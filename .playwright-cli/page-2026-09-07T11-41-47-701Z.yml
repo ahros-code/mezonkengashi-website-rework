@@ -1,0 +1,74 @@
+- generic [active] [ref=f3e1]:
+  - link "Asosiy kontentga oʻtish" [ref=f3e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - link "MEZON — Islom moliyasi boʻyicha konsalting markazi" [ref=f3e5] [cursor=pointer]:
+        - /url: /uz
+        - generic [ref=f3e8]:
+          - text: MEZON
+          - generic [ref=f3e9]: Islamic Finance
+      - navigation "Xizmatlar" [ref=f3e10]:
+        - link "Xizmatlar" [ref=f3e11] [cursor=pointer]:
+          - /url: "#services"
+        - link "Kengash" [ref=f3e12] [cursor=pointer]:
+          - /url: "#council"
+        - link "Jarayon" [ref=f3e13] [cursor=pointer]:
+          - /url: "#process"
+        - link "Aloqa" [ref=f3e14] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=f3e15]:
+        - group "Sayt tili" [ref=f3e16]:
+          - link "Oʻz" [ref=f3e17] [cursor=pointer]:
+            - /url: /uz
+          - link "Ру" [ref=f3e18] [cursor=pointer]:
+            - /url: /ru
+        - link "Konsultatsiya olish" [ref=f3e19] [cursor=pointer]:
+          - /url: "#contact"
+  - main [ref=f3e20]:
+    - region [ref=f3e21]:
+      - generic [ref=f3e30]:
+        - generic [ref=f3e31]:
+          - paragraph [ref=f3e32]: Toshkent shahri, 2013-yildan buyon
+          - paragraph [ref=f3e34]: Biz banklar, lizing va sugʻurta kompaniyalari hamda halol biznes uchun mahsulotlarni shariatga muvofiq quramiz, tekshiramiz va sertifikatlaymiz.
+          - generic [ref=f3e35]:
+            - link "Konsultatsiya olish" [ref=f3e36] [cursor=pointer]:
+              - /url: "#contact"
+            - link "Xizmatlarni koʻrish" [ref=f3e37] [cursor=pointer]:
+              - /url: "#services"
+          - heading "MEZON Har bir shartnoma shariat mezonida oʻlchanadi" [level=1] [ref=f3e38]:
+            - generic [ref=f3e39]: MEZON
+            - generic [ref=f3e40]: Har bir shartnoma shariat mezonida oʻlchanadi
+        - generic [ref=f3e41]:
+          - generic [ref=f3e42]:
+            - blockquote [ref=f3e43]:
+              - paragraph [ref=f3e46]: Fatvo — qogʻoz emas, majburiyat. Biz imzo qoʻygan har bir hujjat ortida kengashning butun masʼuliyati turadi.
+            - generic [ref=f3e65]:
+              - generic [ref=f3e66]: Shayx Abdulaziz Nurmatov
+              - generic [ref=f3e67]: Shariat nazorat kengashi raisi
+          - generic [ref=f3e68]:
+            - paragraph [ref=f3e69]:
+              - generic [ref=f3e70]: 4,2 trln
+              - generic [ref=f3e71]: soʻm
+            - paragraph [ref=f3e72]: ekspertizadan oʻtgan aktivlar hajmi
+          - generic [ref=f3e87]:
+            - paragraph [ref=f3e88]: Qoʻngʻiroqni buyurtma qiling
+            - generic [ref=f3e89]:
+              - generic [ref=f3e90]:
+                - generic: Ism va familiya
+                - textbox "Ism va familiya" [ref=f3e91]:
+                  - /placeholder: Bekzod Ismoilov
+              - generic [ref=f3e92]:
+                - generic: Telefon
+                - textbox "Telefon" [ref=f3e93]:
+                  - /placeholder: +998 __ ___ __ __
+            - textbox [aria-hidden] [ref=f3e94]
+            - button "Yuborish" [ref=f3e95] [cursor=pointer]
+            - paragraph [ref=f3e96]: Ish kunlari 30 daqiqa ichida javob beramiz.
+        - generic [ref=f3e97]:
+          - paragraph [ref=f3e98]:
+            - generic [ref=f3e99]: AAOIFI
+            - generic [ref=f3e102]: IFSB
+            - generic [ref=f3e105]: CIMA Islamic Finance
+            - generic [ref=f3e108]: OIC Fiqh Academy
+          - generic [ref=f3e111]: Pastga

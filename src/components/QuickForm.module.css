@@ -1,0 +1,95 @@
+.form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #eef3f8;
+  letter-spacing: -0.005em;
+}
+
+.fields {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.field {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: 0.42rem;
+  left: 0.8rem;
+  font-size: 0.66rem;
+  color: var(--on-dark-3);
+  pointer-events: none;
+  letter-spacing: 0.02em;
+}
+
+.input {
+  width: 100%;
+  padding: 1.32rem 0.8rem 0.5rem;
+  border-radius: var(--r-sm);
+  background: rgba(4, 16, 32, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  color: #f3f7fb;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  transition:
+    border-color 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+.input::placeholder {
+  color: rgba(126, 145, 168, 0.7);
+}
+.input:focus {
+  outline: none;
+  border-color: rgba(79, 199, 204, 0.6);
+  background: rgba(4, 16, 32, 0.6);
+  box-shadow: 0 0 0 3px rgba(79, 199, 204, 0.16);
+}
+
+.honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.error {
+  font-size: 0.76rem;
+  color: #ffb4a2;
+}
+
+.note {
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--on-dark-3);
+  text-align: center;
+}
+
+.done {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding-block: 1.1rem;
+  animation: rise 0.6s var(--ease-out) both;
+}
+.doneTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: #f4f1ea;
+  margin-top: 0.35rem;
+}
+.doneBody {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+  max-width: 30ch;
+}
