@@ -1,0 +1,227 @@
+.section {
+  background: var(--ganch);
+  padding-block: var(--sec-y);
+  position: relative;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(1.25rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1vw, 0.9rem);
+}
+
+/* ---- the shared tile ---- */
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.35rem, 2vw, 1.9rem);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  border: 1px solid var(--ganch-3);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    border-color 0.45s var(--ease-out),
+    transform 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out);
+}
+.tile:hover {
+  border-color: color-mix(in srgb, var(--kobalt) 32%, var(--ganch-3));
+  transform: translateY(-3px);
+  box-shadow: 0 22px 44px -28px rgba(7, 26, 48, 0.5);
+}
+
+/* a turquoise seam grows along the top edge on hover */
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--firuza), var(--kobalt-3), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.tile:hover::before,
+.tile:focus-within::before {
+  transform: scaleX(1);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  color: var(--kobalt);
+  transition: color 0.4s var(--ease-out);
+}
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+.tile:hover .icon {
+  color: var(--firuza);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  line-height: 1.16;
+  color: var(--ink);
+}
+
+.summary {
+  font-size: 0.925rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.points {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--ganch-2);
+}
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.83rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.point svg {
+  flex: none;
+  margin-top: 0.25em;
+  color: var(--zar);
+}
+
+/* ---- the feature tile: the council, on lapis ---- */
+
+.feature {
+  grid-column: span 7;
+  grid-row: span 2;
+  background: var(--nil);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--on-dark);
+  min-height: 22rem;
+}
+.feature:hover {
+  border-color: rgba(79, 199, 204, 0.4);
+}
+
+.featurePhoto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.featurePhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 62%;
+  filter: saturate(0.95) contrast(1.08) brightness(0.92);
+  transform: scale(1.02);
+  transition: transform 1.2s var(--ease-out);
+}
+.feature:hover .featurePhoto img {
+  transform: scale(1.06);
+}
+
+.featureWash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(7, 26, 48, 0.18) 0%, rgba(7, 26, 48, 0.62) 52%, rgba(5, 19, 36, 0.94) 100%),
+    linear-gradient(96deg, rgba(5, 19, 36, 0.88) 0%, rgba(6, 22, 42, 0.5) 42%, rgba(7, 26, 48, 0.12) 100%);
+}
+
+.featureLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(227, 190, 108, 0.16);
+  mask-image: radial-gradient(80% 70% at 88% 12%, #000, transparent 72%);
+  -webkit-mask-image: radial-gradient(80% 70% at 88% 12%, #000, transparent 72%);
+}
+
+.feature .icon {
+  width: 46px;
+  height: 46px;
+  color: var(--zar-2);
+}
+.feature:hover .icon {
+  color: var(--firuza-2);
+}
+.feature .name {
+  font-size: clamp(1.6rem, 1.15rem + 1.5vw, 2.35rem);
+  color: #fbf9f4;
+  max-width: 16ch;
+}
+.feature .summary {
+  color: var(--on-dark-2);
+  font-size: 1rem;
+  max-width: 44ch;
+}
+.feature .points {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+.feature .point {
+  color: var(--on-dark-2);
+  font-size: 0.875rem;
+}
+.feature .point svg {
+  color: var(--zar-2);
+}
+
+.featureCta {
+  margin-top: 1.15rem;
+  align-self: flex-start;
+}
+
+/* ---- footprints ---- */
+
+.wide {
+  grid-column: span 5;
+}
+.std {
+  grid-column: span 4;
+}
+
+@media (max-width: 1080px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+  }
+  .feature {
+    grid-column: span 12;
+    grid-row: auto;
+    min-height: 0;
+  }
+  .wide {
+    grid-column: span 6;
+  }
+  .std {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 640px) {
+  .wide,
+  .std {
+    grid-column: span 12;
+  }
+}

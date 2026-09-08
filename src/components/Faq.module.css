@@ -1,0 +1,103 @@
+.section {
+  background: var(--paper);
+  border-top: 1px solid var(--ganch-3);
+  padding-block: clamp(4rem, 7vw, 7rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: clamp(1.75rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  line-height: 1.06;
+  color: var(--ink);
+  position: sticky;
+  top: 7rem;
+}
+
+.list {
+  display: grid;
+}
+
+.item {
+  border-top: 1px solid var(--ganch-2);
+}
+.item:last-child {
+  border-bottom: 1px solid var(--ganch-2);
+}
+
+.q {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.15rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.02rem;
+  line-height: 1.4;
+  color: var(--ink);
+  transition: color 0.3s var(--ease-out);
+}
+.q::-webkit-details-marker {
+  display: none;
+}
+.q:hover {
+  color: var(--kobalt);
+}
+
+/* the marker rotates a quarter turn when the answer opens */
+.marker {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--zar);
+  transition: transform 0.5s var(--ease-out);
+}
+.item[open] .marker {
+  transform: rotate(22.5deg) scale(1.12);
+  color: var(--firuza);
+}
+
+.a {
+  padding-bottom: 1.3rem;
+  padding-right: 2.5rem;
+  font-size: 0.94rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.item[open] .a {
+  animation: rise 0.45s var(--ease-out) both;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .title {
+    position: static;
+  }
+  .a {
+    padding-right: 0;
+  }
+}
+
+/* CSS Modules scope animation-name even for keyframes declared in
+   globals.css, so the ones this file references are declared here. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

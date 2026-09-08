@@ -1,9 +1,15 @@
 .header {
+  --pad: clamp(0.9rem, 2vw, 1.6rem);
+  --pad-stuck: 0.7rem;
+  /* Distance the row travels when the header contracts. */
+  --contract: calc(var(--pad-stuck) - var(--pad));
+
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
-  padding-block: clamp(0.9rem, 2vw, 1.6rem);
-  transition: padding-block 0.5s var(--ease-out);
+  /* Padding is constant: the contraction is done with transforms only, so
+     scrolling never triggers layout on the nav subtree. */
+  padding-block: var(--pad);
 }
 
 /* A glass plate slides in behind the whole row once the hero is behind you. */
@@ -22,12 +28,14 @@
     transform 0.45s var(--ease-out);
 }
 
-.header[data-stuck="true"] {
-  padding-block: 0.7rem;
+/* The plate slides up by twice the contraction so its visible height ends at
+   2 x --pad-stuck + row height, keeping the row optically centred in it. */
+.header[data-stuck="true"]::before {
+  transform: translateY(calc(2 * var(--contract)));
 }
+
 .header[data-stuck="true"]::before {
   opacity: 1;
-  transform: none;
 }
 
 .row {
@@ -35,6 +43,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  transition: transform 0.5s var(--ease-out);
+}
+.header[data-stuck="true"] .row {
+  transform: translateY(var(--contract));
 }
 
 /* ---- brand ---- */
@@ -278,5 +290,18 @@
 @media (min-width: 1081px) {
   .sheet {
     display: none;
+  }
+}
+
+/* CSS Modules scope animation-name even for keyframes declared in
+   globals.css, so the ones this file references are declared here. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

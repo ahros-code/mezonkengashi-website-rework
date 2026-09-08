@@ -70,16 +70,8 @@ function Consulting() {
   return (
     <svg {...base}>
       {/* the two squares whose union makes the star — literal structuring */}
-      <rect x="10" y="10" width="22" height="22" rx="2" />
-      <rect
-        x="16"
-        y="16"
-        width="22"
-        height="22"
-        rx="2"
-        transform="rotate(45 27 27)"
-        opacity="0.75"
-      />
+      <rect x="11" y="11" width="26" height="26" rx="2" />
+      <rect x="11" y="11" width="26" height="26" rx="2" transform="rotate(45 24 24)" />
     </svg>
   );
 }

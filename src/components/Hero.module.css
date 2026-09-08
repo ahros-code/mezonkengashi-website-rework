@@ -90,12 +90,12 @@
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: end;
   width: 100%;
-  padding-block: clamp(6.5rem, 11vh, 8.5rem) clamp(1.6rem, 3vh, 2.6rem);
+  padding-block: clamp(6.25rem, 9.4vh, 8rem) clamp(1.4rem, 2.4vh, 2.2rem);
 }
 
 .left {
   display: grid;
-  gap: clamp(0.85rem, 1.7vh, 1.4rem);
+  gap: clamp(0.8rem, 1.35vh, 1.25rem);
   align-content: end;
 }
 
@@ -135,7 +135,7 @@
 }
 
 .title {
-  margin-top: clamp(0.5rem, 1.8vh, 1.5rem);
+  margin-top: clamp(0.4rem, 1.1vh, 1.2rem);
   display: grid;
   gap: clamp(0.4rem, 1.2vh, 0.9rem);
 }
@@ -292,7 +292,7 @@
 
 .rail {
   grid-column: 1 / -1;
-  margin-top: clamp(1rem, 2.4vh, 1.9rem);
+  margin-top: clamp(0.85rem, 1.7vh, 1.6rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -394,5 +394,59 @@
   }
   .stack {
     grid-template-columns: 1fr;
+  }
+}
+
+/* CSS Modules scope animation-name even for keyframes declared in
+   globals.css, so the ones this file references are declared here. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes unveil {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translate3d(0, 0.14em, 0);
+  }
+  to {
+    clip-path: inset(0 0 -0.12em 0);
+    transform: none;
+  }
+}
+
+@keyframes bloom {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(-6%, -4%, 0) rotate(4deg);
+  }
+}
+
+@keyframes sheenSweep {
+  from {
+    background-position: -140% 0;
+  }
+  to {
+    background-position: 240% 0;
   }
 }

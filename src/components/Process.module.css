@@ -1,0 +1,181 @@
+.section {
+  background: var(--ganch);
+  padding-block: var(--sec-y);
+  position: relative;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  gap: clamp(1.25rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+  position: relative;
+}
+
+/* the spine the whole sequence hangs from */
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ganch-3);
+}
+.steps::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--kobalt), var(--firuza));
+  transition: transform 1.6s var(--ease-in-out);
+}
+.steps[data-inview="true"]::after {
+  transform: scaleX(1);
+}
+
+.step {
+  position: relative;
+  padding-top: 3rem;
+}
+
+/* the node: a girih star that fills as the spine reaches it */
+.node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ganch);
+  color: var(--ganch-3);
+  transition: color 0.6s var(--ease-out);
+}
+.nodeNum {
+  position: absolute;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--ink-3);
+  transition: color 0.6s var(--ease-out);
+}
+.steps[data-inview="true"] .node {
+  color: var(--firuza);
+}
+.steps[data-inview="true"] .nodeNum {
+  color: var(--paper);
+}
+.step:nth-child(1) .node,
+.step:nth-child(1) .nodeNum {
+  transition-delay: 0.15s;
+}
+.step:nth-child(2) .node,
+.step:nth-child(2) .nodeNum {
+  transition-delay: 0.5s;
+}
+.step:nth-child(3) .node,
+.step:nth-child(3) .nodeNum {
+  transition-delay: 0.85s;
+}
+.step:nth-child(4) .node,
+.step:nth-child(4) .nodeNum {
+  transition-delay: 1.2s;
+}
+
+.time {
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.16rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-top: 0.5rem;
+}
+
+.body {
+  margin-top: 0.55rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+/* ---- trust band ---- */
+
+.trust {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+  padding-top: clamp(2rem, 3vw, 2.75rem);
+  border-top: 1px solid var(--ganch-3);
+}
+
+.trustItem {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+.trustMark {
+  color: var(--zar);
+}
+.trustName {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  color: var(--ink);
+  margin-top: 0.35rem;
+}
+.trustBody {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 34ch;
+}
+
+@media (max-width: 1080px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+  }
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+  }
+  .steps::before,
+  .steps::after {
+    display: none;
+  }
+  .step {
+    padding-top: 0;
+    padding-left: 2.75rem;
+  }
+  .node {
+    top: 0.1rem;
+  }
+  .trust {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}

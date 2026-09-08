@@ -1,0 +1,340 @@
+.section {
+  background: var(--ganch);
+  padding-block: var(--sec-y);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--ganch-3);
+  box-shadow: 0 40px 80px -50px rgba(7, 26, 48, 0.55);
+}
+
+/* ---------- left: the office, on lapis ---------- */
+
+.aside {
+  position: relative;
+  isolation: isolate;
+  background: var(--nil);
+  color: var(--on-dark);
+  padding: clamp(1.75rem, 3vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  overflow: hidden;
+}
+
+.asidePhoto {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+}
+.asidePhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 55% 45%;
+  filter: saturate(0.7) brightness(0.42);
+}
+.asideWash {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(7, 26, 48, 0.7), rgba(5, 19, 36, 0.94)),
+    radial-gradient(90% 70% at 15% 10%, rgba(42, 107, 173, 0.42), transparent 62%);
+}
+.asideLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(227, 190, 108, 0.14);
+  mask-image: radial-gradient(70% 60% at 85% 92%, #000, transparent 72%);
+  -webkit-mask-image: radial-gradient(70% 60% at 85% 92%, #000, transparent 72%);
+}
+
+.kicker {
+  font-size: var(--t-cap);
+  color: var(--on-dark-3);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.kicker::before {
+  content: "";
+  width: 2.25rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--zar-2), transparent);
+  flex: none;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  line-height: 1.06;
+  color: #fbf9f4;
+  margin-top: 1rem;
+}
+.lede {
+  margin-top: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--on-dark-2);
+  max-width: 40ch;
+}
+
+.blocks {
+  display: grid;
+  gap: 1.15rem;
+  margin-top: auto;
+}
+
+.block {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+  padding-top: 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.blockIcon {
+  color: var(--zar-2);
+  margin-top: 0.1rem;
+}
+.blockLabel {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--on-dark-3);
+  margin-bottom: 0.3rem;
+}
+.blockValue {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #eef3f8;
+}
+.blockNote {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--on-dark-3);
+  margin-top: 0.2rem;
+}
+a.blockValue {
+  transition: color 0.3s var(--ease-out);
+}
+a.blockValue:hover {
+  color: var(--firuza-2);
+}
+
+/* ---------- right: the form, on paper ---------- */
+
+.panel {
+  background: var(--paper);
+  padding: clamp(1.75rem, 3vw, 3rem);
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border-radius: var(--r-sm);
+  background: #fff;
+  border: 1px solid var(--ganch-3);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition:
+    border-color 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+.textarea {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: #9aa6b5;
+}
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--firuza);
+  box-shadow: 0 0 0 3px rgba(30, 154, 160, 0.16);
+}
+.input[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(168, 65, 47, 0.12);
+}
+
+/* topic chips — a radio group that looks like the tabs elsewhere */
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+.topicsLegend {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  margin-bottom: 0.55rem;
+  padding: 0;
+}
+.topic {
+  position: relative;
+}
+.topicInput {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.topicLabel {
+  display: block;
+  padding: 0.52rem 0.85rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--ganch-3);
+  background: #fff;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    border-color 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+.topicInput:hover + .topicLabel {
+  border-color: var(--kobalt-3);
+}
+.topicInput:checked + .topicLabel {
+  background: var(--kobalt);
+  border-color: var(--kobalt);
+  color: var(--paper);
+}
+.topicInput:focus-visible + .topicLabel {
+  outline: 2px solid var(--firuza);
+  outline-offset: 2px;
+}
+
+.error {
+  font-size: 0.78rem;
+  color: var(--danger);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+.privacy {
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--ink-3);
+  flex: 1;
+  min-width: 15rem;
+}
+
+.honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* ---------- sent ---------- */
+
+.done {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+  gap: 0.6rem;
+  min-height: 22rem;
+  animation: rise 0.6s var(--ease-out) both;
+}
+.doneMark {
+  color: var(--zar);
+}
+.doneTitle {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-top: 0.5rem;
+}
+.doneBody {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 34ch;
+}
+.again {
+  margin-top: 0.85rem;
+  font-size: 0.85rem;
+  color: var(--kobalt);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 980px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    gap: 1.5rem;
+  }
+  .blocks {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CSS Modules scope animation-name even for keyframes declared in
+   globals.css, so the ones this file references are declared here. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
