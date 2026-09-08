@@ -173,7 +173,11 @@ Photographs are from Unsplash (Unsplash License) in `public/img/`:
 Swap in the client's own photography when available — each is referenced from a
 single component.
 
-## The hero's 3D field
+## The hero's 3D field (currently off)
+
+`HeroLattice.tsx` has `ENABLED = false` at the top, so the field does not mount
+and `three` is never fetched. Flip it to true to bring it back — the code below
+the flag is untouched.
 
 `src/components/HeroLattice.tsx` extrudes the same khatam star used everywhere
 else and scatters it on a lattice in real space, lit with an amber key against a

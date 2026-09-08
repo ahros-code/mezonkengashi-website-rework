@@ -12,10 +12,19 @@ import s from "./Hero.module.css";
  * It only mounts where it earns its cost: a fine pointer, a wide viewport, and
  * motion allowed. The CSS lattice stays behind it as the fallback.
  */
+/**
+ * Turned off for now — flip this to true to bring the field back. Everything
+ * below is left intact; with it false nothing mounts and three is never even
+ * fetched, since the import() below never runs.
+ * Typed as boolean so the rest does not narrow to unreachable code.
+ */
+const ENABLED: boolean = false;
+
 export default function HeroLattice() {
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!ENABLED) return;
     const el = host.current;
     if (!el) return;
 
@@ -217,6 +226,8 @@ export default function HeroLattice() {
       cleanup?.();
     };
   }, []);
+
+  if (!ENABLED) return null;
 
   return <div ref={host} className={s.lattice3d} aria-hidden="true" />;
 }
