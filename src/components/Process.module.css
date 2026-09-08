@@ -2,6 +2,8 @@
   background: var(--ganch);
   padding-block: var(--sec-y);
   position: relative;
+  isolation: isolate;
+  overflow: clip;
 }
 
 .head {

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Prata, Golos_Text } from "next/font/google";
+import { Prata, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import {
   locales,
@@ -10,6 +10,8 @@ import {
   type Locale,
 } from "@/i18n/config";
 import { getDict } from "@/i18n";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import "../globals.css";
 
 const prata = Prata({
@@ -19,11 +21,12 @@ const prata = Prata({
   variable: "--font-prata",
 });
 
-const golos = Golos_Text({
-  weight: ["400", "500", "600", "700"],
+/* The brandbook typeface. Uzbek needs U+02BB, which sits in the latin subset. */
+const montserrat = Montserrat({
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin", "latin-ext", "cyrillic"],
   display: "swap",
-  variable: "--font-golos",
+  variable: "--font-montserrat",
 });
 
 export function generateStaticParams() {
@@ -33,7 +36,7 @@ export function generateStaticParams() {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f1eee7" },
-    { media: "(prefers-color-scheme: dark)", color: "#071a30" },
+    { media: "(prefers-color-scheme: dark)", color: "#00223d" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -53,7 +56,7 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: {
       default: t.meta.title,
-      template: `%s | ${t.meta.shortTitle}`,
+      template: "%s | MEZON",
     },
     description: t.meta.description,
     keywords: [...t.meta.keywords],
@@ -108,9 +111,18 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
+  const t = getDict(locale);
+
   return (
-    <html lang={htmlLang[locale as Locale]} className={`${prata.variable} ${golos.variable}`}>
-      <body>{children}</body>
+    <html lang={htmlLang[locale as Locale]} className={`${montserrat.variable} ${prata.variable}`}>
+      <body>
+        <a href="#main" className="skip">
+          {t.nav.skip}
+        </a>
+        <Nav t={t} locale={locale} />
+        {children}
+        <Footer t={t} locale={locale} />
+      </body>
     </html>
   );
 }

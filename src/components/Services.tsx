@@ -4,6 +4,7 @@ import { GirihField, GirihStar } from "./Girih";
 import { serviceOrder, type ServiceId } from "@/lib/site";
 import type { Dict } from "@/i18n";
 import s from "./Services.module.css";
+import SectionBackdrop from "./SectionBackdrop";
 
 /** Footprints are uneven on purpose — a mosaic, not six identical cards. */
 const SPAN: Record<ServiceId, string> = {
@@ -21,6 +22,7 @@ const WITH_POINTS: ServiceId[] = ["council", "audit", "dispute"];
 export default function Services({ t }: { t: Dict }) {
   return (
     <section id="services" className={s.section} aria-labelledby="services-title">
+      <SectionBackdrop id="services" placement="right" />
       <div className="container">
         <header className={s.head}>
           <div>

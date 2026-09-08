@@ -1,0 +1,311 @@
+.body {
+  background: var(--ganch);
+  padding-block: clamp(3rem, 6vw, 5rem) var(--sec-y);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ganch-3);
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.headTitle {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  line-height: 1.1;
+  color: var(--ink);
+}
+.headRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--zar) 55%, transparent), transparent);
+}
+.headCount {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+}
+
+/* ---------- upcoming: lapis cards with a date plate ---------- */
+
+.upcoming {
+  display: grid;
+  gap: clamp(0.85rem, 1.6vw, 1.25rem);
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) minmax(0, 14rem);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--r-xl);
+  background: linear-gradient(135deg, var(--kobalt) 0%, var(--nil) 66%);
+  color: var(--on-dark);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.5s var(--ease-out);
+}
+.card:hover {
+  transform: translateY(-3px);
+}
+.cardLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(248, 183, 0, 0.16);
+  mask-image: radial-gradient(52% 90% at 90% 10%, #000, transparent 70%);
+  -webkit-mask-image: radial-gradient(52% 90% at 90% 10%, #000, transparent 70%);
+}
+
+/* the date sits inside a girih star, the same plate the news lead uses */
+.plate {
+  position: relative;
+  width: 8.5rem;
+  height: 8.5rem;
+  display: grid;
+  place-items: center;
+  align-self: start;
+  flex: none;
+}
+.plateStar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(248, 183, 0, 0.45);
+}
+.plateInner {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  line-height: 1;
+}
+.plateDay {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  color: #ffffff;
+}
+.plateMonth {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+.plateYear {
+  margin-top: 0.2rem;
+  font-size: 0.68rem;
+  color: var(--zar-2);
+}
+
+.cardMain {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+}
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 0.74rem;
+  color: var(--on-dark-3);
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.34rem 0.7rem;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(248, 183, 0, 0.38);
+  color: var(--zar-2);
+  line-height: 1;
+}
+.tag svg {
+  flex: none;
+}
+.tagFree {
+  border-color: rgba(248, 183, 0, 0.5);
+  color: var(--firuza-2);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.85rem);
+  line-height: 1.14;
+  color: #ffffff;
+  max-width: 26ch;
+  transition: color 0.35s var(--ease-out);
+}
+.card:hover .cardTitle {
+  color: var(--zar-2);
+}
+.cardExcerpt {
+  font-size: 0.94rem;
+  line-height: 1.58;
+  color: var(--on-dark-2);
+  max-width: 54ch;
+}
+
+.facts {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  padding-left: clamp(0, 2vw, 1.5rem);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+.fact {
+  display: grid;
+  gap: 0.22rem;
+}
+.factLabel {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--on-dark-3);
+}
+.factValue {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #ffffff;
+}
+.factPrice {
+  font-family: var(--font-display);
+  font-size: 1.24rem;
+  color: var(--zar-2);
+  line-height: 1.1;
+}
+.cardCta {
+  margin-top: 0.5rem;
+  justify-self: start;
+}
+
+/* ---------- past: a quiet list ---------- */
+
+.past {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.pastRow {
+  display: grid;
+  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) minmax(0, 1.4rem);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: baseline;
+  padding-block: clamp(1.1rem, 2.2vw, 1.55rem);
+  border-bottom: 1px solid var(--ganch-2);
+  transition: background-color 0.35s var(--ease-out);
+}
+.pastRow:hover {
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
+}
+.pastMeta {
+  display: grid;
+  gap: 0.3rem;
+}
+.pastDate {
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+.pastFormat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--ink-3);
+}
+.pastFormat svg {
+  color: var(--zar);
+  flex: none;
+  transition: transform 0.5s var(--ease-out);
+}
+.pastRow:hover .pastFormat svg {
+  transform: rotate(45deg);
+}
+.pastTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.38rem);
+  line-height: 1.2;
+  color: var(--ink);
+  transition: color 0.35s var(--ease-out);
+}
+.pastRow:hover .pastTitle {
+  color: var(--kobalt);
+}
+.pastExcerpt {
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+.pastArrow {
+  color: var(--ganch-3);
+  align-self: center;
+  transition: color 0.35s var(--ease-out), transform 0.4s var(--ease-out);
+}
+.pastRow:hover .pastArrow {
+  color: var(--kobalt);
+  transform: translateX(4px);
+}
+
+.empty {
+  padding: clamp(2rem, 4vw, 3rem);
+  border-radius: var(--r-lg);
+  border: 1px dashed var(--ganch-3);
+  text-align: center;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1080px) {
+  .card {
+    grid-template-columns: minmax(0, 7rem) minmax(0, 1fr);
+  }
+  .facts {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    border-left: 0;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .cardCta {
+    grid-column: 1 / -1;
+  }
+  .plate {
+    width: 7rem;
+    height: 7rem;
+  }
+  .plateDay {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .facts {
+    grid-auto-flow: row;
+    gap: 0.85rem;
+  }
+  .pastRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+  .pastMeta {
+    grid-auto-flow: column;
+    justify-content: start;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .pastArrow {
+    display: none;
+  }
+}

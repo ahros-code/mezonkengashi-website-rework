@@ -1,23 +1,23 @@
 /**
  * Company facts that do not change between locales.
- * All values here are placeholder data for the design review — replace before launch.
+ * Contact details are the client's real ones; the rest is still placeholder.
  */
 export const company = {
-  name: "MEZON",
-  legalName: 'MEZON Islamic Finance Advisory LLC',
+  name: "MEZON KENGASHI",
+  shortName: "MEZON",
+  legalName: "MEZON KENGASHI",
   founded: 2013,
-  email: "info@mezon.uz",
-  phone: "+998 71 200 40 40",
-  phoneHref: "+998712004040",
-  telegram: "https://t.me/mezon_uz",
-  street: "Mustaqillik shoh koʻchasi 107B",
-  district: "Mirzo Ulugʻbek",
+  email: "info@mezonkengashi.uz",
+  phone: "+998 50 700-77-99",
+  phoneHref: "+998507007799",
+  telegram: "https://t.me/mezonkengashi",
   city: "Toshkent",
-  postal: "100000",
   country: "UZ",
+  countryName: "Oʻzbekiston",
   lat: 41.3111,
   lng: 69.2797,
-  taxId: "3 0 5 4 4 1 9 8 7",
+  hoursOpen: "09:00",
+  hoursClose: "18:00",
 } as const;
 
 export type ServiceId =

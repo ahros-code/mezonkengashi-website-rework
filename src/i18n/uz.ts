@@ -1,7 +1,6 @@
 const uz = {
   meta: {
     title: "MEZON — Islom moliyasi boʻyicha konsalting va shariat auditi | Toshkent",
-    shortTitle: "MEZON — Islom moliyasi konsaltingi",
     description:
       "MEZON — Toshkentdagi islom moliyasi markazi: shariat nazorat kengashi, audit va sertifikatlash, nizolarni hal qilish, taʼlim, konsalting va zakot hisobi. 2013-yildan buyon 28 moliya instituti bilan ishlaymiz.",
     keywords: [
@@ -17,7 +16,6 @@ const uz = {
       "islom banki Toshkent",
       "AAOIFI standartlari",
     ],
-    ogAlt: "MEZON — islom moliyasi boʻyicha konsalting markazi, Toshkent",
   },
 
   nav: {
@@ -25,6 +23,11 @@ const uz = {
     council: "Kengash",
     process: "Jarayon",
     contact: "Aloqa",
+    about: "Biz haqimizda",
+    research: "Tadqiqotlar",
+    news: "Yangiliklar",
+    events: "Tadbirlar",
+    faq: "Savol-javob",
     cta: "Konsultatsiya olish",
     openMenu: "Menyuni ochish",
     closeMenu: "Menyuni yopish",
@@ -286,7 +289,7 @@ const uz = {
     title: "Savolingizni yozing",
     lede:
       "Konsultatsiya, audit, taʼlim yoki zakot hisobi — mavzuni tanlang va tafsilotlarni yozing. Murojaatni tegishli mutaxassisga yoʻnaltiramiz.",
-    officeTitle: "Ofis",
+    officeTitle: "Manzil",
     hoursTitle: "Ish vaqti",
     hours: "Dushanba–Juma, 09:00–18:00",
     hoursNote: "Juma kuni 12:30–14:00 tanaffus",
@@ -302,10 +305,7 @@ const uz = {
     about: "Biz haqimizda",
     council: "Kengash",
     process: "Jarayon",
-    registry: "Sertifikatlar reyestri",
-    careers: "Vakansiyalar",
     rights: "Barcha huquqlar himoyalangan.",
-    stir: "STIR",
     disclaimer:
       "Saytdagi maʼlumot umumiy xarakterga ega va moliyaviy yoki huquqiy maslahat oʻrnini bosmaydi.",
     credits: "Fotosuratlar: Samarqand meʼmoriy yodgorliklari",

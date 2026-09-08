@@ -27,8 +27,8 @@ export default async function Image({
   const locale: Locale = isLocale(raw) ? raw : defaultLocale;
   const t = getDict(locale);
 
-  const prata = await readFile(
-    path.join(process.cwd(), "src/assets/Prata-Regular.ttf"),
+  const brandFont = await readFile(
+    path.join(process.cwd(), "src/assets/Montserrat-Bold.ttf"),
   );
 
   return new ImageResponse(
@@ -41,7 +41,7 @@ export default async function Image({
           flexDirection: "column",
           justifyContent: "flex-end",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #071a30 0%, #123a6b 62%, #0b2440 100%)",
+          background: "linear-gradient(135deg, #00223d 0%, #003a64 62%, #002d51 100%)",
           position: "relative",
         }}
       >
@@ -56,7 +56,7 @@ export default async function Image({
               key={r}
               points={starPoints(320, 320, r)}
               fill="none"
-              stroke="#e3be6c"
+              stroke="#f8b700"
               strokeWidth="2"
               opacity={0.18 - i * 0.025}
             />
@@ -77,7 +77,7 @@ export default async function Image({
             <polygon
               points={starPoints(11, 11, 10)}
               fill="none"
-              stroke="#e3be6c"
+              stroke="#f8b700"
               strokeWidth="1.4"
             />
           </svg>
@@ -86,21 +86,33 @@ export default async function Image({
 
         <div
           style={{
-            fontFamily: "Prata",
-            fontSize: 168,
-            color: "#fbf9f4",
+            fontFamily: "Montserrat",
+            fontSize: 150,
+            color: "#ffffff",
             lineHeight: 1,
             marginTop: 26,
-            letterSpacing: 2,
+            letterSpacing: 5,
           }}
         >
           MEZON
+        </div>
+        <div
+          style={{
+            fontFamily: "Montserrat",
+            fontSize: 47,
+            color: "#f8b700",
+            lineHeight: 1,
+            marginTop: 12,
+            letterSpacing: 33,
+          }}
+        >
+          KENGASHI
         </div>
 
         <div
           style={{
             fontSize: 36,
-            color: "#dfe8f1",
+            color: "#e8eef4",
             marginTop: 22,
             maxWidth: 900,
             lineHeight: 1.3,
@@ -114,14 +126,14 @@ export default async function Image({
             height: 2,
             width: "100%",
             marginTop: 40,
-            background: "linear-gradient(90deg, #c79a3e, rgba(199,154,62,0))",
+            background: "linear-gradient(90deg, #f8b700, rgba(248, 183, 0,0))",
           }}
         />
       </div>
     ),
     {
       ...size,
-      fonts: [{ name: "Prata", data: prata, style: "normal", weight: 400 }],
+      fonts: [{ name: "Montserrat", data: brandFont, style: "normal", weight: 700 }],
     },
   );
 }

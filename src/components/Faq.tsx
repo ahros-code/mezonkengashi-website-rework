@@ -1,10 +1,12 @@
 import { GirihStar } from "./Girih";
 import type { Dict } from "@/i18n";
 import s from "./Faq.module.css";
+import SectionBackdrop from "./SectionBackdrop";
 
 export default function Faq({ t }: { t: Dict }) {
   return (
     <section className={s.section} aria-labelledby="faq-title">
+      <SectionBackdrop id="faq-home" placement="right" />
       <div className={`container ${s.grid}`}>
         <h2 id="faq-title" className={s.title}>
           {t.faq.title}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { GirihStar } from "./Girih";
 import type { Dict } from "@/i18n";
 import type { Locale } from "@/i18n/config";
@@ -13,6 +13,15 @@ export default function ContactForm({ t, locale }: { t: Dict; locale: Locale }) 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+  const focusTarget = useRef<string | null>(null);
+
+  /* aria-invalid is only on the DOM after React commits, so the field to focus
+     is chosen during validation and moved to here rather than queried inline. */
+  useEffect(() => {
+    if (!focusTarget.current) return;
+    document.getElementById(focusTarget.current)?.focus();
+    focusTarget.current = null;
+  }, [errors]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,11 +39,12 @@ export default function ContactForm({ t, locale }: { t: Dict; locale: Locale }) 
     if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) next.email = t.form.errEmail;
     if (message.length < 5) next.message = t.form.errMessage;
 
+    const firstInvalid = (["name", "phone", "email", "message"] as const).find(
+      (k) => next[k],
+    );
+    if (firstInvalid) focusTarget.current = `${uid}-${firstInvalid}`;
     setErrors(next);
-    if (Object.keys(next).length) {
-      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
-      return;
-    }
+    if (firstInvalid) return;
 
     setSending(true);
     try {

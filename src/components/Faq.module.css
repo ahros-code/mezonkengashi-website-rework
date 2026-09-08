@@ -2,6 +2,9 @@
   background: var(--paper);
   border-top: 1px solid var(--ganch-3);
   padding-block: clamp(4rem, 7vw, 7rem);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
 }
 
 .grid {

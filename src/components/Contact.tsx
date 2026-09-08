@@ -6,14 +6,16 @@ import { company } from "@/lib/site";
 import type { Dict } from "@/i18n";
 import type { Locale } from "@/i18n/config";
 import s from "./Contact.module.css";
+import SectionBackdrop from "./SectionBackdrop";
 
 export default function Contact({ t, locale }: { t: Dict; locale: Locale }) {
   const mapQuery = encodeURIComponent(
-    `${company.street}, ${company.city}, Uzbekistan`,
+    `${company.city}, ${company.countryName}`,
   );
 
   return (
     <section id="contact" className={s.section} aria-labelledby="contact-title">
+      <SectionBackdrop id="contact" placement="band" />
       <div className="container">
         <div className={s.shell}>
           <div className={s.aside}>
@@ -52,9 +54,9 @@ export default function Contact({ t, locale }: { t: Dict; locale: Locale }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {company.street}
+                    {company.countryName}
                     <br />
-                    {company.district}, {company.city}
+                    {company.city}
                   </a>
                   <span className={s.blockNote}>{t.contact.mapLabel}</span>
                 </span>

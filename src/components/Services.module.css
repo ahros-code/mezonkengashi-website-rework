@@ -2,6 +2,8 @@
   background: var(--ganch);
   padding-block: var(--sec-y);
   position: relative;
+  isolation: isolate;
+  overflow: clip;
 }
 
 .head {
@@ -39,7 +41,7 @@
 .tile:hover {
   border-color: color-mix(in srgb, var(--kobalt) 32%, var(--ganch-3));
   transform: translateY(-3px);
-  box-shadow: 0 22px 44px -28px rgba(7, 26, 48, 0.5);
+  box-shadow: 0 22px 44px -28px rgba(0, 34, 61, 0.5);
 }
 
 /* a turquoise seam grows along the top edge on hover */
@@ -118,7 +120,7 @@
   min-height: 22rem;
 }
 .feature:hover {
-  border-color: rgba(79, 199, 204, 0.4);
+  border-color: rgba(248, 183, 0, 0.4);
 }
 
 .featurePhoto {
@@ -144,15 +146,15 @@
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(7, 26, 48, 0.18) 0%, rgba(7, 26, 48, 0.62) 52%, rgba(5, 19, 36, 0.94) 100%),
-    linear-gradient(96deg, rgba(5, 19, 36, 0.88) 0%, rgba(6, 22, 42, 0.5) 42%, rgba(7, 26, 48, 0.12) 100%);
+    linear-gradient(180deg, rgba(0, 34, 61, 0.18) 0%, rgba(0, 34, 61, 0.62) 52%, rgba(0, 26, 46, 0.94) 100%),
+    linear-gradient(96deg, rgba(0, 26, 46, 0.88) 0%, rgba(0, 30, 54, 0.5) 42%, rgba(0, 34, 61, 0.12) 100%);
 }
 
 .featureLattice {
   position: absolute;
   inset: 0;
   z-index: -1;
-  color: rgba(227, 190, 108, 0.16);
+  color: rgba(248, 183, 0, 0.16);
   mask-image: radial-gradient(80% 70% at 88% 12%, #000, transparent 72%);
   -webkit-mask-image: radial-gradient(80% 70% at 88% 12%, #000, transparent 72%);
 }
@@ -167,7 +169,7 @@
 }
 .feature .name {
   font-size: clamp(1.6rem, 1.15rem + 1.5vw, 2.35rem);
-  color: #fbf9f4;
+  color: #ffffff;
   max-width: 16ch;
 }
 .feature .summary {

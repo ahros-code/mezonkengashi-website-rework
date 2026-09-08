@@ -1,5 +1,6 @@
 import Image from "next/image";
 import HeroAtmosphere from "./HeroAtmosphere";
+import HeroLattice from "./HeroLattice";
 import QuickForm from "./QuickForm";
 import GlassCard from "./GlassCard";
 import { GirihMedallion, GirihStar } from "./Girih";
@@ -27,14 +28,22 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
         />
       </div>
       <div className={s.wash} aria-hidden="true" />
+      <HeroLattice />
       <HeroAtmosphere />
 
       <div className={`container ${s.inner}`}>
+        {/* One column, read top to bottom: who → name → promise → detail → act. */}
         <div className={s.left}>
           <p className={s.place}>
             <span className={s.placeDot} aria-hidden="true" />
             {t.hero.place}
           </p>
+
+          <h1 className={s.title} id="hero-title">
+            <span className={s.word}>{t.hero.wordmark}</span>
+            <span className={s.wordSub}>KENGASHI</span>
+            <span className={s.tag}>{t.hero.tagline}</span>
+          </h1>
 
           <p className={s.lede}>{t.hero.lede}</p>
 
@@ -46,11 +55,6 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
               {t.hero.secondary}
             </a>
           </div>
-
-          <h1 className={s.title} id="hero-title">
-            <span className={s.word}>{t.hero.wordmark}</span>
-            <span className={s.tag}>{t.hero.tagline}</span>
-          </h1>
         </div>
 
         <div className={s.stack}>
@@ -61,7 +65,7 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
             </blockquote>
             <figcaption className={s.attrib}>
               <span className={s.attribMed}>
-                <GirihMedallion seed="nurmatov" />
+                <GirihMedallion seed="nurmatov" scope="hero" />
               </span>
               <span>
                 <span className={s.attribName}>{t.hero.quoteName}</span>

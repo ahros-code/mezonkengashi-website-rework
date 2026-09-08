@@ -2,10 +2,12 @@ import InView from "./InView";
 import { GirihStar } from "./Girih";
 import type { Dict } from "@/i18n";
 import s from "./Process.module.css";
+import SectionBackdrop from "./SectionBackdrop";
 
 export default function Process({ t }: { t: Dict }) {
   return (
     <section id="process" className={s.section} aria-labelledby="process-title">
+      <SectionBackdrop id="process" placement="left" photo="/img/panjara.jpg" />
       <div className="container">
         <header className={s.head}>
           <div>

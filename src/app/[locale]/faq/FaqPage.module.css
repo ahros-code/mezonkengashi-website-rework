@@ -1,0 +1,216 @@
+.body {
+  background: var(--ganch);
+  padding-block: var(--sec-y);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.34fr) minmax(0, 1fr);
+  gap: clamp(1.75rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* ---- sticky index ---- */
+
+.index {
+  position: sticky;
+  top: 7.5rem;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.indexLink {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--r-md);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  transition:
+    background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+.indexLink svg {
+  color: var(--ganch-3);
+  transition: color 0.3s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.indexLink:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+.indexLink:hover svg {
+  color: var(--zar);
+  transform: rotate(45deg);
+}
+
+.indexCount {
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+/* ---- categories ---- */
+
+.cats {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.cat {
+  scroll-margin-top: 7.5rem;
+}
+
+.catHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--ganch-3);
+  margin-bottom: 0.25rem;
+}
+.catName {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.2rem + 0.9vw, 1.95rem);
+  line-height: 1.1;
+  color: var(--ink);
+}
+.catRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--zar) 55%, transparent), transparent);
+}
+
+.item {
+  border-bottom: 1px solid var(--ganch-2);
+}
+
+.q {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.15rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.02rem;
+  line-height: 1.42;
+  color: var(--ink);
+  transition: color 0.3s var(--ease-out);
+}
+.q::-webkit-details-marker {
+  display: none;
+}
+.q:hover {
+  color: var(--kobalt);
+}
+
+.marker {
+  flex: none;
+  margin-top: 0.18rem;
+  color: var(--zar);
+  transition: transform 0.5s var(--ease-out), color 0.3s var(--ease-out);
+}
+.item[open] .marker {
+  transform: rotate(22.5deg) scale(1.12);
+  color: var(--firuza);
+}
+
+.a {
+  padding-bottom: 1.35rem;
+  padding-right: 2.5rem;
+  font-size: 0.96rem;
+  line-height: 1.66;
+  color: var(--ink-2);
+  max-width: 66ch;
+}
+.item[open] .a {
+  animation: rise 0.45s var(--ease-out) both;
+}
+
+/* ---- still stuck ---- */
+
+.still {
+  position: relative;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border-radius: var(--r-xl);
+  background: var(--nil);
+  color: var(--on-dark);
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  gap: 0.7rem;
+  justify-items: start;
+}
+.stillLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(248, 183, 0, 0.15);
+  mask-image: radial-gradient(60% 90% at 90% 10%, #000, transparent 72%);
+  -webkit-mask-image: radial-gradient(60% 90% at 90% 10%, #000, transparent 72%);
+}
+.stillTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.2rem + 0.9vw, 1.95rem);
+  line-height: 1.12;
+  color: #ffffff;
+}
+.stillBody {
+  font-size: 0.95rem;
+  line-height: 1.58;
+  color: var(--on-dark-2);
+  max-width: 42ch;
+}
+.stillCta {
+  margin-top: 0.7rem;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .index {
+    position: static;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+  }
+  .index::-webkit-scrollbar {
+    display: none;
+  }
+  .indexLink {
+    border: 1px solid var(--ganch-3);
+    border-radius: var(--r-pill);
+    white-space: nowrap;
+    font-size: 0.85rem;
+  }
+  .indexCount {
+    display: none;
+  }
+  .a {
+    padding-right: 0;
+  }
+}
+
+/* CSS Modules scope animation-name even for keyframes declared in
+   globals.css, so the ones this file references are declared here. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

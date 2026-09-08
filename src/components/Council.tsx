@@ -23,7 +23,8 @@ export default function Council({ t }: { t: Dict }) {
     if (!tab || !box) return;
     const a = tab.getBoundingClientRect();
     const b = box.getBoundingClientRect();
-    setThumb({ x: a.left - b.left + box.scrollLeft, w: a.width });
+    const border = parseFloat(getComputedStyle(box).borderLeftWidth) || 0;
+    setThumb({ x: a.left - b.left - border + box.scrollLeft, w: a.width });
   }, [group]);
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export default function Council({ t }: { t: Dict }) {
               return (
                 <article key={m.id} className={s.member}>
                   <div className={s.portrait}>
-                    <GirihMedallion seed={m.id} />
+                    <GirihMedallion seed={m.id} scope={`council-${id}`} />
                     <span className={s.initials} aria-hidden="true">
                       {m.initials}
                     </span>

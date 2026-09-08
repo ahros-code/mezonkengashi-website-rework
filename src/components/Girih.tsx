@@ -130,7 +130,17 @@ export function GirihStar({
  * same person always gets the same figure. No stock portrait stands in for a
  * real scholar.
  */
-export function GirihMedallion({ seed, className }: { seed: string; className?: string }) {
+export function GirihMedallion({
+  seed,
+  /** Distinguishes two medallions for the same person on one page — the
+      gradient id must stay unique or the second one renders the first's fill. */
+  scope = "m",
+  className,
+}: {
+  seed: string;
+  scope?: string;
+  className?: string;
+}) {
   let h = 0;
   for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
 
@@ -147,15 +157,15 @@ export function GirihMedallion({ seed, className }: { seed: string; className?: 
       fill="none"
     >
       <defs>
-        <radialGradient id={`med-${seed}`} cx="50%" cy="35%">
-          <stop offset="0%" stopColor="#2a6bad" />
-          <stop offset="55%" stopColor="#123a6b" />
-          <stop offset="100%" stopColor="#071a30" />
+        <radialGradient id={`med-${scope}-${seed}`} cx="50%" cy="35%">
+          <stop offset="0%" stopColor="#17629c" />
+          <stop offset="55%" stopColor="#003a64" />
+          <stop offset="100%" stopColor="#00223d" />
         </radialGradient>
       </defs>
-      <rect width="200" height="200" fill={`url(#med-${seed})`} />
+      <rect width="200" height="200" fill={`url(#med-${scope}-${seed})`} />
 
-      <g stroke="rgba(227,190,108,0.5)" strokeWidth="0.9">
+      <g stroke="rgba(248, 183, 0,0.5)" strokeWidth="0.9">
         {Array.from({ length: rings }, (_, i) => (
           <polygon
             key={i}
@@ -165,7 +175,7 @@ export function GirihMedallion({ seed, className }: { seed: string; className?: 
         ))}
       </g>
 
-      <g stroke="rgba(79,199,204,0.55)" strokeWidth="0.8">
+      <g stroke="rgba(248, 183, 0,0.55)" strokeWidth="0.8">
         {Array.from({ length: petals }, (_, i) => {
           const a = ((i * 360) / petals + phase) * (Math.PI / 180);
           return (
@@ -182,8 +192,8 @@ export function GirihMedallion({ seed, className }: { seed: string; className?: 
 
       <polygon
         points={starPoints(100, 100, 26, phase)}
-        fill="rgba(227,190,108,0.16)"
-        stroke="rgba(227,190,108,0.7)"
+        fill="rgba(248, 183, 0,0.16)"
+        stroke="rgba(248, 183, 0,0.7)"
         strokeWidth="1"
       />
     </svg>

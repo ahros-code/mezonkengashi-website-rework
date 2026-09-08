@@ -11,7 +11,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  color: rgba(227, 190, 108, 0.09);
+  color: rgba(248, 183, 0, 0.09);
   mask-image: radial-gradient(80% 90% at 50% 0%, #000, transparent 78%);
   -webkit-mask-image: radial-gradient(80% 90% at 50% 0%, #000, transparent 78%);
 }
@@ -33,15 +33,9 @@
   align-items: center;
   gap: 0.65rem;
 }
-.brandMark {
-  color: var(--zar-2);
-}
-.brandName {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  color: #fbf9f4;
+.brandLogo {
+  height: 42px;
+  width: auto;
 }
 .tagline {
   font-size: 0.9rem;
@@ -58,7 +52,7 @@
 .colTitle {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #fbf9f4;
+  color: #ffffff;
   margin-bottom: 0.9rem;
 }
 
@@ -94,9 +88,9 @@
   color: transparent;
   background: linear-gradient(
     180deg,
-    rgba(227, 190, 108, 0.34) 0%,
-    rgba(42, 107, 173, 0.24) 55%,
-    rgba(7, 26, 48, 0) 96%
+    rgba(248, 183, 0, 0.34) 0%,
+    rgba(23, 98, 156, 0.24) 55%,
+    rgba(0, 34, 61, 0) 96%
   );
   -webkit-background-clip: text;
   background-clip: text;

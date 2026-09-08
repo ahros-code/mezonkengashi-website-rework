@@ -1,0 +1,226 @@
+.body {
+  background: var(--ganch);
+  padding-block: clamp(3rem, 6vw, 5rem) var(--sec-y);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+/* ---------- the featured piece, on lapis ---------- */
+
+.feature {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: end;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+  border-radius: var(--r-xl);
+  background: linear-gradient(140deg, var(--kobalt) 0%, var(--nil) 72%);
+  color: var(--on-dark);
+  overflow: hidden;
+  isolation: isolate;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  transition: transform 0.5s var(--ease-out);
+}
+.feature:hover {
+  transform: translateY(-3px);
+}
+.featureLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(248, 183, 0, 0.16);
+  mask-image: radial-gradient(58% 90% at 88% 12%, #000, transparent 70%);
+  -webkit-mask-image: radial-gradient(58% 90% at 88% 12%, #000, transparent 70%);
+}
+
+.featureLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.74rem;
+  color: var(--zar-2);
+  margin-bottom: 1rem;
+}
+
+.featureTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.25rem + 2.1vw, 3rem);
+  line-height: 1.06;
+  color: #ffffff;
+  letter-spacing: -0.012em;
+}
+.featureExcerpt {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--on-dark-2);
+  max-width: 48ch;
+}
+.featureMeta {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.6rem);
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--on-dark-3);
+  padding-top: 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.featureMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+.featureMeta svg {
+  color: rgba(248, 183, 0, 0.65);
+  flex: none;
+}
+.featureCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--zar-2);
+  transition: gap 0.4s var(--ease-out);
+}
+.feature:hover .featureCta {
+  gap: 1rem;
+}
+
+/* ---------- the list ---------- */
+
+.listHead {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ganch-3);
+  margin-bottom: 0.35rem;
+}
+.listTitle {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  line-height: 1.1;
+  color: var(--ink);
+}
+.listRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--zar) 55%, transparent), transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.4rem);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--ganch-3);
+  background: var(--paper);
+  overflow: hidden;
+  transition:
+    border-color 0.45s var(--ease-out),
+    transform 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out);
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--kobalt) 32%, var(--ganch-3));
+  box-shadow: 0 22px 44px -30px rgba(0, 34, 61, 0.5);
+}
+/* the same turquoise seam the service tiles use */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--firuza), var(--kobalt-3), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.card:hover::before,
+.card:focus-within::before {
+  transform: scaleX(1);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+.cardCat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--kobalt);
+  font-weight: 600;
+}
+.cardCat svg {
+  color: var(--zar);
+}
+.cardDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ganch-3);
+  flex: none;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.16rem, 1.05rem + 0.5vw, 1.45rem);
+  line-height: 1.18;
+  color: var(--ink);
+}
+.cardExcerpt {
+  font-size: 0.92rem;
+  line-height: 1.56;
+  color: var(--ink-2);
+}
+
+.cardFoot {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ganch-2);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+.cardAuthorMed {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: none;
+  border: 1px solid var(--ganch-3);
+}
+
+@media (max-width: 900px) {
+  .feature {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 1.5rem;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

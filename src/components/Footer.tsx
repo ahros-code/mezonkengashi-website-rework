@@ -1,5 +1,6 @@
 import { GirihField, GirihStar } from "./Girih";
 import { company, serviceOrder } from "@/lib/site";
+import { paths } from "@/lib/routes";
 import type { Dict } from "@/i18n";
 import type { Locale } from "@/i18n/config";
 import s from "./Footer.module.css";
@@ -17,15 +18,16 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
         <div className={s.top}>
           <div className={s.brandBlock}>
             <span className={s.brandRow}>
-              <GirihStar size={24} strokeWidth={1.1} className={s.brandMark} />
-              <span className={s.brandName}>MEZON</span>
+              <img
+                src="/brand/mezon-logo-dark.svg"
+                alt="MEZON KENGASHI"
+                className={s.brandLogo}
+                width={210}
+                height={50}
+              />
             </span>
             <p className={s.tagline}>{t.footer.tagline}</p>
-            <p className={s.legalLine}>
-              {company.legalName}
-              <br />
-              {t.footer.stir} {company.taxId}
-            </p>
+            <p className={s.legalLine}>{company.legalName}</p>
           </div>
 
           <nav aria-labelledby="foot-services">
@@ -35,7 +37,7 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
             <ul className={s.list}>
               {serviceOrder.map((id) => (
                 <li key={id}>
-                  <a href="#services" className={s.link}>
+                  <a href={paths.services(locale)} className={s.link}>
                     {t.services.items[id].name}
                   </a>
                 </li>
@@ -49,23 +51,23 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
             </h2>
             <ul className={s.list}>
               <li>
-                <a href="#council" className={s.link}>
+                <a href={paths.about(locale)} className={s.link}>
+                  {t.footer.about}
+                </a>
+              </li>
+              <li>
+                <a href={paths.council(locale)} className={s.link}>
                   {t.footer.council}
                 </a>
               </li>
               <li>
-                <a href="#process" className={s.link}>
+                <a href={paths.process(locale)} className={s.link}>
                   {t.footer.process}
                 </a>
               </li>
               <li>
-                <a href="#services" className={s.link}>
-                  {t.footer.registry}
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className={s.link}>
-                  {t.footer.careers}
+                <a href={paths.faq(locale)} className={s.link}>
+                  {t.nav.faq}
                 </a>
               </li>
             </ul>
@@ -96,7 +98,7 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
               </li>
               <li>
                 <span className={s.link}>
-                  {company.street}, {company.city}
+                  {company.countryName}
                 </span>
               </li>
             </ul>

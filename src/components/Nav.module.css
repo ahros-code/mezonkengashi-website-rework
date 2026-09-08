@@ -17,7 +17,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 26, 48, 0.82), rgba(7, 26, 48, 0.62));
+  background: linear-gradient(180deg, rgba(0, 34, 61, 0.82), rgba(0, 34, 61, 0.62));
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -60,35 +60,19 @@
   margin-right: auto;
 }
 
-.brandMark {
-  color: var(--zar-2);
-  transition: transform 0.7s var(--ease-out);
+.brandLogo {
+  height: clamp(30px, 3.4vw, 38px);
+  width: auto;
+  transition: opacity 0.35s var(--ease-out);
 }
-.brand:hover .brandMark {
-  transform: rotate(45deg);
-}
-
-.brandName {
-  font-family: var(--font-display);
-  font-size: 1.32rem;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  padding-left: 0.06em;
-}
-
-.brandSub {
-  display: block;
-  font-family: var(--font-text);
-  font-size: 0.6rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--on-dark-3);
-  margin-top: 0.28rem;
+.brand:hover .brandLogo {
+  opacity: 0.82;
 }
 
 /* ---- centre pill ---- */
 
 .pill {
+  overflow: visible;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -114,18 +98,23 @@
 .link:hover {
   color: var(--on-dark);
 }
-.link[data-active="true"] {
-  color: #0a1c30;
+/* Losing active returns to light immediately; gaining it waits for the
+   indicator to arrive, or the label sits dark-on-dark while it travels. */
+.link[data-active="true"],
+.trigger[data-active="true"] {
+  color: #00223d;
+  transition: color 0.2s var(--ease-out) 0.3s;
 }
 
 /* the indicator that slides between items */
 .thumb {
   position: absolute;
   z-index: 0;
+  left: 0;
   top: 0.32rem;
   bottom: 0.32rem;
   border-radius: var(--r-pill);
-  background: linear-gradient(180deg, #fdfcf9, #e6e1d6);
+  background: linear-gradient(180deg, #ffffff, #e6ecf2);
   box-shadow:
     0 2px 10px rgba(4, 14, 28, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -167,7 +156,7 @@
 }
 .lang[aria-current="true"] {
   background: rgba(255, 255, 255, 0.92);
-  color: #0a1c30;
+  color: #00223d;
 }
 
 .cta {
@@ -228,7 +217,7 @@
   display: grid;
   align-content: center;
   padding: 6rem var(--gutter) 3rem;
-  background: linear-gradient(180deg, rgba(7, 26, 48, 0.94), rgba(11, 36, 64, 0.97));
+  background: linear-gradient(180deg, rgba(0, 34, 61, 0.94), rgba(0, 45, 81, 0.97));
   backdrop-filter: blur(28px) saturate(150%);
   -webkit-backdrop-filter: blur(28px) saturate(150%);
   opacity: 0;
@@ -245,7 +234,7 @@
 .sheetLattice {
   position: absolute;
   inset: 0;
-  color: rgba(227, 190, 108, 0.13);
+  color: rgba(248, 183, 0, 0.13);
   pointer-events: none;
 }
 
@@ -277,17 +266,19 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 1080px) {
-  .pill,
-  .cta {
+@media (max-width: 1220px) {
+  /* Scoped to .header so these beat the global .btn display, which otherwise
+     wins on equal specificity depending on bundle order. */
+  .header .pill,
+  .header .cta {
     display: none;
   }
-  .burger {
+  .header .burger {
     display: inline-flex;
   }
 }
 
-@media (min-width: 1081px) {
+@media (min-width: 1221px) {
   .sheet {
     display: none;
   }
@@ -304,4 +295,128 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---- knowledge-centre dropdown ---- */
+
+.group {
+  position: relative;
+  z-index: 1;
+  display: flex;
+}
+
+.trigger {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.05rem;
+  border-radius: var(--r-pill);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--on-dark-2);
+  white-space: nowrap;
+  transition: color 0.3s var(--ease-out);
+}
+.trigger:hover,
+.trigger[aria-expanded="true"] {
+  color: var(--on-dark);
+}
+
+
+.chev {
+  flex: none;
+  transition: transform 0.4s var(--ease-out);
+}
+.trigger[aria-expanded="true"] .chev {
+  transform: rotate(180deg);
+}
+
+.menu {
+  background-color: rgba(0, 30, 54, 0.76);
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 50%;
+  width: min(21rem, calc(100vw - 2rem));
+  padding: 0.5rem;
+  border-radius: var(--r-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -8px);
+  transition:
+    opacity 0.32s var(--ease-out),
+    transform 0.32s var(--ease-out),
+    visibility 0.32s;
+}
+.group[data-open="true"] .menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.menuHead {
+  padding: 0.55rem 0.75rem 0.65rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--on-dark-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.35rem;
+}
+
+.menuLink {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.62rem 0.75rem;
+  border-radius: var(--r-md);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--on-dark-2);
+  transition:
+    background-color 0.28s var(--ease-out),
+    color 0.28s var(--ease-out);
+}
+.menuLink svg {
+  color: rgba(248, 183, 0, 0.6);
+  transition: transform 0.45s var(--ease-out), color 0.28s var(--ease-out);
+}
+.menuLink:hover,
+.menuLink:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.menuLink:hover svg {
+  transform: rotate(45deg);
+  color: var(--firuza-2);
+}
+.menuLink[aria-current="page"] {
+  color: #ffffff;
+}
+.menuLink[aria-current="page"] svg {
+  color: var(--firuza-2);
+}
+
+/* ---- mobile sheet grouping ---- */
+
+.sheetGroupLabel {
+  margin-top: 1.6rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  opacity: 0;
+  transform: translateY(14px);
+}
+.sheet[data-open="true"] .sheetGroupLabel {
+  animation: rise 0.6s var(--ease-out) forwards;
+}
+
+.sheetSub {
+  font-size: clamp(1.1rem, 4.6vw, 1.4rem);
+  font-family: var(--font-text);
+  font-weight: 500;
 }
