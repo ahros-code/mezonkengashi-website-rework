@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  /*
+   * Sanity Studio imports `useSWR` as a default export, which only exists in
+   * swr's client build. Bundling `sanity` into the RSC graph makes Turbopack
+   * resolve swr under the `react-server` condition, where that default export
+   * is absent and the build fails. Keeping the package external means Node
+   * requires it at runtime through the normal condition instead.
+   */
+  serverExternalPackages: ["sanity", "@sanity/vision"],
   async headers() {
     return [
       {

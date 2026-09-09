@@ -6,12 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity:seed": "tsx scripts/seed-sanity.ts"
   },
   "dependencies": {
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^6.13.1",
     "next": "^16.3.4",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
+    "next-sanity": "^13.3.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sanity": "^6.13.1",
+    "styled-components": "^6.5.3",
     "three": "^0.185.1"
   },
   "devDependencies": {
@@ -19,6 +25,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.185.4",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }

@@ -65,7 +65,7 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
             </blockquote>
             <figcaption className={s.attrib}>
               <span className={s.attribMed}>
-                <GirihMedallion seed="nurmatov" scope="hero" />
+                <GirihMedallion seed="mezon" scope="hero" />
               </span>
               <span>
                 <span className={s.attribName}>{t.hero.quoteName}</span>

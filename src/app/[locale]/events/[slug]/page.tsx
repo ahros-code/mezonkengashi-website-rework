@@ -5,7 +5,7 @@ import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, eventNode, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
-import { events } from "@/content/events";
+import { getEvents } from "@/content/source";
 import { countLabel, formatDate, formatPrice } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihStar } from "@/components/Girih";
@@ -17,7 +17,8 @@ import SectionBackdrop from "@/components/SectionBackdrop";
    frozen at build time — revalidate hourly. */
 export const revalidate = 3600;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const events = await getEvents();
   return locales.flatMap((locale) => events.map((e) => ({ locale, slug: e.slug })));
 }
 
@@ -28,7 +29,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!isLocale(locale)) return {};
-  const event = events.find((e) => e.slug === slug);
+  const event = (await getEvents()).find((e) => e.slug === slug);
   if (!event) return {};
 
   return pageMetadata({
@@ -48,7 +49,7 @@ export default async function EventPage({
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
 
-  const event = events.find((e) => e.slug === slug);
+  const event = (await getEvents()).find((e) => e.slug === slug);
   if (!event) notFound();
 
   const t = getDict(locale);

@@ -1,13 +1,16 @@
 import type { MetadataRoute } from "next";
 import { locales, SITE_URL } from "@/i18n/config";
-import { news } from "@/content/news";
-import { research } from "@/content/research";
-import { events } from "@/content/events";
+import { getEvents, getNews, getResearch } from "@/content/source";
 
 type Entry = { path: string; lastModified: Date; priority: number; freq: "daily" | "weekly" | "monthly" | "yearly" };
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const [research, news, events] = await Promise.all([
+    getResearch(),
+    getNews(),
+    getEvents(),
+  ]);
 
   const entries: Entry[] = [
     { path: "", lastModified: now, priority: 1, freq: "monthly" },

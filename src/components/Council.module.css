@@ -148,6 +148,13 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.7rem, 1.2vw, 1.1rem);
 }
+/* three cards keep the width of a four-up card and sit centred under the tabs */
+.gridShort {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: calc(75% - 0.25 * clamp(0.7rem, 1.2vw, 1.1rem));
+  margin-inline: auto;
+}
+
 /* the inactive panel stays in the HTML for crawlers but out of the layout */
 .grid[hidden] {
   display: none;
@@ -187,9 +194,14 @@
 
 .portrait {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 5 / 4;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(
+    circle at 50% 46%,
+    rgba(11, 58, 88, 0.85),
+    rgba(3, 26, 45, 0.6) 70%
+  );
 }
 .portrait svg {
   width: 100%;
@@ -198,6 +210,41 @@
 }
 .member:hover .portrait svg {
   transform: rotate(12deg) scale(1.08);
+}
+/* behind a face the medallion is texture, not pattern — it must not compete */
+.hasPhoto svg {
+  opacity: 0.3;
+}
+
+/*
+ * The portrait discs are pre-rendered with a navy rim (see
+ * scripts/gen-portraits.cjs), so they need no mask or shadow here — only a
+ * faint halo to lift them off the medallion.
+ */
+.photo {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: auto;
+  height: 98%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease-out);
+}
+.member:hover .photo {
+  transform: scale(1.04);
+}
+.hasPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: 98%;
+  width: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.09);
+  pointer-events: none;
 }
 
 /* the monogram sits over its own medallion */
@@ -249,12 +296,13 @@
 }
 .cred {
   font-size: 0.68rem;
-  line-height: 1;
   padding: 0.36rem 0.55rem;
   border-radius: var(--r-pill);
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: var(--on-dark-2);
-  white-space: nowrap;
+  /* real credentials run long — a chip wraps rather than overflowing its card */
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
 @media (max-width: 1080px) {
@@ -265,13 +313,16 @@
   .screenWash {
     background: linear-gradient(180deg, rgba(0, 34, 61, 0.92), var(--nil) 55%);
   }
-  .grid {
+  .grid,
+  .gridShort {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
   }
 }
 
 @media (max-width: 560px) {
-  .grid {
+  .grid,
+  .gridShort {
     grid-template-columns: 1fr;
   }
   .switch {

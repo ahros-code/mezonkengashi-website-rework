@@ -28,6 +28,8 @@ export default function proxy(request: NextRequest) {
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
+    // The Sanity Studio is not a localised page and must not be redirected.
+    pathname.startsWith("/studio") ||
     PUBLIC_FILE.test(pathname)
   ) {
     return NextResponse.next();
@@ -44,5 +46,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|studio|.*\\..*).*)"],
 };

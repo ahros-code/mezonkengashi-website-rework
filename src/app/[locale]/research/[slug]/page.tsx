@@ -5,11 +5,12 @@ import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { articleNode, breadcrumbs, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
-import { research } from "@/content/research";
+import { getResearch } from "@/content/source";
 import { byNewestFirst, categoryLabel, countWords } from "@/content/types";
 import ArticleView from "@/components/ArticleView";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const research = await getResearch();
   return locales.flatMap((locale) =>
     research.map((a) => ({ locale, slug: a.slug })),
   );
@@ -22,7 +23,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!isLocale(locale)) return {};
-  const article = research.find((a) => a.slug === slug);
+  const article = (await getResearch()).find((a) => a.slug === slug);
   if (!article) return {};
   const t = getDict(locale);
   const author = t.council.members[article.author as keyof typeof t.council.members];
@@ -48,13 +49,14 @@ export default async function ResearchArticle({
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
 
-  const article = research.find((a) => a.slug === slug);
+  const all = await getResearch();
+  const article = all.find((a) => a.slug === slug);
   if (!article) notFound();
 
   const t = getDict(locale);
   const author = t.council.members[article.author as keyof typeof t.council.members];
 
-  const related = research
+  const related = all
     .filter((a) => a.slug !== slug)
     .sort((a, b) => {
       const sameCat = Number(b.category === article.category) - Number(a.category === article.category);

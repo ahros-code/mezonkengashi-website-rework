@@ -47,18 +47,28 @@ export const serviceSpan: Record<ServiceId, string> = {
   zakat: "wide",
 };
 
-export type MemberSeed = { id: string; initials: string };
+export type MemberSeed = {
+  id: string;
+  initials: string;
+  /** A real portrait exists at /img/council/<id>.webp; otherwise the medallion carries the monogram. */
+  photo?: boolean;
+};
 
+/** Islom moliyasi kengashi — the scholars who issue the shariah opinion. */
 export const boardMembers: MemberSeed[] = [
-  { id: "nurmatov", initials: "AN" },
-  { id: "qosimov", initials: "ZQ" },
-  { id: "rahmonov", initials: "IR" },
-  { id: "yuldosheva", initials: "MY" },
+  { id: "sultonxojaev", initials: "AS", photo: true },
+  { id: "razzoqov", initials: "YR", photo: true },
+  { id: "qosimov", initials: "MQ", photo: true },
+  { id: "umarxodjayev", initials: "MU", photo: true },
+  { id: "saydaraliev", initials: "SS", photo: true },
+  { id: "rozaliyev", initials: "HR", photo: true },
+  { id: "qurbonov", initials: "IQ", photo: true },
+  { id: "akramov", initials: "MA", photo: true },
 ];
 
+/** Yuridik kengash — the lawyers who make the opinion enforceable. */
 export const expertMembers: MemberSeed[] = [
-  { id: "ismoilov", initials: "BI" },
-  { id: "sattorova", initials: "NS" },
-  { id: "turayev", initials: "JT" },
-  { id: "aliyev", initials: "SA" },
+  { id: "usmanov", initials: "JU", photo: true },
+  { id: "rajabov", initials: "NR", photo: true },
+  { id: "husanov", initials: "SH", photo: true },
 ];

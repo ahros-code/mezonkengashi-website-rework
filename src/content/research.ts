@@ -7,7 +7,7 @@ export const research: Article[] = [
     date: "2026-07-30",
     category: "fiqh",
     readingMinutes: 9,
-    author: "nurmatov",
+    author: "mezon",
     title: {
       uz: "Murobaha va oddiy kredit: farq qayerda boshlanadi",
       ru: "Мурабаха и обычный кредит: где начинается разница",
@@ -86,7 +86,7 @@ export const research: Article[] = [
     date: "2026-06-11",
     category: "market",
     readingMinutes: 12,
-    author: "qosimov",
+    author: "mezon",
     title: {
       uz: "Sukuk strukturalari: ijara, mushoraka va vakolat modellari",
       ru: "Структуры сукук: модели иджара, мушарака и вакала",
@@ -165,7 +165,7 @@ export const research: Article[] = [
     date: "2026-04-24",
     category: "accounting",
     readingMinutes: 8,
-    author: "sattorova",
+    author: "mezon",
     title: {
       uz: "Takaful zaxiralarini AAOIFI FAS boʻyicha hisobga olish",
       ru: "Учёт резервов такафул по стандартам AAOIFI FAS",
@@ -229,7 +229,7 @@ export const research: Article[] = [
     date: "2026-02-18",
     category: "zakat",
     readingMinutes: 7,
-    author: "yuldosheva",
+    author: "mezon",
     title: {
       uz: "Zakot bazasida aylanma mablagʻlar masalasi",
       ru: "Вопрос оборотных средств в базе закята",
@@ -278,7 +278,7 @@ export const research: Article[] = [
     date: "2025-12-09",
     category: "audit",
     readingMinutes: 6,
-    author: "ismoilov",
+    author: "mezon",
     title: {
       uz: "Shariat auditida tanlab tekshirish hajmini belgilash",
       ru: "Определение объёма выборки в шариатском аудите",
@@ -331,7 +331,7 @@ export const research: Article[] = [
     date: "2025-10-16",
     category: "law",
     readingMinutes: 5,
-    author: "turayev",
+    author: "mezon",
     title: {
       uz: "Tahkim bandini shartnomaga qanday kiritish kerak",
       ru: "Как правильно включить арбитражную оговорку в договор",

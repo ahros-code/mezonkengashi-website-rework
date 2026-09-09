@@ -5,7 +5,7 @@ import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, collectionPage, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
-import { research } from "@/content/research";
+import { getPageCopy, getResearch } from "@/content/source";
 import { byNewestFirst, categoryLabel, countLabel, formatDate } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihMedallion, GirihStar } from "@/components/Girih";
@@ -25,11 +25,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = getDict(locale);
+  const copy = await getPageCopy("researchPage", locale, t.research);
   return pageMetadata({
     locale,
     path: "/research",
-    title: t.research.metaTitle,
-    description: t.research.metaDescription,
+    title: copy.metaTitle,
+    description: copy.metaDescription,
     titleAbsolute: true,
   });
 }
@@ -43,16 +44,17 @@ export default async function ResearchIndex({
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
   const t = getDict(locale);
+  const copy = await getPageCopy("researchPage", locale, t.research);
 
-  const sorted = [...research].sort(byNewestFirst);
+  const sorted = [...(await getResearch())].sort(byNewestFirst);
   const [featured, ...rest] = sorted;
 
   const jsonLd = graph(
     collectionPage({
       locale,
       path: "/research",
-      name: t.research.metaTitle,
-      description: t.research.metaDescription,
+      name: copy.metaTitle,
+      description: copy.metaDescription,
       items: sorted.map((a) => ({
         name: a.title[locale],
         path: `/research/${a.slug}`,
@@ -77,21 +79,24 @@ export default async function ResearchIndex({
           t={t}
           latticeId="girih-research"
           crumbs={[{ label: t.nav.research }]}
-          kicker={t.research.kicker}
-          title={t.research.title}
-          lede={t.research.lede}
+          kicker={copy.kicker}
+          title={copy.title}
+          lede={copy.lede}
           meta={[
             countLabel(sorted.length, locale, {
               uz: "material",
               ru: ["материал", "материала", "материалов"],
             }),
-            formatDate(featured.date, locale),
+            ...(featured ? [formatDate(featured.date, locale)] : []),
           ]}
         />
 
         <section className={s.body}>
           <SectionBackdrop id="research-body" placement="right" />
           <div className="container">
+            {!featured && <p className={s.empty}>{t.ui.empty}</p>}
+
+            {featured && (
             <a href={paths.researchItem(locale, featured.slug)} className={s.feature}>
               <span className={s.featureLattice} aria-hidden="true">
                 <GirihField id="girih-research-feature" tile={124} strokeWidth={0.9} />
@@ -100,7 +105,7 @@ export default async function ResearchIndex({
               <div>
                 <span className={s.featureLabel}>
                   <GirihStar size={11} strokeWidth={1.6} />
-                  {t.research.featured}
+                  {copy.featured}
                 </span>
                 <h2 className={s.featureTitle}>{featured.title[locale]}</h2>
                 <p className={s.featureExcerpt}>{featured.excerpt[locale]}</p>
@@ -124,9 +129,10 @@ export default async function ResearchIndex({
                 </span>
               </p>
             </a>
+            )}
 
             <div className={s.listHead}>
-              <h2 className={s.listTitle}>{t.research.all}</h2>
+              <h2 className={s.listTitle}>{copy.all}</h2>
               <span className={s.listRule} aria-hidden="true" />
             </div>
 

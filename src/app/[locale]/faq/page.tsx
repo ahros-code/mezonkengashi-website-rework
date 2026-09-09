@@ -6,6 +6,7 @@ import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, faqNode, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { countLabel } from "@/content/types";
+import { getFaqCategories, getPageCopy } from "@/content/source";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihStar } from "@/components/Girih";
 import s from "./FaqPage.module.css";
@@ -23,11 +24,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = getDict(locale);
+  const copy = await getPageCopy("faqPage", locale, t.faqPage);
   return pageMetadata({
     locale,
     path: "/faq",
-    title: t.faqPage.metaTitle,
-    description: t.faqPage.metaDescription,
+    title: copy.metaTitle,
+    description: copy.metaDescription,
     titleAbsolute: true,
   });
 }
@@ -41,8 +43,10 @@ export default async function FaqRoute({
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
   const t = getDict(locale);
+  const copy = await getPageCopy("faqPage", locale, t.faqPage);
+  const categories = await getFaqCategories(locale, t.faqPage.categories);
 
-  const all = t.faqPage.categories.flatMap((c) => c.items);
+  const all = categories.flatMap((c) => c.items);
 
   const jsonLd = graph(
     faqNode(locale, "/faq", all),
@@ -65,15 +69,15 @@ export default async function FaqRoute({
           t={t}
           latticeId="girih-faq"
           crumbs={[{ label: t.nav.faq }]}
-          kicker={t.faqPage.kicker}
-          title={t.faqPage.title}
-          lede={t.faqPage.lede}
+          kicker={copy.kicker}
+          title={copy.title}
+          lede={copy.lede}
           meta={[
             countLabel(all.length, locale, {
               uz: "savol",
               ru: ["вопрос", "вопроса", "вопросов"],
             }),
-            countLabel(t.faqPage.categories.length, locale, {
+            countLabel(categories.length, locale, {
               uz: "boʻlim",
               ru: ["раздел", "раздела", "разделов"],
             }),
@@ -83,8 +87,8 @@ export default async function FaqRoute({
         <section className={s.body}>
           <SectionBackdrop id="faq-page" placement="left" photo="/img/panjara.jpg" />
           <div className={`container ${s.grid}`}>
-            <nav className={s.index} aria-label={t.faqPage.title}>
-              {t.faqPage.categories.map((c) => (
+            <nav className={s.index} aria-label={copy.title}>
+              {categories.map((c) => (
                 <a key={c.id} href={`#${c.id}`} className={s.indexLink}>
                   <GirihStar size={11} strokeWidth={1.6} />
                   <span>
@@ -95,7 +99,7 @@ export default async function FaqRoute({
             </nav>
 
             <div className={s.cats}>
-              {t.faqPage.categories.map((c) => (
+              {categories.map((c) => (
                 <section key={c.id} id={c.id} className={s.cat} aria-labelledby={`${c.id}-h`}>
                   <div className={s.catHead}>
                     <h2 id={`${c.id}-h`} className={s.catName}>
@@ -120,10 +124,10 @@ export default async function FaqRoute({
                 <span className={s.stillLattice} aria-hidden="true">
                   <GirihField id="girih-faq-still" tile={116} strokeWidth={0.9} />
                 </span>
-                <h2 className={s.stillTitle}>{t.faqPage.stillTitle}</h2>
-                <p className={s.stillBody}>{t.faqPage.stillBody}</p>
+                <h2 className={s.stillTitle}>{copy.stillTitle}</h2>
+                <p className={s.stillBody}>{copy.stillBody}</p>
                 <a href={paths.contact(locale)} className={`btn btn--gold ${s.stillCta}`}>
-                  {t.faqPage.stillCta}
+                  {copy.stillCta}
                 </a>
               </aside>
             </div>

@@ -7,7 +7,7 @@ export const news: Article[] = [
     date: "2026-08-14",
     category: "company",
     readingMinutes: 3,
-    author: "ismoilov",
+    author: "mezon",
     title: {
       uz: "2026-yilning birinchi yarmida 47 ta mahsulot sertifikatlandi",
       ru: "За первое полугодие 2026 года сертифицированы 47 продуктов",
@@ -79,7 +79,7 @@ export const news: Article[] = [
     date: "2026-06-27",
     category: "regulation",
     readingMinutes: 4,
-    author: "sattorova",
+    author: "mezon",
     title: {
       uz: "Islom moliyasi boʻyicha yangi uslubiy qoʻllanma muhokamaga qoʻyildi",
       ru: "Новое методическое руководство по исламским финансам вынесено на обсуждение",
@@ -132,7 +132,7 @@ export const news: Article[] = [
     date: "2026-05-19",
     category: "partnership",
     readingMinutes: 2,
-    author: "yuldosheva",
+    author: "mezon",
     title: {
       uz: "Toshkent islom instituti bilan qoʻshma oʻquv dasturi",
       ru: "Совместная учебная программа с Ташкентским исламским институтом",
@@ -172,7 +172,7 @@ export const news: Article[] = [
     date: "2026-03-05",
     category: "market",
     readingMinutes: 3,
-    author: "qosimov",
+    author: "mezon",
     title: {
       uz: "Mahalliy sukuk emissiyasi shariat ekspertizasidan oʻtdi",
       ru: "Локальный выпуск сукук прошёл шариатскую экспертизу",
@@ -225,7 +225,7 @@ export const news: Article[] = [
     date: "2026-01-22",
     category: "method",
     readingMinutes: 2,
-    author: "nurmatov",
+    author: "mezon",
     title: {
       uz: "Zakot hisobi boʻyicha uslubiy qoʻllanma yangilandi",
       ru: "Обновлено методическое руководство по расчёту закята",

@@ -101,24 +101,38 @@ export default function Council({ t }: { t: Dict }) {
           ))}
         </div>
 
-        {GROUPS.map((id) => (
+        {GROUPS.map((id) => {
+          const members = id === "board" ? boardMembers : expertMembers;
+          return (
           <div
             key={id}
-            className={s.grid}
+            /* a roster shorter than a full row centres itself instead of leaving a ragged edge */
+            className={`${s.grid} ${members.length < 4 ? s.gridShort : ""}`}
             role="tabpanel"
             id={`panel-${id}`}
             aria-labelledby={`tab-${id}`}
             hidden={group !== id}
           >
-            {(id === "board" ? boardMembers : expertMembers).map((m) => {
+            {members.map((m) => {
               const person = t.council.members[m.id as keyof typeof t.council.members];
               return (
                 <article key={m.id} className={s.member}>
-                  <div className={s.portrait}>
+                  <div className={`${s.portrait} ${m.photo ? s.hasPhoto : ""}`}>
                     <GirihMedallion seed={m.id} scope={`council-${id}`} />
-                    <span className={s.initials} aria-hidden="true">
-                      {m.initials}
-                    </span>
+                    {m.photo ? (
+                      <Image
+                        className={s.photo}
+                        src={`/img/council/${m.id}.webp`}
+                        alt={person.name}
+                        width={512}
+                        height={512}
+                        sizes="(max-width: 560px) 55vw, (max-width: 1080px) 26vw, 13vw"
+                      />
+                    ) : (
+                      <span className={s.initials} aria-hidden="true">
+                        {m.initials}
+                      </span>
+                    )}
                   </div>
                   <div className={s.body}>
                     <h3 className={s.name}>{person.name}</h3>
@@ -136,7 +150,8 @@ export default function Council({ t }: { t: Dict }) {
               );
             })}
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

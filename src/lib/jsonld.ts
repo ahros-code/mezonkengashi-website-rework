@@ -1,4 +1,4 @@
-import { company, serviceOrder } from "./site";
+import { boardMembers, company, expertMembers, serviceOrder } from "./site";
 import { SITE_URL, htmlLang, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n";
 
@@ -39,14 +39,11 @@ export function buildJsonLd(locale: Locale, t: Dict) {
         closes: "18:00",
       },
     ],
-    employee: [
-      ...Object.values(t.council.members).map((m) => ({
-        "@type": "Person",
-        name: m.name,
-        jobTitle: m.role,
-        description: m.bio,
-      })),
-    ],
+    // Only the seated council members are real people; the editorial byline is not.
+    employee: [...boardMembers, ...expertMembers].map(({ id }) => {
+      const m = t.council.members[id as keyof typeof t.council.members];
+      return { "@type": "Person", name: m.name, jobTitle: m.role, description: m.bio };
+    }),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: t.services.title,

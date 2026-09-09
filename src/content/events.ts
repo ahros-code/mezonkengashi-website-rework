@@ -11,7 +11,7 @@ export const events: MezonEvent[] = [
     city: { uz: "Toshkent", ru: "Ташкент" },
     seats: 24,
     price: 3200000,
-    host: "ismoilov",
+    host: "mezon",
     title: {
       uz: "Islom moliyasi asoslari: bank jamoalari uchun ikki kunlik intensiv",
       ru: "Основы исламских финансов: двухдневный интенсив для банковских команд",
@@ -49,7 +49,7 @@ export const events: MezonEvent[] = [
     city: { uz: "Onlayn", ru: "Онлайн" },
     seats: 40,
     price: 4800000,
-    host: "sattorova",
+    host: "mezon",
     title: {
       uz: "AAOIFI CSAA imtihoniga tayyorgarlik kursi",
       ru: "Курс подготовки к экзамену AAOIFI CSAA",
@@ -85,7 +85,7 @@ export const events: MezonEvent[] = [
     city: { uz: "Toshkent", ru: "Ташкент" },
     seats: 60,
     price: 1800000,
-    host: "qosimov",
+    host: "mezon",
     title: {
       uz: "Sukuk strukturalari boʻyicha amaliy seminar",
       ru: "Практический семинар по структурам сукук",
@@ -120,7 +120,7 @@ export const events: MezonEvent[] = [
     city: { uz: "Onlayn", ru: "Онлайн" },
     seats: 300,
     price: 0,
-    host: "yuldosheva",
+    host: "mezon",
     title: {
       uz: "Biznes uchun zakot hisobi: ochiq dars",
       ru: "Расчёт закята для бизнеса: открытый урок",
@@ -152,7 +152,7 @@ export const events: MezonEvent[] = [
     city: { uz: "Toshkent", ru: "Ташкент" },
     seats: 180,
     price: 0,
-    host: "nurmatov",
+    host: "mezon",
     title: {
       uz: "Yillik shariat nazorati forumi",
       ru: "Ежегодный форум шариатского надзора",

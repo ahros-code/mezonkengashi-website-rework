@@ -5,7 +5,7 @@ import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, collectionPage, eventNode, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
-import { events } from "@/content/events";
+import { getEvents, getPageCopy } from "@/content/source";
 import { countLabel, dayInTashkent, formatDate, formatPrice } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihStar } from "@/components/Girih";
@@ -29,11 +29,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = getDict(locale);
+  const copy = await getPageCopy("eventsPage", locale, t.events);
   return pageMetadata({
     locale,
     path: "/events",
-    title: t.events.metaTitle,
-    description: t.events.metaDescription,
+    title: copy.metaTitle,
+    description: copy.metaDescription,
     titleAbsolute: true,
   });
 }
@@ -47,7 +48,9 @@ export default async function EventsIndex({
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
   const t = getDict(locale);
+  const copy = await getPageCopy("eventsPage", locale, t.events);
 
+  const events = await getEvents();
   const now = Date.now();
   const upcoming = events
     .filter((e) => new Date(e.end).getTime() >= now)
@@ -65,8 +68,8 @@ export default async function EventsIndex({
     collectionPage({
       locale,
       path: "/events",
-      name: t.events.metaTitle,
-      description: t.events.metaDescription,
+      name: copy.metaTitle,
+      description: copy.metaDescription,
       items: [...upcoming, ...past].map((e) => ({
         name: e.title[locale],
         path: `/events/${e.slug}`,
@@ -107,9 +110,9 @@ export default async function EventsIndex({
           t={t}
           latticeId="girih-events"
           crumbs={[{ label: t.nav.events }]}
-          kicker={t.events.kicker}
-          title={t.events.title}
-          lede={t.events.lede}
+          kicker={copy.kicker}
+          title={copy.title}
+          lede={copy.lede}
           meta={[
             countLabel(upcoming.length, locale, {
               uz: "yaqin tadbir",
@@ -126,13 +129,13 @@ export default async function EventsIndex({
           <SectionBackdrop id="events-body" placement="right" />
           <div className="container">
             <div className={s.head}>
-              <h2 className={s.headTitle}>{t.events.upcoming}</h2>
+              <h2 className={s.headTitle}>{copy.upcoming}</h2>
               <span className={s.headRule} aria-hidden="true" />
               <span className={s.headCount}>{upcoming.length}</span>
             </div>
 
             {upcoming.length === 0 ? (
-              <p className={s.empty}>{t.events.noUpcoming}</p>
+              <p className={s.empty}>{copy.noUpcoming}</p>
             ) : (
               <div className={s.upcoming}>
                 {upcoming.map((e) => {
@@ -157,7 +160,7 @@ export default async function EventsIndex({
                         <span className={s.cardTop}>
                           <span className={s.tag}>
                             <GirihStar size={9} strokeWidth={1.8} />
-                            {t.events.formats[e.format]}
+                            {copy.formats[e.format]}
                           </span>
                           {e.price === 0 && (
                             <span className={`${s.tag} ${s.tagFree}`}>
@@ -175,24 +178,24 @@ export default async function EventsIndex({
 
                       <div className={s.facts}>
                         <span className={s.fact}>
-                          <span className={s.factLabel}>{t.events.when}</span>
+                          <span className={s.factLabel}>{copy.when}</span>
                           <span className={s.factValue}>
                             <time dateTime={e.start}>{formatDate(e.start, locale, true)}</time>
                           </span>
                         </span>
                         <span className={s.fact}>
-                          <span className={s.factLabel}>{t.events.host}</span>
+                          <span className={s.factLabel}>{copy.host}</span>
                           <span className={s.factValue}>{host.name}</span>
                         </span>
                         <span className={s.fact}>
-                          <span className={s.factLabel}>{t.events.price}</span>
+                          <span className={s.factLabel}>{copy.price}</span>
                           <span className={s.factPrice}>{formatPrice(e.price, locale)}</span>
                         </span>
                         <a
                           href={paths.eventItem(locale, e.slug)}
                           className={`btn btn--gold ${s.cardCta}`}
                         >
-                          {t.events.register}
+                          {copy.register}
                         </a>
                       </div>
                     </article>
@@ -204,7 +207,7 @@ export default async function EventsIndex({
             {past.length > 0 && (
               <div className={s.past}>
                 <div className={s.head}>
-                  <h2 className={s.headTitle}>{t.events.past}</h2>
+                  <h2 className={s.headTitle}>{copy.past}</h2>
                   <span className={s.headRule} aria-hidden="true" />
                   <span className={s.headCount}>{past.length}</span>
                 </div>
@@ -217,7 +220,7 @@ export default async function EventsIndex({
                       </time>
                       <span className={s.pastFormat}>
                         <GirihStar size={10} strokeWidth={1.6} />
-                        {t.events.formats[e.format]}
+                        {copy.formats[e.format]}
                       </span>
                     </span>
 

@@ -218,3 +218,14 @@
     display: none;
   }
 }
+
+/* Listing with nothing in it — an editor can empty the CMS, and a bare page
+   with a heading and no explanation reads as a bug. */
+.empty {
+  padding: clamp(2rem, 4vw, 3rem);
+  border-radius: var(--r-lg);
+  border: 1px dashed var(--ganch-3);
+  text-align: center;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}

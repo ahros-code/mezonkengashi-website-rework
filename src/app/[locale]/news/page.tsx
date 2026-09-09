@@ -5,7 +5,7 @@ import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, collectionPage, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
-import { news } from "@/content/news";
+import { getNews, getPageCopy } from "@/content/source";
 import { byNewestFirst, categoryLabel, countLabel, dayInTashkent, formatDate } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihStar } from "@/components/Girih";
@@ -25,11 +25,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = getDict(locale);
+  const copy = await getPageCopy("newsPage", locale, t.news);
   return pageMetadata({
     locale,
     path: "/news",
-    title: t.news.metaTitle,
-    description: t.news.metaDescription,
+    title: copy.metaTitle,
+    description: copy.metaDescription,
     titleAbsolute: true,
   });
 }
@@ -43,8 +44,9 @@ export default async function NewsIndex({
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
   const t = getDict(locale);
+  const copy = await getPageCopy("newsPage", locale, t.news);
 
-  const sorted = [...news].sort(byNewestFirst);
+  const sorted = [...(await getNews())].sort(byNewestFirst);
   const [lead, ...rest] = sorted;
 
   /* group the archive by year, newest first */
@@ -59,8 +61,8 @@ export default async function NewsIndex({
     collectionPage({
       locale,
       path: "/news",
-      name: t.news.metaTitle,
-      description: t.news.metaDescription,
+      name: copy.metaTitle,
+      description: copy.metaDescription,
       items: sorted.map((a) => ({ name: a.title[locale], path: `/news/${a.slug}` })),
     }),
     breadcrumbs(locale, [
@@ -69,7 +71,7 @@ export default async function NewsIndex({
     ]),
   );
 
-  const leadDate = new Date(lead.date);
+  const leadDate = lead ? new Date(lead.date) : null;
 
   return (
     <>
@@ -84,21 +86,24 @@ export default async function NewsIndex({
           t={t}
           latticeId="girih-news"
           crumbs={[{ label: t.nav.news }]}
-          kicker={t.news.kicker}
-          title={t.news.title}
-          lede={t.news.lede}
+          kicker={copy.kicker}
+          title={copy.title}
+          lede={copy.lede}
           meta={[
             countLabel(sorted.length, locale, {
               uz: "xabar",
               ru: ["публикация", "публикации", "публикаций"],
             }),
-            formatDate(lead.date, locale),
+            ...(lead ? [formatDate(lead.date, locale)] : []),
           ]}
         />
 
         <section className={s.body}>
           <SectionBackdrop id="news-body" placement="left" />
           <div className="container">
+            {!lead && <p className={s.empty}>{t.ui.empty}</p>}
+
+            {lead && leadDate && (
             <article className={s.lead}>
               <span className={s.plate} aria-hidden="true">
                 <GirihStar size={112} strokeWidth={1} className={s.plateStar} />
@@ -112,7 +117,7 @@ export default async function NewsIndex({
               <a href={paths.newsItem(locale, lead.slug)} className={`${s.leadBody} ${s.leadLink}`}>
                 <span className={s.leadLabel}>
                   <GirihStar size={11} strokeWidth={1.6} />
-                  {t.news.latest}
+                  {copy.latest}
                 </span>
                 <h2 className={s.leadTitle}>{lead.title[locale]}</h2>
                 <p className={s.leadExcerpt}>{lead.excerpt[locale]}</p>
@@ -122,6 +127,7 @@ export default async function NewsIndex({
                 </span>
               </a>
             </article>
+            )}
 
             {years.map((year) => (
               <section key={year} aria-label={year}>

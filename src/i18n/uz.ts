@@ -45,8 +45,8 @@ const uz = {
     secondary: "Xizmatlarni koʻrish",
     quote:
       "Fatvo — qogʻoz emas, majburiyat. Biz imzo qoʻygan har bir hujjat ortida kengashning butun masʼuliyati turadi.",
-    quoteName: "Shayx Abdulaziz Nurmatov",
-    quoteRole: "Shariat nazorat kengashi raisi",
+    quoteName: "MEZON KENGASHI",
+    quoteRole: "Islom moliyasi kengashi",
     metricValue: "4,2 trln",
     metricUnit: "soʻm",
     metricLabel: "ekspertizadan oʻtgan aktivlar hajmi",
@@ -173,67 +173,135 @@ const uz = {
     kicker: "Kim javob beradi",
     title: "Ikki kengash, bitta imzo",
     lede:
-      "Shariat masalasini olimlar hal qiladi, moliyaviy va huquqiy ijrosini esa amaliyotchilar tayyorlaydi. Hujjat ikkalasining ham imzosisiz chiqmaydi.",
+      "Shariat masalasini olimlar hal qiladi, uning qonuniy va shartnomaviy ijrosini esa yuristlar tayyorlaydi. Hujjat ikkala kengash imzosisiz chiqmaydi.",
     groups: {
       board: {
-        name: "Shariat nazorat kengashi",
-        short: "Shariat kengashi",
-        role: "Fatvo va shariat qarorlari",
+        name: "Islom moliyasi kengashi",
+        short: "Islom moliyasi",
+        role: "Fatvo va shariat xulosalari",
       },
       experts: {
-        name: "Ekspert-metodologik kengash",
-        short: "Ekspert kengashi",
-        role: "Metodologiya, audit va huquq",
+        name: "Yuridik kengash",
+        short: "Yuridik kengash",
+        role: "Qonunchilik va huquqiy ekspertiza",
       },
     },
     members: {
-      nurmatov: {
-        name: "Shayx Abdulaziz Nurmatov",
-        role: "Kengash raisi",
-        bio: "Fiqh al-muomalot boʻyicha doktor. AAOIFI shariat standartlarini mahalliy amaliyotga moslashtirish boʻyicha ekspert.",
-        credentials: ["Al-Azhar universiteti", "AAOIFI CSAA", "19 yil amaliyot"],
+      sultonxojaev: {
+        name: "Alisher Sultonxoʻjaev",
+        role: "Kengash aʼzosi",
+        bio: "Toshkent islom instituti oʻqituvchisi, kitoblar muallifi. Islomshunos, imom-xatib va arab tili oʻqituvchisi.",
+        credentials: [
+          "Toshkent islom instituti",
+          "TDShI, magistratura",
+          "Arab, rus, ingliz, turk tillari",
+        ],
+      },
+      razzoqov: {
+        name: "Yahyobek Razzoqov",
+        role: "Kengash aʼzosi",
+        bio: "Islomshunos, iqtisodchi va arabshunos. Muhammad Taqi Usmoniyning “Fiqhul buyuʼ” asarini arab tilidan oʻzbek tiliga tarjima qilgan.",
+        credentials: [
+          "Toshkent moliya instituti",
+          "Toshkent islom instituti",
+          "Ikkita oliy maʼlumot",
+        ],
       },
       qosimov: {
-        name: "Doktor Zuhriddin Qosimov",
+        name: "Mirjalol Qosimov",
         role: "Kengash aʼzosi",
-        bio: "Islom huquqi va moliyaviy muomalalar boʻyicha tadqiqotchi. Sukuk emissiyalari boʻyicha xulosalar muallifi.",
-        credentials: ["Madina islom universiteti", "PhD, fiqh", "14 yil amaliyot"],
+        bio: "Islomshunoslik fanlari boʻyicha falsafa doktori (PhD). Oʻzbekiston musulmonlari idorasi huzuridagi “Vaqf” jamgʻarmasining xalqaro aloqalar boʻlimi boshligʻi.",
+        credentials: [
+          "Oʻzbekiston xalqaro islom akademiyasi, PhD",
+          "Toshkent islom universiteti, magistratura",
+          "Islom tarixi va manbashunosligi",
+        ],
       },
-      rahmonov: {
-        name: "Shayx Ilyos Rahmonov",
+      umarxodjayev: {
+        name: "Murod Umarxodjayev",
         role: "Kengash aʼzosi",
-        bio: "Takaful va qayta sugʻurta shartnomalarining shariat ekspertizasiga ixtisoslashgan.",
-        credentials: ["Toshkent islom instituti", "Takaful ekspertizasi", "11 yil amaliyot"],
+        bio: "Islomshunos va iqtisodchi, Toshkent islom institutida fiqh fanidan dars beradi. 2011-yildan buyon buxgalteriya hisobi sohasida faoliyat yuritadi.",
+        credentials: [
+          "Toshkent islom instituti",
+          "Toshkent kimyo-texnologiya instituti",
+          "“Koʻkaldosh” islom bilim yurti",
+        ],
       },
-      yuldosheva: {
-        name: "Doktor Malika Yoʻldosheva",
+      saydaraliev: {
+        name: "Saidaxmadxon Saydaraliev",
         role: "Kengash aʼzosi",
-        bio: "Islom iqtisodiyoti boʻyicha doktor. Mikromoliya va ijtimoiy moliya yoʻnalishini olib boradi.",
-        credentials: ["IIUM, Malayziya", "Islom iqtisodiyoti, PhD", "9 yil amaliyot"],
+        bio: "Islomshunos va imom-xatib, Oʻzbekiston musulmonlari idorasi Fatvo markazi mutaxassisi. Islom bilim yurtlarida aqoid va arab tili fanlaridan 14 yil dars bergan.",
+        credentials: [
+          "Toshkent islom instituti (bakalavr)",
+          "Fatvo markazi mutaxassisi",
+          "Fiqh va matematika oʻqituvchisi",
+        ],
       },
-      ismoilov: {
-        name: "Bekzod Ismoilov",
-        role: "Ekspert kengashi raisi",
-        bio: "Bank auditi va ichki nazorat boʻyicha 14 yillik tajriba. Sertifikatlash jarayonini boshqaradi.",
-        credentials: ["CIMA Islamic Finance", "ACCA (DipIFR)", "14 yil amaliyot"],
+      rozaliyev: {
+        name: "Hikmatulloh Roʻzaliyev",
+        role: "Kengash aʼzosi",
+        bio: "Islomshunos, arab tili oʻqituvchisi va filolog (tadqiqotchi-pedagog). Oʻzbekiston musulmonlari idorasi Fatvo markazi mutaxassisi.",
+        credentials: [
+          "Toshkent islom instituti (bakalavr)",
+          "TDShU, magistratura",
+          "CPSS",
+        ],
       },
-      sattorova: {
-        name: "Nigora Sattorova",
-        role: "Metodologiya boʻyicha rahbar",
-        bio: "AAOIFI va IFRS hisob standartlarini birlashtirish, hisobot shakllarini ishlab chiqish.",
-        credentials: ["AAOIFI FAS", "IFRS", "12 yil amaliyot"],
+      qurbonov: {
+        name: "Ismoiljon Qurbonov",
+        role: "Kengash aʼzosi",
+        bio: "Islomshunos, imom-xatib va arab tili oʻqituvchisi. Toshkent shahridagi “Hazrati Imom” jome masjidida imom noibi.",
+        credentials: [
+          "Toshkent islom instituti (bakalavr)",
+          "“Oriental” universiteti, magistratura",
+          "Imom-noiblikda 5+ yil",
+        ],
       },
-      turayev: {
-        name: "Jasur Toʻrayev",
-        role: "Huquq boʻyicha rahbar",
-        bio: "Xalqaro tijorat arbitraji va shariat asosidagi nizolarni hal qilish amaliyoti.",
-        credentials: ["Xalqaro arbitraj", "TDYU", "13 yil amaliyot"],
+      akramov: {
+        name: "Muxtor Akramov",
+        role: "Kengash aʼzosi",
+        bio: "Islomshunos, islom iqtisodi va moliyasi mutaxassisi. Tadqiqotchi va pedagog, malaka oshirish markazida dars bergan.",
+        credentials: [
+          "Toshkent islom instituti (bakalavr)",
+          "Oʻzbekiston xalqaro islom akademiyasi, magistratura",
+          "CPSS",
+        ],
       },
-      aliyev: {
-        name: "Sardor Aliyev",
-        role: "Mahsulotlar boʻyicha rahbar",
-        bio: "Murobaha, ijara va mushoraka strukturalarini loyihalash hamda bank tizimiga joriy etish.",
-        credentials: ["Mahsulot strukturasi", "Riskni baholash", "10 yil amaliyot"],
+      usmanov: {
+        name: "Jamshid Usmanov",
+        role: "“Constant” yuridik firmasi direktori",
+        bio: "Tadbirkorlik subyektlariga kompleks huquqiy xizmat koʻrsatadi. Oʻzbekistonda islom moliyasini joriy etish boʻyicha qonun hujjatlari loyihalarini ishlab chiqishda bevosita ishtirok etgan.",
+        credentials: [
+          "Toshkent davlat yuridik instituti",
+          "Iqtisodiy va maʼmuriy nizolar",
+          "19 yil amaliyot",
+        ],
+      },
+      rajabov: {
+        name: "Nodir Rajabov",
+        role: "Xalqaro tijorat hakamlik sudi sudyasi",
+        bio: "«ENTER Engineering Pte. Ltd.» kompaniyasi yuridik boshqarmasi boshligʻi. Qurilish va pudrat ishlari bilan bogʻliq huquqiy nizolar boʻyicha yetuk mutaxassis.",
+        credentials: [
+          "Samarqand davlat universiteti",
+          "“Philosophy of Justice” hakamlik sudi",
+          "20 yil amaliyot",
+        ],
+      },
+      husanov: {
+        name: "Shohruh Husanov",
+        role: "“Philosophy of Justice” xalqaro arbitraj sudi rahbari",
+        bio: "«SAM LEX UNIVERSALIS» advokatlik firmasining boshqaruvchi sherigi va advokati. Xalqaro arbitraj amaliyotiga ixtisoslashgan.",
+        credentials: [
+          "Samarqand davlat universiteti",
+          "Nagoya universiteti (Yaponiya)",
+          "20+ yil amaliyot",
+        ],
+      },
+      mezon: {
+        name: "MEZON KENGASHI",
+        role: "Tahlil va metodologiya guruhi",
+        bio: "Kengash materiallarini tayyorlovchi ichki tahliliy guruh.",
+        credentials: ["Metodologiya", "Shariat ekspertizasi", "Huquqiy tahlil"],
       },
     },
   },
