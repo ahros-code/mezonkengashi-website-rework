@@ -142,8 +142,10 @@ export function formatPrice(price: number, locale: Locale) {
 /** Rough word count for the article schema — good enough for a signal. */
 export function countWords(blocks: Block[], locale: Locale) {
   let n = 0;
-  const add = (s: string) => {
-    n += s.trim().split(/\s+/).filter(Boolean).length;
+  /* CMS content can arrive with a locale missing, and a word count is never
+     worth failing a render over. */
+  const add = (s: string | undefined | null) => {
+    n += (s ?? "").trim().split(/\s+/).filter(Boolean).length;
   };
   for (const b of blocks) {
     if (b.type === "p" || b.type === "h") add(b.text[locale]);

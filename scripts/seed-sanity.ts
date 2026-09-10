@@ -12,6 +12,11 @@
  *
  * Ids are derived from the slug, so re-running is idempotent — it will not
  * produce a second copy of anything.
+ *
+ * The separator is a hyphen, not a dot. Sanity reserves dotted id prefixes for
+ * its own namespaces (drafts., versions.), so an id like "newsArticle.my-slug"
+ * is read as a namespaced id and rejected — silently enough that the first
+ * version of this script reported success while writing almost nothing.
  */
 import { createClient } from "@sanity/client";
 import { config as loadEnv } from "dotenv";
@@ -74,7 +79,7 @@ function toBlocks(body: Block[]) {
 
 function articleDoc(type: string, a: Article) {
   return {
-    _id: `${type}.${a.slug}`,
+    _id: `${type}-${a.slug}`,
     _type: type,
     title: a.title,
     slug: { _type: "slug", current: a.slug },
@@ -89,7 +94,7 @@ function articleDoc(type: string, a: Article) {
 
 function eventDoc(e: MezonEvent) {
   return {
-    _id: `event.${e.slug}`,
+    _id: `event-${e.slug}`,
     _type: "event",
     title: e.title,
     slug: { _type: "slug", current: e.slug },
@@ -118,7 +123,7 @@ function faqDocs() {
   return uzPages.faqPage.categories.map((c, index) => {
     const ru = ruPages.faqPage.categories[index];
     return {
-      _id: `faqCategory.${c.id}`,
+      _id: `faqCategory-${c.id}`,
       _type: "faqCategory",
       title: pair(c.name, ru.name),
       slug: { _type: "slug", current: c.id },
@@ -221,19 +226,77 @@ async function main() {
     return;
   }
 
-  // One transaction: either the dataset gets the whole site or none of it,
-  // so a half-seeded Studio never has to be cleaned up by hand.
-  const tx = client.transaction();
+  /*
+   * One transaction per type rather than one for everything.
+   *
+   * A single transaction looked tidier, but it makes a failure all-or-nothing
+   * and — worse — hard to attribute: you get one error with no clue which
+   * document caused it. Per type, a failure names the group, the other groups
+   * still land, and re-running fills the gap.
+   */
+  const byType = new Map<string, typeof docs>();
   for (const doc of docs) {
-    if (force) tx.createOrReplace(doc);
-    else tx.createIfNotExists(doc);
+    const list = byType.get(doc._type) ?? [];
+    list.push(doc);
+    byType.set(doc._type, list);
   }
-  await tx.commit();
 
-  console.log("Done. Open /studio to review, then publish.");
+  let failed = 0;
+  for (const [type, group] of byType) {
+    const tx = client.transaction();
+    for (const doc of group) {
+      if (force) tx.createOrReplace(doc);
+      else tx.createIfNotExists(doc);
+    }
+    try {
+      await tx.commit({ visibility: "sync" });
+      console.log(`  ✓ ${type} (${group.length})`);
+    } catch (err) {
+      failed++;
+      const e = err as { message?: string; statusCode?: number; details?: unknown };
+      console.error(`  ✗ ${type} (${group.length}) — ${e.statusCode ?? ""} ${e.message ?? err}`);
+      if (e.details) console.error(`    ${JSON.stringify(e.details).slice(0, 500)}`);
+    }
+  }
+
+  /*
+   * Read the dataset back rather than trusting the writes. The first version of
+   * this script reported success while most of its documents were missing, so
+   * "committed" is not the thing worth printing — "present" is.
+   */
+  console.log("\nIn the dataset now:");
+  const actual = await client.fetch<Record<string, number>>(
+    `{
+      "researchArticle": count(*[_type == "researchArticle"]),
+      "newsArticle": count(*[_type == "newsArticle"]),
+      "event": count(*[_type == "event"]),
+      "faqCategory": count(*[_type == "faqCategory"]),
+      "researchPage": count(*[_type == "researchPage"]),
+      "newsPage": count(*[_type == "newsPage"]),
+      "eventsPage": count(*[_type == "eventsPage"]),
+      "faqPage": count(*[_type == "faqPage"])
+    }`
+  );
+
+  let short = 0;
+  for (const [type, expected] of Object.entries(counts)) {
+    const got = actual[type] ?? 0;
+    const ok = got >= expected;
+    if (!ok) short++;
+    console.log(`  ${ok ? "✓" : "✗"} ${type}: ${got} (expected at least ${expected})`);
+  }
+
+  if (failed || short) {
+    console.error("\nSeed incomplete — see the failures above.");
+    process.exit(1);
+  }
+  console.log("\nDone. Open /studio to review.");
 }
 
 main().catch((err) => {
-  console.error(err.message ?? err);
+  const e = err as { message?: string; statusCode?: number; responseBody?: string };
+  console.error(e.message ?? err);
+  if (e.statusCode) console.error(`HTTP ${e.statusCode}`);
+  if (e.responseBody) console.error(String(e.responseBody).slice(0, 800));
   process.exit(1);
 });

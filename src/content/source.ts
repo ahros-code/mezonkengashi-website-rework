@@ -24,23 +24,41 @@ import type { Article, Block, L, MezonEvent } from "./types";
  * from Sanity and the bundled files become the outage fallback only.
  */
 
+/**
+ * Guarantees both locales are strings.
+ *
+ * The Studio asks for both languages and validates the important fields, but
+ * content arrives from people, not from the type system: a half-filled block
+ * reaches the site as `{uz: "…"}` with no `ru` at all. Rendering the other
+ * language is a visible imperfection; reading `.trim()` off undefined takes the
+ * whole build down, which is what it did.
+ */
+function text(value: unknown): L {
+  const v = (value ?? {}) as Partial<L>;
+  const uz = v.uz?.trim() ?? "";
+  const ru = v.ru?.trim() ?? "";
+  return { uz: uz || ru, ru: ru || uz };
+}
+
 /** GROQ leaves the unused half of a block's fields as null; drop them. */
 function cleanBlock(raw: Record<string, unknown>): Block | null {
   const type = raw.type as Block["type"] | null;
   if (!type) return null;
   if (type === "ul") {
-    const items = (raw.items as L[] | null) ?? [];
+    const items = ((raw.items as unknown[] | null) ?? []).map(text).filter((i) => i.uz);
     return items.length ? { type, items } : null;
   }
-  const text = raw.text as L | null;
-  if (!text) return null;
-  if (type === "quote") return { type, text, by: (raw.by as L | null) ?? { uz: "", ru: "" } };
-  return { type, text };
+  const body = text(raw.text);
+  if (!body.uz) return null;
+  if (type === "quote") return { type, text: body, by: text(raw.by) };
+  return { type, text: body };
 }
 
 function cleanArticle(raw: Record<string, unknown>): Article {
   return {
     ...(raw as unknown as Article),
+    title: text(raw.title),
+    excerpt: text(raw.excerpt),
     body: (((raw.body as Record<string, unknown>[] | null) ?? [])
       .map(cleanBlock)
       .filter(Boolean) as Block[]),
@@ -76,8 +94,13 @@ export async function getEvents(): Promise<MezonEvent[]> {
   );
   return raw.map((e) => ({
     ...e,
-    agenda: e.agenda ?? [],
-    outcomes: e.outcomes ?? [],
+    title: text(e.title),
+    excerpt: text(e.excerpt),
+    venue: text(e.venue),
+    city: text(e.city),
+    audience: text(e.audience),
+    agenda: (e.agenda ?? []).map((row) => ({ time: row.time, text: text(row.text) })),
+    outcomes: (e.outcomes ?? []).map(text),
   }));
 }
 
@@ -96,8 +119,8 @@ export async function getFaqCategories(
   if (!rows?.length) return [...fallback];
   return rows.map((c) => ({
     id: c.id,
-    name: c.title[locale],
-    items: (c.items ?? []).map((i) => ({ q: i.q[locale], a: i.a[locale] })),
+    name: text(c.title)[locale],
+    items: (c.items ?? []).map((i) => ({ q: text(i.q)[locale], a: text(i.a)[locale] })),
   }));
 }
 
