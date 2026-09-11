@@ -42,7 +42,7 @@ export function pageMetadata({
     openGraph: {
       type,
       url,
-      siteName: "MEZON",
+      siteName: "Mezon Kengashi",
       title,
       description,
       locale: ogLocale[locale],

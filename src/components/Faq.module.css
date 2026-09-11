@@ -1,7 +1,7 @@
 .section {
   background: var(--paper);
   border-top: 1px solid var(--ganch-3);
-  padding-block: clamp(4rem, 7vw, 7rem);
+  padding-block: clamp(4.5rem, 8vw, 7.5rem);
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -9,86 +9,308 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
-  gap: clamp(1.75rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 5rem);
   align-items: start;
+}
+
+/* ---------------- left column ---------------- */
+
+.intro {
+  position: sticky;
+  top: 7rem;
+  display: grid;
+  gap: 1rem;
+}
+.intro :global(.kicker) {
+  margin-bottom: 0;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: var(--t-2xl);
-  line-height: 1.06;
+  font-size: var(--t-3xl);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  position: sticky;
-  top: 7rem;
+  max-width: 14ch;
+}
+.lede {
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 44ch;
+}
+
+/* help card */
+.ask {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  gap: 0.55rem;
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  padding: var(--card-pad);
+  border-radius: var(--r-lg);
+  background: linear-gradient(150deg, var(--kobalt), var(--nil) 72%);
+  color: var(--on-dark);
+}
+.ask::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 16rem;
+  aspect-ratio: 1;
+  right: -6rem;
+  top: -7rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(248, 183, 0, 0.24), transparent 66%);
+}
+.askMark {
+  color: var(--zar);
+}
+.askTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.askBody {
+  font-size: 0.88rem;
+  line-height: 1.58;
+  color: var(--on-dark-2);
+  max-width: 40ch;
+}
+.askActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.25rem;
+  margin-top: 0.5rem;
+}
+.askLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--t-cap);
+  font-weight: 600;
+  color: inherit;
+  transition: gap 0.35s var(--ease-out), color 0.3s var(--ease-out);
+}
+.ask .askLink:hover {
+  color: var(--zar-2);
+}
+.askLink:hover {
+  gap: 0.8rem;
+}
+
+/* ---------------- right column ---------------- */
+
+.desk {
+  min-width: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  margin-bottom: 1.25rem;
+  border-radius: var(--r-pill);
+  background: var(--ganch);
+  border: 1px solid var(--ganch-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex: none;
+  padding: 0.62rem 1.05rem;
+  border-radius: var(--r-pill);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tab[aria-selected="true"] {
+  background: var(--paper);
+  color: var(--kobalt);
+  box-shadow: 0 6px 16px -10px rgba(0, 34, 61, 0.55);
 }
 
 .list {
   display: grid;
+  gap: 0.6rem;
+  list-style: none;
+  padding: 0;
 }
 
 .item {
-  border-top: 1px solid var(--ganch-2);
+  position: relative;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--ganch-2);
+  transition:
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    background-color 0.4s var(--ease-out);
+  animation: rise 0.55s var(--ease-out) both;
 }
-.item:last-child {
-  border-bottom: 1px solid var(--ganch-2);
+/* the open answer gets an amber spine and lifts off the page */
+.item::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 1rem;
+  bottom: 1rem;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--zar), var(--firuza));
+  transform: scaleY(0);
+  transition: transform 0.45s var(--ease-out);
+}
+.item:hover {
+  border-color: var(--ganch-3);
+}
+.item[data-open="true"] {
+  border-color: color-mix(in srgb, var(--zar) 45%, var(--ganch-2));
+  box-shadow: 0 22px 44px -30px rgba(0, 34, 61, 0.45);
+}
+.item[data-open="true"]::before {
+  transform: scaleY(1);
 }
 
 .q {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-block: 1.15rem;
-  cursor: pointer;
-  list-style: none;
-  font-size: 1.02rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.1rem 1.1rem 1.1rem 1.35rem;
+  text-align: left;
+  border-radius: inherit;
+}
+.q:focus-visible {
+  outline-offset: -2px;
+}
+
+.num {
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  transition: color 0.3s var(--ease-out);
+}
+.item[data-open="true"] .num,
+.q:hover .num {
+  color: var(--firuza);
+}
+
+.qText {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 1.01rem;
+  font-weight: 600;
   line-height: 1.4;
   color: var(--ink);
   transition: color 0.3s var(--ease-out);
 }
-.q::-webkit-details-marker {
-  display: none;
-}
-.q:hover {
+.q:hover .qText {
   color: var(--kobalt);
 }
-
-/* the marker rotates a quarter turn when the answer opens */
-.marker {
-  flex: none;
-  margin-top: 0.15rem;
+/* a girih star that turns into a minus as the answer opens */
+.toggle {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: color-mix(in srgb, var(--zar) 70%, transparent);
+  transition: color 0.3s var(--ease-out);
+}
+.toggle svg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.55s var(--ease-out);
+}
+.plus,
+.plus::after {
+  position: absolute;
+  width: 10px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--kobalt);
+}
+.plus::after {
+  content: "";
+  transform: rotate(90deg);
+  transition: transform 0.45s var(--ease-out);
+}
+.item[data-open="true"] .toggle {
   color: var(--zar);
-  transition: transform 0.5s var(--ease-out);
 }
-.item[open] .marker {
-  transform: rotate(22.5deg) scale(1.12);
-  color: var(--firuza);
+.item[data-open="true"] .toggle svg {
+  transform: rotate(22.5deg);
+}
+.item[data-open="true"] .plus::after {
+  transform: rotate(0deg);
 }
 
+/* height animates through the grid track, so no JS measuring is needed */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
+}
+.item[data-open="true"] .panel {
+  grid-template-rows: 1fr;
+}
+.panelInner {
+  overflow: hidden;
+}
 .a {
-  padding-bottom: 1.3rem;
-  padding-right: 2.5rem;
+  padding: 0 3.6rem 1.3rem calc(1.35rem + 1.3rem + 1rem);
   font-size: 0.94rem;
-  line-height: 1.62;
+  line-height: 1.66;
   color: var(--ink-2);
-  max-width: 62ch;
+  max-width: 68ch;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.35s var(--ease-out), transform 0.45s var(--ease-out);
+}
+.item[data-open="true"] .a {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.08s;
 }
 
-.item[open] .a {
-  animation: rise 0.45s var(--ease-out) both;
-}
-
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
   }
-  .title {
+  .intro {
     position: static;
   }
+  /* on a phone the contact section directly below does this card's job */
+  .ask {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .q {
+    gap: 0.75rem;
+    padding: 1rem 0.9rem 1rem 1rem;
+  }
   .a {
-    padding-right: 0;
+    padding: 0 1rem 1.2rem 1rem;
   }
 }
 
@@ -97,7 +319,7 @@
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translate3d(0, 26px, 0);
+    transform: translate3d(0, 18px, 0);
   }
   to {
     opacity: 1;

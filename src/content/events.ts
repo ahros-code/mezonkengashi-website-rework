@@ -7,7 +7,7 @@ export const events: MezonEvent[] = [
     start: "2026-10-15T09:30:00+05:00",
     end: "2026-10-16T17:00:00+05:00",
     format: "onsite",
-    venue: { uz: "MEZON oʻquv markazi", ru: "Учебный центр MEZON" },
+    venue: { uz: "Mezon Kengashi oʻquv markazi", ru: "Учебный центр Mezon Kengashi" },
     city: { uz: "Toshkent", ru: "Ташкент" },
     seats: 24,
     price: 3200000,

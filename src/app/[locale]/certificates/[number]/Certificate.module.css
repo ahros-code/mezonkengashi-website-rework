@@ -1,0 +1,557 @@
+.body {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--ganch);
+  padding-block: clamp(2.5rem, 5vw, 4rem) var(--sec-y);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 21rem);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: start;
+}
+
+/* =========================================================================
+   The certificate — paper, a double gold frame, lattice watermark
+   ========================================================================= */
+
+.doc {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  gap: clamp(1.4rem, 2.8vw, 2.2rem);
+  padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem) clamp(1.75rem, 3.5vw, 2.5rem);
+  background:
+    radial-gradient(90% 60% at 50% 0%, #fffdf6, transparent 70%),
+    linear-gradient(180deg, #fffcf3, #fbf6e8);
+  color: var(--ink);
+  border-radius: var(--r-md);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 40px 80px -40px rgba(0, 34, 61, 0.55),
+    0 12px 28px -18px rgba(0, 34, 61, 0.35);
+  animation: rise 0.8s var(--ease-out) both;
+}
+/* outer hairline, then a heavier inner rule — the frame of a printed deed */
+.doc::before {
+  content: "";
+  position: absolute;
+  inset: 0.7rem;
+  z-index: -1;
+  border: 1px solid color-mix(in srgb, var(--zar) 70%, #b98a00);
+  border-radius: calc(var(--r-md) - 6px);
+  pointer-events: none;
+}
+.docFrame {
+  position: absolute;
+  inset: 1.1rem;
+  z-index: -1;
+  border: 2px solid color-mix(in srgb, var(--zar) 45%, transparent);
+  border-radius: calc(var(--r-md) - 10px);
+  pointer-events: none;
+}
+.docLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  color: color-mix(in srgb, var(--zar) 16%, transparent);
+  mask-image: radial-gradient(70% 55% at 50% 55%, transparent 30%, #000 100%);
+  -webkit-mask-image: radial-gradient(70% 55% at 50% 55%, transparent 30%, #000 100%);
+}
+
+.docHead {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+.docLogo {
+  width: clamp(6.5rem, 12vw, 8.5rem);
+  height: auto;
+}
+.docTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nil);
+  line-height: 1.2;
+}
+.docNumber {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  color: #8a6400;
+}
+
+.docMain {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 0.3rem;
+  max-width: 44rem;
+  margin-inline: auto;
+}
+.docLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 0.6rem;
+}
+.docOrg {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 1.2rem + 2.2vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--kobalt);
+}
+/* the one place Prata appears outside an article: the certified subject reads as engraved */
+.docSubject {
+  font-family: var(--font-accent);
+  font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem);
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 34ch;
+}
+.docStatement {
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-width: 58ch;
+}
+.docStandards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+.docStandards span {
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-pill);
+  border: 1px solid color-mix(in srgb, var(--zar) 55%, transparent);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #8a6400;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.docFacts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: 1px solid color-mix(in srgb, var(--zar) 40%, transparent);
+  text-align: center;
+}
+.docFacts > div {
+  padding: 0.95rem 0.5rem;
+}
+.docFacts > div + div {
+  border-left: 1px solid color-mix(in srgb, var(--zar) 30%, transparent);
+}
+.docFacts dt {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.docFacts dd {
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.docFoot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: 1.5rem;
+}
+.sign {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+.signLine {
+  width: min(100%, 12rem);
+  height: 1px;
+  margin-bottom: 0.5rem;
+  background: var(--ink-3);
+}
+.signName {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.signRole {
+  font-size: 0.72rem;
+  color: var(--ink-3);
+}
+
+/* gold seal carrying the brand mark */
+.seal {
+  position: relative;
+  width: clamp(5rem, 9vw, 6.5rem);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6d6, #f3d98a 55%, #d9ad3a);
+  box-shadow:
+    0 0 0 4px #fffcf3,
+    0 0 0 5px color-mix(in srgb, var(--zar) 70%, #b98a00),
+    0 10px 22px -10px rgba(120, 80, 0, 0.6);
+}
+.seal::before {
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  border: 1px dashed rgba(120, 80, 0, 0.45);
+}
+.seal img {
+  width: 62%;
+  height: 62%;
+}
+
+.docVerify {
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--ink-3);
+}
+.docVerify span {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  color: var(--kobalt);
+  overflow-wrap: anywhere;
+}
+
+/* a rubber stamp over the dates, where an office would ink it — never over the holder's name */
+.stamp {
+  position: absolute;
+  bottom: 21%;
+  right: 7%;
+  transform: rotate(-12deg);
+  padding: 0.6rem 1.6rem;
+  border: 3px double currentColor;
+  border-radius: var(--r-sm);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 0.8rem + 1.3vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.78;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.stamp[data-status="revoked"] {
+  color: var(--danger);
+}
+.stamp[data-status="expired"] {
+  color: var(--ink-3);
+}
+.doc[data-status="revoked"] .docMain,
+.doc[data-status="expired"] .docMain {
+  filter: grayscale(0.4);
+}
+
+/* =========================================================================
+   Aside
+   ========================================================================= */
+
+.aside {
+  position: sticky;
+  top: 6.5rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.statusCard {
+  padding: var(--card-pad);
+  border-radius: var(--r-lg);
+  background: linear-gradient(150deg, var(--kobalt), var(--nil) 72%);
+  color: var(--on-dark);
+}
+.statusCard[data-status="expired"] {
+  background: linear-gradient(150deg, #2d4257, #1a2b3b 72%);
+}
+.statusCard[data-status="revoked"] {
+  background: linear-gradient(150deg, #5a1f16, #2d100b 72%);
+}
+.statusLabel {
+  font-size: 0.74rem;
+  color: var(--on-dark-3);
+}
+.statusValue {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--zar);
+  box-shadow: 0 0 0 4px rgba(248, 183, 0, 0.25);
+}
+.statusCard[data-status="expired"] .statusDot {
+  background: var(--on-dark-3);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+.statusCard[data-status="revoked"] .statusDot {
+  background: #ff7a63;
+  box-shadow: 0 0 0 4px rgba(255, 122, 99, 0.25);
+}
+.statusNote {
+  margin-top: 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--on-dark-2);
+}
+
+.panel {
+  padding: var(--card-pad);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  border: 1px solid var(--ganch-2);
+}
+.panelTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+
+.holder {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.mark {
+  position: relative;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background: linear-gradient(150deg, var(--kobalt), var(--nil));
+  color: rgba(248, 183, 0, 0.55);
+  overflow: hidden;
+}
+.mark svg {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+}
+.mark span {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.35rem;
+  background: var(--paper);
+}
+.holderName {
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.holderMeta {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+.facts {
+  display: grid;
+  margin-top: 1rem;
+}
+.facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.6rem;
+  border-top: 1px solid var(--ganch-2);
+  font-size: 0.85rem;
+}
+.facts dt {
+  color: var(--ink-3);
+}
+.facts dd {
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}
+
+.actions {
+  display: grid;
+  gap: 0.5rem;
+}
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--ganch-3);
+  background: var(--paper);
+  font-size: var(--t-cap);
+  font-weight: 600;
+  color: var(--kobalt);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+.ghostBtn:hover {
+  border-color: var(--kobalt);
+}
+
+.others {
+  display: grid;
+}
+.other {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.15rem 0.75rem;
+  padding-block: 0.7rem;
+  border-top: 1px solid var(--ganch-2);
+}
+.otherNumber {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--kobalt);
+}
+.otherSubject {
+  grid-column: 1;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.other:hover .otherSubject {
+  color: var(--ink);
+}
+.otherStatus {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8a6400;
+}
+.otherStatus[data-status="expired"] {
+  color: var(--ink-3);
+}
+.otherStatus[data-status="revoked"] {
+  color: var(--danger);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-left: 0.3rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--kobalt);
+}
+.back svg {
+  transform: rotate(180deg);
+  transition: transform 0.35s var(--ease-out);
+}
+.back:hover svg {
+  transform: rotate(180deg) translateX(3px);
+}
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .aside {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .docFacts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .docFacts > div + div {
+    border-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--zar) 30%, transparent);
+  }
+  .docFoot {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .seal {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================================================================
+   Print: the certificate alone, on one page
+   ========================================================================= */
+
+@media print {
+  :global(body > :not(main)),
+  :global(main#main > section:first-child),
+  .aside {
+    display: none !important;
+  }
+  :global(body) {
+    background: #ffffff;
+  }
+  .body {
+    padding: 0;
+    background: none;
+  }
+  .body > :first-child {
+    display: none;
+  }
+  .layout {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+  .doc {
+    box-shadow: none;
+    animation: none;
+    break-inside: avoid;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

@@ -85,8 +85,8 @@ export const news: Article[] = [
       ru: "Новое методическое руководство по исламским финансам вынесено на обсуждение",
     },
     excerpt: {
-      uz: "Hujjat loyihasi hisob yuritish va hisobot shakllarini belgilaydi. MEZON oʻz izohlarini yubordi — asosiy eʼtiroz zaxiralarni tan olish tartibiga qaratilgan.",
-      ru: "Проект документа определяет порядок учёта и формы отчётности. MEZON направил свои комментарии — основное замечание касается порядка признания резервов.",
+      uz: "Hujjat loyihasi hisob yuritish va hisobot shakllarini belgilaydi. Mezon Kengashi oʻz izohlarini yubordi — asosiy eʼtiroz zaxiralarni tan olish tartibiga qaratilgan.",
+      ru: "Проект документа определяет порядок учёта и формы отчётности. Mezon Kengashi направил свои комментарии — основное замечание касается порядка признания резервов.",
     },
     body: [
       {
@@ -160,8 +160,8 @@ export const news: Article[] = [
       {
         type: "p",
         text: {
-          uz: "Eng yaxshi natija koʻrsatgan uch talaba MEZONda amaliyot oʻtash imkoniyatini oladi.",
-          ru: "Три студента с лучшими результатами получат возможность пройти стажировку в MEZON.",
+          uz: "Eng yaxshi natija koʻrsatgan uch talaba Mezon Kengashida amaliyot oʻtash imkoniyatini oladi.",
+          ru: "Три студента с лучшими результатами получат возможность пройти стажировку в Mezon Kengashi.",
         },
       },
     ],

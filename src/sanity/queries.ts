@@ -77,3 +77,24 @@ export const pageCopyQuery = groq`*[_id == $id][0]{
   stillBody${localised},
   stillCta${localised}
 }`;
+
+export const organizationsQuery = groq`*[_type == "organization" && defined(slug.current)]|order(name asc){
+  "slug": slug.current,
+  name,
+  sector,
+  city${localised},
+  since,
+  "logo": logo.asset->url
+}`;
+
+export const certificatesQuery = groq`*[_type == "certificate" && defined(number) && defined(organization->slug.current)]|order(issued desc){
+  number,
+  "org": organization->slug.current,
+  kind,
+  subject${localised},
+  "standards": coalesce(standards, []),
+  issued,
+  validUntil,
+  "revoked": coalesce(revoked, false),
+  "file": file.asset->url
+}`;

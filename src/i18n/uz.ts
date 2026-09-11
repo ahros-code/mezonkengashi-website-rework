@@ -1,8 +1,8 @@
 const uz = {
   meta: {
-    title: "MEZON — Islom moliyasi boʻyicha konsalting va shariat auditi | Toshkent",
+    title: "Mezon Kengashi — Islom moliyasi boʻyicha konsalting va shariat auditi | Toshkent",
     description:
-      "MEZON — Toshkentdagi islom moliyasi markazi: shariat nazorat kengashi, audit va sertifikatlash, nizolarni hal qilish, taʼlim, konsalting va zakot hisobi. 2013-yildan buyon 28 moliya instituti bilan ishlaymiz.",
+      "Mezon Kengashi — Toshkentdagi islom moliyasi markazi: shariat nazorat kengashi, audit va sertifikatlash, nizolarni hal qilish, taʼlim, konsalting va zakot hisobi. 2013-yildan buyon 28 moliya instituti bilan ishlaymiz.",
     keywords: [
       "islom moliyasi",
       "shariat auditi",
@@ -28,6 +28,7 @@ const uz = {
     news: "Yangiliklar",
     events: "Tadbirlar",
     faq: "Savol-javob",
+    talim: "Mezon Taʼlim",
     cta: "Konsultatsiya olish",
     openMenu: "Menyuni ochish",
     closeMenu: "Menyuni yopish",
@@ -171,6 +172,8 @@ const uz = {
 
   council: {
     kicker: "Kim javob beradi",
+    prev: "Oldingi aʼzo",
+    next: "Keyingi aʼzo",
     title: "Ikki kengash, bitta imzo",
     lede:
       "Shariat masalasini olimlar hal qiladi, uning qonuniy va shartnomaviy ijrosini esa yuristlar tayyorlaydi. Hujjat ikkala kengash imzosisiz chiqmaydi.",
@@ -379,8 +382,28 @@ const uz = {
     credits: "Fotosuratlar: Samarqand meʼmoriy yodgorliklari",
   },
 
+  clients: {
+    kicker: "Ishonch",
+    title: "Biz tekshirgan va sertifikatlagan tashkilotlar",
+    lede: "Banklar, lizing va takaful kompaniyalari, investitsiya fondlari va halol biznes — har biri bir xil mezon boʻyicha tekshirilgan.",
+    since: "{year}-yildan",
+    certified: "Sertifikatlangan",
+    registryCta: "Sertifikatlar reyestri",
+    verifyTitle: "Sertifikatni tekshiring",
+    verifyBody: "Reyestr raqamini yoki tashkilot nomini kiriting — sertifikat amaldami, darhol koʻrasiz.",
+    verifyLabel: "Sertifikat raqami yoki tashkilot",
+    verifyCta: "Tekshirish",
+  },
+
   faq: {
     title: "Tez-tez beriladigan savollar",
+    kicker: "Savol-javob",
+    lede: "Mijozlarimiz eng koʻp soʻraydigan savollar. Mavzuni tanlang — javoblar shu yerda.",
+    popular: "Eng koʻp soʻralgan",
+    askTitle: "Javob topilmadimi?",
+    askBody: "Savolingizni yozing — tegishli mutaxassis ish kuni davomida javob beradi.",
+    askCta: "Savol berish",
+    allLink: "Barcha savollar",
     items: [
       {
         q: "Shariat auditi qancha vaqt oladi?",

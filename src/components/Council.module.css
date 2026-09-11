@@ -194,7 +194,7 @@
 
 .portrait {
   position: relative;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 1;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: radial-gradient(
@@ -217,33 +217,27 @@
 }
 
 /*
- * The portrait discs are pre-rendered with a navy rim (see
- * scripts/gen-portraits.cjs), so they need no mask or shadow here — only a
- * faint halo to lift them off the medallion.
+ * Square portraits fill the top of the card edge to edge (see
+ * scripts/gen-portraits.cjs). The base fades into the card so the photo and
+ * the name read as one object rather than a picture stacked on a panel.
  */
 .photo {
   position: absolute;
   inset: 0;
-  margin: auto;
-  width: auto;
-  height: 98%;
-  aspect-ratio: 1;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: 50% 30%;
   transition: transform 1.4s var(--ease-out);
 }
 .member:hover .photo {
-  transform: scale(1.04);
+  transform: scale(1.045);
 }
 .hasPhoto::after {
   content: "";
   position: absolute;
   inset: 0;
-  margin: auto;
-  height: 98%;
-  width: auto;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.09);
+  background: linear-gradient(180deg, transparent 62%, rgba(0, 30, 54, 0.55) 88%, rgba(0, 30, 54, 0.85));
   pointer-events: none;
 }
 
@@ -340,5 +334,98 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ---- phones: each council is a swipe row, one card and a peek of the next ---- */
+
+.pager {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .grid,
+  .gridShort {
+    display: flex;
+    gap: 0.75rem;
+    max-width: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* bleed to the screen edge so the peeking card reads as "more this way" */
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+  .grid[hidden] {
+    display: none;
+  }
+  .member {
+    flex: 0 0 min(78%, 20rem);
+    scroll-snap-align: start;
+    animation: none;
+  }
+  .member:hover {
+    transform: none;
+  }
+  .bio {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1.1rem;
+  }
+  .pagerBtn {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    transition: background-color 0.3s var(--ease-out), opacity 0.3s var(--ease-out),
+      border-color 0.3s var(--ease-out);
+  }
+  .pagerBtn:not(:disabled):active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .pagerBtn:disabled {
+    opacity: 0.35;
+  }
+  .pagerTrack {
+    position: relative;
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.14);
+    overflow: hidden;
+  }
+  .pagerFill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--zar);
+    transform-origin: left center;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .pagerCount {
+    flex: none;
+    min-width: 2.6rem;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--on-dark-2);
   }
 }

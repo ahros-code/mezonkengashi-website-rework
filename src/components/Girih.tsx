@@ -181,8 +181,9 @@ export function GirihMedallion({
           return (
             <circle
               key={i}
-              cx={100 + 52 * Math.cos(a)}
-              cy={100 + 52 * Math.sin(a)}
+              /* rounded like starPoints: server and browser disagree on the last digits */
+              cx={(100 + 52 * Math.cos(a)).toFixed(3)}
+              cy={(100 + 52 * Math.sin(a)).toFixed(3)}
               r={17}
               opacity={0.5}
             />

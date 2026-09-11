@@ -1,6 +1,5 @@
 import Image from "next/image";
 import HeroAtmosphere from "./HeroAtmosphere";
-import HeroLattice from "./HeroLattice";
 import QuickForm from "./QuickForm";
 import GlassCard from "./GlassCard";
 import { GirihMedallion, GirihStar } from "./Girih";
@@ -28,7 +27,6 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
         />
       </div>
       <div className={s.wash} aria-hidden="true" />
-      <HeroLattice />
       <HeroAtmosphere />
 
       <div className={`container ${s.inner}`}>

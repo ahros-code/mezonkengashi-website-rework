@@ -11,7 +11,8 @@ const singletonTitles: Record<string, string> = {
 /**
  * The Studio sidebar mirrors the site's own navigation, so an editor looking
  * for the page they can see in the browser finds it in the same place here.
- * Everything the CMS owns sits under Bilim markazi; nothing else does yet.
+ * Knowledge-centre content sits under Bilim markazi; the client roster and the
+ * certificate registry have their own group.
  */
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -27,6 +28,16 @@ export const structure: StructureResolver = (S) =>
               S.documentTypeListItem("newsArticle").title("Yangiliklar"),
               S.documentTypeListItem("event").title("Tadbirlar"),
               S.documentTypeListItem("faqCategory").title("Savol-javob boʻlimlari"),
+            ])
+        ),
+      S.listItem()
+        .title("Mijozlar va sertifikatlar")
+        .child(
+          S.list()
+            .title("Mijozlar va sertifikatlar")
+            .items([
+              S.documentTypeListItem("organization").title("Tashkilotlar"),
+              S.documentTypeListItem("certificate").title("Sertifikatlar reyestri"),
             ])
         ),
       S.divider(),

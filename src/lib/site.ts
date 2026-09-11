@@ -3,8 +3,8 @@
  * Contact details are the client's real ones; the rest is still placeholder.
  */
 export const company = {
-  name: "MEZON KENGASHI",
-  shortName: "MEZON",
+  name: "Mezon Kengashi",
+  shortName: "Mezon Kengashi",
   legalName: "MEZON KENGASHI",
   founded: 2013,
   email: "info@mezonkengashi.uz",

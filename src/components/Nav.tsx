@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { GirihStar, GirihField } from "./Girih";
+import { TalimLeaves } from "./TalimMark";
 import { useSpecular } from "@/lib/useSpecular";
 import { paths } from "@/lib/routes";
 import { locales, localeLabel, type Locale } from "@/i18n/config";
@@ -44,8 +45,10 @@ export default function Nav({ t, locale }: { t: Dict; locale: Locale }) {
     { id: "events", href: paths.events(locale), label: t.nav.events },
     { id: "faq", href: paths.faq(locale), label: t.nav.faq },
   ];
+  const talimHref = paths.talim(locale);
+  const onTalim = pathname.startsWith(talimHref);
 
-  const inKnowledge = knowledge.some((k) => pathname.startsWith(k.href));
+  const inKnowledge = onTalim || knowledge.some((k) => pathname.startsWith(k.href));
   const onAbout = pathname.startsWith(paths.about(locale));
 
   /* --- glass plate appears once the hero has scrolled away --- */
@@ -327,6 +330,34 @@ export default function Nav({ t, locale }: { t: Dict; locale: Locale }) {
                     {k.label}
                   </a>
                 ))}
+
+                {/* The education sub-brand gets its own lit card, not another row. */}
+                <a
+                  href={talimHref}
+                  className={s.talimCard}
+                  aria-current={onTalim ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <TalimLeaves left="#ffffff" right="#f8b700" className={s.talimMark} />
+                  <span className={s.talimText}>
+                    <span className={s.talimName}>{t.nav.talim}</span>
+                    <span className={s.talimNote}>{t.talim.menuNote}</span>
+                  </span>
+                  <svg
+                    className={s.talimArrow}
+                    width="14"
+                    height="14"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -413,6 +444,18 @@ export default function Nav({ t, locale }: { t: Dict; locale: Locale }) {
               {k.label}
             </a>
           ))}
+          <a
+            href={talimHref}
+            className={`${s.talimCard} ${s.sheetTalim}`}
+            style={{ animationDelay: `${0.34 + knowledge.length * 0.05}s` }}
+            onClick={() => setOpen(false)}
+          >
+            <TalimLeaves left="#ffffff" right="#f8b700" className={s.talimMark} />
+            <span className={s.talimText}>
+              <span className={s.talimName}>{t.nav.talim}</span>
+              <span className={s.talimNote}>{t.talim.menuNote}</span>
+            </span>
+          </a>
         </nav>
         <div className={s.sheetFoot}>
           <a href={paths.contact(locale)} className="btn btn--gold" onClick={() => setOpen(false)}>

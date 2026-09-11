@@ -6,7 +6,7 @@ import { getDict } from "@/i18n";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "MEZON";
+export const alt = "Mezon Kengashi";
 
 /** The same 8-point star used across the site, drawn once for the card. */
 function starPoints(cx: number, cy: number, r: number) {

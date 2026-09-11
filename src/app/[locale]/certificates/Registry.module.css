@@ -1,0 +1,480 @@
+.body {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--ganch);
+  padding-block: clamp(2.5rem, 5vw, 4rem) var(--sec-y);
+}
+
+.registry {
+  display: grid;
+  gap: 1rem;
+}
+
+/* ---------------- status cards (also the status filter) ---------------- */
+
+.statuses {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+  margin-bottom: 0.5rem;
+}
+.statusCard {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
+  padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 2vw, 1.5rem);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  border: 1px solid var(--ganch-2);
+  text-align: left;
+  box-shadow: 0 14px 30px -26px rgba(0, 34, 61, 0.5);
+  transition:
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out),
+    background-color 0.35s var(--ease-out);
+}
+.statusCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--ganch-3);
+}
+.statusCard[aria-pressed="true"] {
+  background: var(--nil);
+  border-color: var(--nil);
+  box-shadow: 0 22px 40px -26px rgba(0, 34, 61, 0.8);
+}
+.statusCount {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  transition: color 0.35s var(--ease-out);
+}
+.statusName {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  transition: color 0.35s var(--ease-out);
+}
+.statusCard[aria-pressed="true"] .statusCount {
+  color: #ffffff;
+}
+.statusCard[aria-pressed="true"] .statusName {
+  color: var(--on-dark-2);
+}
+
+/* Status colours stay inside the brand: gold for valid, ink for lapsed, and
+   the one reserved danger red for a revocation. */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+.dot[data-status="valid"] {
+  background: var(--zar);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--zar) 25%, transparent);
+}
+.dot[data-status="expired"] {
+  background: var(--ink-3);
+}
+.dot[data-status="revoked"] {
+  background: var(--danger);
+}
+
+/* ---------------- toolbar ---------------- */
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+  gap: 0.6rem;
+}
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--r-pill);
+  background: var(--paper);
+  border: 1px solid var(--ganch-3);
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+.search:focus-within {
+  border-color: var(--kobalt);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--kobalt) 12%, transparent);
+}
+.searchIcon {
+  position: absolute;
+  left: 1.15rem;
+  color: var(--ink-3);
+  pointer-events: none;
+}
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.95rem 1.2rem 0.95rem 3rem;
+  border: 0;
+  background: none;
+  outline: none;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.searchInput::placeholder {
+  color: var(--ink-3);
+}
+.select {
+  appearance: none;
+  padding: 0.95rem 2.6rem 0.95rem 1.2rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--ganch-3);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' stroke='%2340566d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 4l3 3 3-3'/%3E%3C/svg%3E")
+      right 1.2rem center / 10px no-repeat,
+    var(--paper);
+  font-size: 0.92rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.select:focus-visible {
+  border-color: var(--kobalt);
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  min-height: 2rem;
+  padding-left: 0.4rem;
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+}
+.summary strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.orgChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem 0.35rem 0.8rem;
+  border-radius: var(--r-pill);
+  background: var(--kobalt);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.orgChip span {
+  display: grid;
+  place-items: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  line-height: 1;
+}
+.reset {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--kobalt);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--kobalt) 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+/* ---------------- the register ---------------- */
+
+.table {
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  border: 1px solid var(--ganch-2);
+  box-shadow: 0 20px 44px -34px rgba(0, 34, 61, 0.5);
+  overflow: hidden;
+}
+
+.thead,
+.row {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr) 9rem 9rem 11rem;
+  gap: 1.25rem;
+  align-items: center;
+  padding-inline: var(--card-pad);
+}
+.thead {
+  padding-block: 0.85rem;
+  background: var(--ganch);
+  border-bottom: 1px solid var(--ganch-2);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.row {
+  position: relative;
+  padding-block: 1.05rem;
+  border-bottom: 1px solid var(--ganch-2);
+  transition: background-color 0.3s var(--ease-out);
+  animation: rise 0.5s var(--ease-out) both;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+/* a gold spine marks the row under the pointer */
+.row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--zar);
+  transform: scaleY(0);
+  transition: transform 0.35s var(--ease-out);
+}
+.row:hover {
+  background: color-mix(in srgb, var(--ganch) 60%, var(--paper));
+}
+.row:hover::before {
+  transform: scaleY(1);
+}
+
+.number {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--kobalt);
+}
+
+.holder {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+.mark {
+  position: relative;
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background: linear-gradient(150deg, var(--kobalt), var(--nil));
+  color: rgba(248, 183, 0, 0.55);
+  overflow: hidden;
+}
+.mark svg {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+}
+.mark span {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+.mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.35rem;
+  background: var(--paper);
+}
+.holderText {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+.orgName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  transition: color 0.3s var(--ease-out);
+}
+.row:hover .orgName {
+  color: var(--kobalt);
+}
+.subject {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.kind {
+  font-size: 0.72rem;
+  color: var(--ink-3);
+}
+
+.date {
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.cellLabel {
+  display: none;
+}
+
+.statusCell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.statusCell > svg {
+  color: var(--ganch-3);
+  flex: none;
+  transition: color 0.3s var(--ease-out), transform 0.35s var(--ease-out);
+}
+.row:hover .statusCell > svg {
+  color: var(--kobalt);
+  transform: translateX(3px);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 0.75rem;
+  border-radius: var(--r-pill);
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pill[data-status="valid"] {
+  background: color-mix(in srgb, var(--zar) 16%, transparent);
+  color: #8a6400;
+}
+.pill[data-status="expired"] {
+  background: var(--ganch);
+  color: var(--ink-3);
+}
+.pill[data-status="revoked"] {
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
+}
+/* a lapsed or withdrawn entry stays legible but steps back */
+.row[data-status="expired"] .holderText,
+.row[data-status="revoked"] .holderText {
+  opacity: 0.72;
+}
+
+.empty {
+  padding: 2.5rem var(--card-pad);
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.3rem;
+  border-radius: var(--r-md);
+  border: 1px dashed var(--ganch-3);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.note svg {
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--zar);
+}
+.noteLink {
+  font-weight: 600;
+  color: var(--kobalt);
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 1080px) {
+  .thead,
+  .row {
+    grid-template-columns: 8.5rem minmax(0, 1fr) 8.5rem 10.5rem;
+  }
+  .thead > :nth-child(3),
+  .row > .date:nth-of-type(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .statuses {
+    gap: 0.5rem;
+  }
+  .statusCard {
+    padding: 0.9rem;
+  }
+  .toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .thead {
+    display: none;
+  }
+  /* each entry becomes a card: number and status on top, holder, then dates */
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "number status"
+      "holder holder"
+      "issued until";
+    gap: 0.75rem 1rem;
+    padding-block: 1.15rem;
+  }
+  .number {
+    grid-area: number;
+  }
+  .holder {
+    grid-area: holder;
+  }
+  .statusCell {
+    grid-area: status;
+  }
+  .statusCell > svg {
+    display: none;
+  }
+  .row > .date {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .row > .date:nth-of-type(3) {
+    grid-area: issued;
+    display: grid;
+  }
+  .row > .date:nth-of-type(4) {
+    grid-area: until;
+  }
+  .cellLabel {
+    display: block;
+    font-size: 0.66rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

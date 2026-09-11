@@ -4,6 +4,7 @@ import { headingBlock, listBlock, paragraphBlock, quoteBlock } from "./blocks";
 import { newsArticle, researchArticle } from "./article";
 import { agendaItem, mezonEvent } from "./event";
 import { faqCategory, faqItem } from "./faq";
+import { certificate, organization } from "./clients";
 import { eventsPage, faqPage, newsPage, researchPage } from "./pages";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
@@ -21,6 +22,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   newsArticle,
   mezonEvent,
   faqCategory,
+  organization,
+  certificate,
   researchPage,
   newsPage,
   eventsPage,

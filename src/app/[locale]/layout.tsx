@@ -12,6 +12,7 @@ import {
 import { getDict } from "@/i18n";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import VisitTrail from "@/components/VisitTrail";
 import "../globals.css";
 
 const prata = Prata({
@@ -56,14 +57,14 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: {
       default: t.meta.title,
-      template: "%s | MEZON",
+      template: "%s | Mezon Kengashi",
     },
     description: t.meta.description,
     keywords: [...t.meta.keywords],
-    applicationName: "MEZON",
-    authors: [{ name: "MEZON" }],
-    creator: "MEZON",
-    publisher: "MEZON",
+    applicationName: "Mezon Kengashi",
+    authors: [{ name: "Mezon Kengashi" }],
+    creator: "Mezon Kengashi",
+    publisher: "Mezon Kengashi",
     alternates: {
       canonical: `${SITE_URL}/${locale}`,
       languages: {
@@ -75,7 +76,7 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       url: `${SITE_URL}/${locale}`,
-      siteName: "MEZON",
+      siteName: "Mezon Kengashi",
       title: t.meta.title,
       description: t.meta.description,
       locale: ogLocale[locale],
@@ -122,6 +123,7 @@ export default async function LocaleLayout({
         <Nav t={t} locale={locale} />
         {children}
         <Footer t={t} locale={locale} />
+        <VisitTrail />
       </body>
     </html>
   );

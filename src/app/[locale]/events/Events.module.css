@@ -42,7 +42,7 @@
   display: grid;
   grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) minmax(0, 14rem);
   gap: clamp(1.25rem, 3vw, 2.5rem);
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  padding: var(--card-pad);
   border-radius: var(--r-xl);
   background: linear-gradient(135deg, var(--kobalt) 0%, var(--nil) 66%);
   color: var(--on-dark);
@@ -156,7 +156,7 @@
   display: grid;
   gap: 0.85rem;
   align-content: start;
-  padding-left: clamp(0, 2vw, 1.5rem);
+  padding-left: clamp(1.25rem, 2vw, 1.75rem);
   border-left: 1px solid rgba(255, 255, 255, 0.14);
 }
 .fact {
@@ -196,6 +196,10 @@
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: baseline;
   padding-block: clamp(1.1rem, 2.2vw, 1.55rem);
+  /* the hover wash needs room around the text, without moving it off the column */
+  padding-inline: var(--row-pad);
+  margin-inline: calc(var(--row-pad) * -1);
+  border-radius: var(--r-md);
   border-bottom: 1px solid var(--ganch-2);
   transition: background-color 0.35s var(--ease-out);
 }

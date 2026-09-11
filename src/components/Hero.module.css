@@ -38,28 +38,6 @@
     linear-gradient(92deg, rgba(0, 26, 46, 0.93) 0%, rgba(0, 30, 54, 0.62) 26%, rgba(0, 34, 61, 0.08) 54%, rgba(0, 40, 70, 0.38) 100%);
 }
 
-.lattice3d {
-  position: absolute;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 1.4s var(--ease-out);
-}
-.lattice3d[data-live="true"] {
-  opacity: 0.85;
-}
-/* keeps the field off the reading column, the way the flat lattice was masked */
-.lattice3d {
-  mask-image: radial-gradient(125% 105% at 66% 26%, #000 10%, rgba(0, 0, 0, 0.5) 44%, rgba(0, 0, 0, 0.12) 68%, transparent 86%);
-  -webkit-mask-image: radial-gradient(125% 105% at 66% 26%, #000 10%, rgba(0, 0, 0, 0.5) 44%, rgba(0, 0, 0, 0.12) 68%, transparent 86%);
-}
-.lattice3d canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
 /* amber dome-light, breathing slowly */
 .bloom {
   position: absolute;

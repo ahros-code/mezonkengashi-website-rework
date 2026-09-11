@@ -16,6 +16,9 @@ export default function Council({ t }: { t: Dict }) {
 
   const switchRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef(new Map<GroupId, HTMLButtonElement>());
+  const panelRefs = useRef(new Map<GroupId, HTMLDivElement>());
+  /* phone carousel: which card is in view */
+  const [slide, setSlide] = useState(0);
 
   const placeThumb = useCallback(() => {
     const tab = tabRefs.current.get(group);
@@ -32,6 +35,32 @@ export default function Council({ t }: { t: Dict }) {
     window.addEventListener("resize", placeThumb);
     return () => window.removeEventListener("resize", placeThumb);
   }, [placeThumb]);
+
+  const members = group === "board" ? boardMembers : expertMembers;
+
+  /* On a phone each panel is a swipe row; the pager reads and drives it. */
+  const step = () => {
+    const panel = panelRefs.current.get(group);
+    const card = panel?.firstElementChild as HTMLElement | null;
+    if (!panel || !card) return 0;
+    return card.offsetWidth + parseFloat(getComputedStyle(panel).columnGap || "0");
+  };
+  const onPanelScroll = (id: GroupId) => {
+    if (id !== group) return;
+    const panel = panelRefs.current.get(id);
+    const w = step();
+    if (!panel || !w) return;
+    /* the last card cannot reach the left edge, so the end of the row counts as it */
+    const atEnd = panel.scrollLeft >= panel.scrollWidth - panel.clientWidth - 2;
+    setSlide(atEnd ? panel.children.length - 1 : Math.round(panel.scrollLeft / w));
+  };
+  const go = (dir: 1 | -1) => {
+    panelRefs.current.get(group)?.scrollBy({ left: dir * step(), behavior: "smooth" });
+  };
+  useEffect(() => {
+    setSlide(0);
+    panelRefs.current.get(group)?.scrollTo({ left: 0 });
+  }, [group]);
 
   /* Left/right arrows move between tabs, as a tablist should. */
   function onKeyDown(e: React.KeyboardEvent) {
@@ -106,6 +135,10 @@ export default function Council({ t }: { t: Dict }) {
           return (
           <div
             key={id}
+            ref={(el) => {
+              if (el) panelRefs.current.set(id, el);
+            }}
+            onScroll={() => onPanelScroll(id)}
             /* a roster shorter than a full row centres itself instead of leaving a ragged edge */
             className={`${s.grid} ${members.length < 4 ? s.gridShort : ""}`}
             role="tabpanel"
@@ -118,20 +151,22 @@ export default function Council({ t }: { t: Dict }) {
               return (
                 <article key={m.id} className={s.member}>
                   <div className={`${s.portrait} ${m.photo ? s.hasPhoto : ""}`}>
-                    <GirihMedallion seed={m.id} scope={`council-${id}`} />
                     {m.photo ? (
                       <Image
                         className={s.photo}
                         src={`/img/council/${m.id}.webp`}
                         alt={person.name}
-                        width={512}
-                        height={512}
-                        sizes="(max-width: 560px) 55vw, (max-width: 1080px) 26vw, 13vw"
+                        width={720}
+                        height={720}
+                        sizes="(max-width: 760px) 80vw, (max-width: 1080px) 50vw, 25vw"
                       />
                     ) : (
-                      <span className={s.initials} aria-hidden="true">
-                        {m.initials}
-                      </span>
+                      <>
+                        <GirihMedallion seed={m.id} scope={`council-${id}`} />
+                        <span className={s.initials} aria-hidden="true">
+                          {m.initials}
+                        </span>
+                      </>
                     )}
                   </div>
                   <div className={s.body}>
@@ -152,6 +187,35 @@ export default function Council({ t }: { t: Dict }) {
           </div>
           );
         })}
+
+        {/* phones only: position and arrows for the swipe row */}
+        <div className={s.pager}>
+          <button type="button" className={s.pagerBtn} onClick={() => go(-1)} disabled={slide <= 0} aria-label={t.council.prev}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 3.5 5.5 8l4.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <span className={s.pagerTrack} aria-hidden="true">
+            <span
+              className={s.pagerFill}
+              style={{ transform: `scaleX(${(Math.min(slide, members.length - 1) + 1) / members.length})` }}
+            />
+          </span>
+          <span className={s.pagerCount} aria-live="polite">
+            {Math.min(slide, members.length - 1) + 1} / {members.length}
+          </span>
+          <button
+            type="button"
+            className={s.pagerBtn}
+            onClick={() => go(1)}
+            disabled={slide >= members.length - 1}
+            aria-label={t.council.next}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
   );

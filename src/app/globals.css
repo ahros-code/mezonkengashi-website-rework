@@ -57,6 +57,10 @@
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
   --maxw: 1320px;
   --sec-y: clamp(5rem, 9vw, 9.5rem);
+  /* inner padding shared by every card, so edges line up across sections */
+  --card-pad: clamp(1.5rem, 2.6vw, 2.25rem);
+  /* inset for list rows whose hover wash reaches past the text column */
+  --row-pad: clamp(0.75rem, 1.4vw, 1.25rem);
 
   /* --- radii --- */
   --r-sm: 10px;

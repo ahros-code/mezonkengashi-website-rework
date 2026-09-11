@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { ServiceIcon } from "./Icons";
+import { ArrowMark, ServiceIcon } from "./Icons";
 import { GirihField, GirihStar } from "./Girih";
+import { TalimLeaves } from "./TalimMark";
 import { serviceOrder, type ServiceId } from "@/lib/site";
+import { paths } from "@/lib/routes";
 import type { Dict } from "@/i18n";
+import type { Locale } from "@/i18n/config";
 import s from "./Services.module.css";
 import SectionBackdrop from "./SectionBackdrop";
 
@@ -19,7 +22,7 @@ const SPAN: Record<ServiceId, string> = {
 /** Only the tiles with room to breathe carry their detail list. */
 const WITH_POINTS: ServiceId[] = ["council", "audit", "dispute"];
 
-export default function Services({ t }: { t: Dict }) {
+export default function Services({ t, locale }: { t: Dict; locale: Locale }) {
   return (
     <section id="services" className={s.section} aria-labelledby="services-title">
       <SectionBackdrop id="services" placement="right" />
@@ -40,7 +43,7 @@ export default function Services({ t }: { t: Dict }) {
             const isFeature = id === "council";
 
             return (
-              <article key={id} className={`${s.tile} ${SPAN[id]}`}>
+              <article key={id} id={`service-${id}`} className={`${s.tile} ${SPAN[id]}`}>
                 {isFeature && (
                   <>
                     <span className={s.featurePhoto}>
@@ -80,6 +83,15 @@ export default function Services({ t }: { t: Dict }) {
                 {isFeature && (
                   <a href="#contact" className={`btn btn--gold ${s.featureCta}`}>
                     {t.nav.cta}
+                  </a>
+                )}
+
+                {/* Teaching lives with the sub-brand; this is its one door on the home page. */}
+                {id === "education" && (
+                  <a href={paths.talim(locale)} className={s.talimLink}>
+                    <TalimLeaves className={s.talimMark} />
+                    {t.talim.serviceLink}
+                    <ArrowMark />
                   </a>
                 )}
               </article>

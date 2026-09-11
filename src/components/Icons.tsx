@@ -69,9 +69,11 @@ function Education() {
 function Consulting() {
   return (
     <svg {...base}>
-      {/* the two squares whose union makes the star — literal structuring */}
-      <rect x="11" y="11" width="26" height="26" rx="2" />
-      <rect x="11" y="11" width="26" height="26" rx="2" transform="rotate(45 24 24)" />
+      {/* the khatam, nested: star, octagon, star — a product built up in layers.
+          Drawn as single outlines; two crossed squares read as a hexagram at icon size. */}
+      <polygon points="43,24 37.4,29.6 37.4,37.4 29.6,37.4 24,43 18.4,37.4 10.6,37.4 10.6,29.6 5,24 10.6,18.4 10.6,10.6 18.4,10.6 24,5 29.6,10.6 37.4,10.6 37.4,18.4" />
+      <polygon points="33.7,28 28,33.7 20,33.7 14.3,28 14.3,20 20,14.3 28,14.3 33.7,20" opacity="0.7" />
+      <polygon points="29.4,24 27.8,25.6 27.8,27.8 25.6,27.8 24,29.4 22.4,27.8 20.2,27.8 20.2,25.6 18.6,24 20.2,22.4 20.2,20.2 22.4,20.2 24,18.6 25.6,20.2 27.8,20.2 27.8,22.4" />
     </svg>
   );
 }
@@ -136,6 +138,16 @@ export function ClockMark() {
     <svg {...base} width="20" height="20">
       <circle cx="24" cy="24" r="18" />
       <path d="M24 13v11l7 5" />
+    </svg>
+  );
+}
+
+/** Telegram's paper plane, drawn in the same stroke as the other marks. */
+export function PlaneMark() {
+  return (
+    <svg {...base} width="20" height="20">
+      <path d="M42 7L5 21.5l12 4.5 4.5 13.5 7-8.5L39 38z" />
+      <path d="M17 26l17-12-12.5 16" />
     </svg>
   );
 }

@@ -398,6 +398,108 @@
   color: var(--firuza-2);
 }
 
+/* ---- Mezon Taʼlim: the education sub-brand, lit in its own night-and-gold ---- */
+
+.talimCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(248, 183, 0, 0.22), transparent 55%),
+    linear-gradient(135deg, #0b2848, #020a14);
+  box-shadow:
+    inset 0 0 0 1px rgba(248, 183, 0, 0.45),
+    0 10px 24px -12px rgba(248, 183, 0, 0.45);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    box-shadow 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+}
+/* a slow sweep of light, so the card reads as the one to try */
+.talimCard::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  z-index: -1;
+  background: linear-gradient(100deg, transparent, rgba(248, 183, 0, 0.22), transparent);
+  transform: skewX(-20deg);
+  animation: talimSweep 4.5s ease-in-out 1s infinite;
+}
+@keyframes talimSweep {
+  0% {
+    left: -60%;
+  }
+  45%,
+  100% {
+    left: 130%;
+  }
+}
+.talimCard:hover,
+.talimCard:focus-visible {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 0 0 1px var(--zar),
+    0 14px 30px -12px rgba(248, 183, 0, 0.7);
+}
+.talimMark {
+  width: 2rem;
+  height: auto;
+  filter: drop-shadow(0 0 8px rgba(248, 183, 0, 0.55));
+}
+.talimText {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.talimName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.talimNote {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(255, 211, 92, 0.85);
+}
+.talimArrow {
+  color: var(--zar);
+  transition: transform 0.35s var(--ease-out);
+}
+.talimCard:hover .talimArrow {
+  transform: translateX(3px);
+}
+
+.sheetTalim {
+  margin-top: 1.1rem;
+  padding: 1rem;
+  opacity: 0;
+  transform: translateY(14px);
+}
+.sheetTalim .talimName {
+  font-size: 1.15rem;
+}
+.sheetTalim .talimNote {
+  font-size: 0.8rem;
+}
+.sheet[data-open="true"] .sheetTalim {
+  animation: rise 0.6s var(--ease-out) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .talimCard::after {
+    animation: none;
+  }
+}
+
 /* ---- mobile sheet grouping ---- */
 
 .sheetGroupLabel {

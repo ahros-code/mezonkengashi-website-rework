@@ -8,10 +8,12 @@ import { paths } from "@/lib/routes";
 import { getNews, getPageCopy } from "@/content/source";
 import { byNewestFirst, categoryLabel, countLabel, dayInTashkent, formatDate } from "@/content/types";
 import PageHero from "@/components/PageHero";
-import { GirihStar } from "@/components/Girih";
+import { GirihField, GirihMedallion, GirihStar } from "@/components/Girih";
 import { ArrowMark } from "@/components/Icons";
-import s from "./News.module.css";
 import SectionBackdrop from "@/components/SectionBackdrop";
+import { company } from "@/lib/site";
+import NewsArchive, { type ArchiveItem } from "./NewsArchive";
+import s from "./News.module.css";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -48,14 +50,28 @@ export default async function NewsIndex({
 
   const sorted = [...(await getNews())].sort(byNewestFirst);
   const [lead, ...rest] = sorted;
-
-  /* group the archive by year, newest first */
-  const years = [...new Set(rest.map((a) => a.date.slice(0, 4)))];
+  /* the two stories that sit beside the lead on the front block */
+  const side = rest.slice(0, 2);
 
   const monthShort = new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "uz-UZ", {
     month: "short",
     timeZone: "Asia/Tashkent",
   });
+  const month = (iso: string) => monthShort.format(new Date(iso)).replace(".", "");
+  const minutes = (n: number) => `${n} ${t.ui.minRead}`;
+
+  const archive: ArchiveItem[] = sorted.map((a) => ({
+    slug: a.slug,
+    href: paths.newsItem(locale, a.slug),
+    date: a.date,
+    day: dayInTashkent(a.date),
+    month: month(a.date),
+    category: a.category,
+    categoryLabel: categoryLabel[a.category][locale],
+    title: a.title[locale],
+    excerpt: a.excerpt[locale],
+    minutes: minutes(a.readingMinutes),
+  }));
 
   const jsonLd = graph(
     collectionPage({
@@ -71,7 +87,9 @@ export default async function NewsIndex({
     ]),
   );
 
-  const leadDate = lead ? new Date(lead.date) : null;
+  const byline = lead
+    ? t.council.members[lead.author as keyof typeof t.council.members]
+    : null;
 
   return (
     <>
@@ -103,65 +121,127 @@ export default async function NewsIndex({
           <div className="container">
             {!lead && <p className={s.empty}>{t.ui.empty}</p>}
 
-            {lead && leadDate && (
-            <article className={s.lead}>
-              <span className={s.plate} aria-hidden="true">
-                <GirihStar size={112} strokeWidth={1} className={s.plateStar} />
-                <span className={s.plateInner}>
-                  <span className={s.plateDay}>{dayInTashkent(lead.date)}</span>
-                  <span className={s.plateMonth}>{monthShort.format(leadDate)}</span>
-                  <span className={s.plateYear}>{lead.date.slice(0, 4)}</span>
-                </span>
-              </span>
+            {lead && (
+              <div className={s.front}>
+                {/* ---- lead story ---- */}
+                <a href={paths.newsItem(locale, lead.slug)} className={s.lead}>
+                  <span className={s.leadLattice} aria-hidden="true">
+                    <GirihField id="girih-news-lead" tile={132} strokeWidth={0.9} />
+                  </span>
 
-              <a href={paths.newsItem(locale, lead.slug)} className={`${s.leadBody} ${s.leadLink}`}>
-                <span className={s.leadLabel}>
-                  <GirihStar size={11} strokeWidth={1.6} />
-                  {copy.latest}
-                </span>
-                <h2 className={s.leadTitle}>{lead.title[locale]}</h2>
-                <p className={s.leadExcerpt}>{lead.excerpt[locale]}</p>
-                <span className={s.leadCta}>
-                  {t.ui.readMore}
-                  <ArrowMark />
-                </span>
-              </a>
-            </article>
-            )}
+                  <span className={s.leadTop}>
+                    <span className={s.plate} aria-hidden="true">
+                      <GirihStar size={104} strokeWidth={1} className={s.plateStar} />
+                      <span className={s.plateInner}>
+                        <span className={s.plateDay}>{dayInTashkent(lead.date)}</span>
+                        <span className={s.plateMonth}>{month(lead.date)}</span>
+                        <span className={s.plateYear}>{lead.date.slice(0, 4)}</span>
+                      </span>
+                    </span>
+                    <span className={s.leadTags}>
+                      <span className={s.leadLabel}>
+                        <span className={s.leadPulse} aria-hidden="true" />
+                        {copy.latest}
+                      </span>
+                      <span className={s.leadCat}>{categoryLabel[lead.category][locale]}</span>
+                      <span className={s.leadMin}>{minutes(lead.readingMinutes)}</span>
+                    </span>
+                  </span>
 
-            {years.map((year) => (
-              <section key={year} aria-label={year}>
-                <div className={s.yearHead}>
-                  <h2 className={s.yearNum}>{year}</h2>
-                  <span className={s.yearRule} aria-hidden="true" />
-                </div>
+                  <span className={s.leadBody}>
+                    <h2 className={s.leadTitle}>{lead.title[locale]}</h2>
+                    <p className={s.leadExcerpt}>{lead.excerpt[locale]}</p>
+                  </span>
 
-                {rest
-                  .filter((a) => a.date.startsWith(year))
-                  .map((a) => (
-                    <a key={a.slug} href={paths.newsItem(locale, a.slug)} className={s.row}>
-                      <span className={s.rowMeta}>
-                        <time className={s.rowDate} dateTime={a.date}>
-                          {formatDate(a.date, locale)}
-                        </time>
-                        <span className={s.rowCat}>
-                          <GirihStar size={10} strokeWidth={1.6} />
-                          {categoryLabel[a.category][locale]}
+                  <span className={s.leadFoot}>
+                    {byline && (
+                      <span className={s.byline}>
+                        <span className={s.bylineMed}>
+                          <GirihMedallion seed={lead.author} scope="news-lead" />
+                        </span>
+                        <span>
+                          <span className={s.bylineName}>{byline.name}</span>
+                          <span className={s.bylineRole}>{byline.role}</span>
                         </span>
                       </span>
+                    )}
+                    <span className={s.leadCta}>
+                      {t.ui.readMore}
+                      <ArrowMark />
+                    </span>
+                  </span>
+                </a>
 
-                      <span>
-                        <h3 className={s.rowTitle}>{a.title[locale]}</h3>
-                        <p className={s.rowExcerpt}>{a.excerpt[locale]}</p>
-                      </span>
+                {/* ---- the next two, stacked beside it ---- */}
+                {side.length > 0 && (
+                  <div className={s.side}>
+                    <p className={s.sideLabel}>{copy.alsoLatest}</p>
+                    {side.map((a) => (
+                      <a key={a.slug} href={paths.newsItem(locale, a.slug)} className={s.sideCard}>
+                        <span className={s.sideMeta}>
+                          <span className={s.rowCat}>
+                            <GirihStar size={10} strokeWidth={1.6} />
+                            {categoryLabel[a.category][locale]}
+                          </span>
+                          <time dateTime={a.date}>{formatDate(a.date, locale)}</time>
+                        </span>
+                        <span className={s.sideTitle}>{a.title[locale]}</span>
+                        <span className={s.sideExcerpt}>{a.excerpt[locale]}</span>
+                        <span className={s.sideFoot}>
+                          {minutes(a.readingMinutes)}
+                          <ArrowMark />
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
-                      <span className={s.rowArrow} aria-hidden="true">
-                        <ArrowMark />
-                      </span>
-                    </a>
-                  ))}
-              </section>
-            ))}
+            <div className={s.layout}>
+              <NewsArchive
+                items={archive}
+                featured={1 + side.length}
+                labels={{
+                  archive: copy.archive,
+                  filterLabel: copy.filterLabel,
+                  all: copy.all,
+                  noMatch: copy.noMatch,
+                }}
+              />
+
+              <aside className={s.aside}>
+                <div className={s.subscribe}>
+                  <span className={s.subscribeLattice} aria-hidden="true">
+                    <GirihField id="girih-news-sub" tile={110} strokeWidth={0.9} />
+                  </span>
+                  <GirihStar size={22} strokeWidth={1.2} className={s.subscribeMark} />
+                  <h2 className={s.subscribeTitle}>{copy.subscribeTitle}</h2>
+                  <p className={s.subscribeBody}>{copy.subscribeBody}</p>
+                  <a
+                    href={company.telegram}
+                    className="btn btn--gold btn--wide"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {copy.subscribeCta}
+                  </a>
+                </div>
+
+                <div className={s.press}>
+                  <h2 className={s.pressTitle}>{copy.pressTitle}</h2>
+                  <p className={s.pressBody}>{copy.pressBody}</p>
+                  <a href={`mailto:${company.email}`} className={s.pressLink}>
+                    {company.email}
+                    <ArrowMark />
+                  </a>
+                  <a href={`tel:${company.phoneHref}`} className={s.pressLink}>
+                    {company.phone}
+                    <ArrowMark />
+                  </a>
+                </div>
+              </aside>
+            </div>
           </div>
         </section>
       </main>

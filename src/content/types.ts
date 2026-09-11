@@ -157,3 +157,79 @@ export function countWords(blocks: Block[], locale: Locale) {
   }
   return n;
 }
+
+/* ---------------------------------------------------------------------------
+   Clients and the certificate registry
+   --------------------------------------------------------------------------- */
+
+export type SectorId =
+  | "bank"
+  | "leasing"
+  | "takaful"
+  | "investment"
+  | "microfinance"
+  | "business";
+
+export const sectorLabel: Record<SectorId, L> = {
+  bank: { uz: "Bank", ru: "Банк" },
+  leasing: { uz: "Lizing", ru: "Лизинг" },
+  takaful: { uz: "Takaful", ru: "Такафул" },
+  investment: { uz: "Investitsiya", ru: "Инвестиции" },
+  microfinance: { uz: "Mikromoliya", ru: "Микрофинансы" },
+  business: { uz: "Halol biznes", ru: "Халяль-бизнес" },
+};
+
+/** An organisation the council has worked with. */
+export type Organization = {
+  slug: string;
+  name: string;
+  sector: SectorId;
+  city: L;
+  /** year the relationship began */
+  since: number;
+  /** absolute URL of the logo, when the CMS has one; a monogram stands in otherwise */
+  logo?: string;
+};
+
+export type CertificateKind = "product" | "operations" | "fund" | "sukuk";
+
+export const certificateKindLabel: Record<CertificateKind, L> = {
+  product: { uz: "Mahsulot sertifikati", ru: "Сертификат продукта" },
+  operations: { uz: "Faoliyat sertifikati", ru: "Сертификат деятельности" },
+  fund: { uz: "Fond sertifikati", ru: "Сертификат фонда" },
+  sukuk: { uz: "Sukuk emissiyasi sertifikati", ru: "Сертификат выпуска сукук" },
+};
+
+export type Certificate = {
+  /** public registry number, also the URL segment, e.g. MK-2026-0142 */
+  number: string;
+  /** Organization.slug */
+  org: string;
+  kind: CertificateKind;
+  /** what was certified: a product, a fund, the whole operation */
+  subject: L;
+  /** standards the review was made against */
+  standards: string[];
+  /** ISO dates */
+  issued: string;
+  validUntil: string;
+  /** withdrawn before expiry; the registry keeps the entry so the record stays honest */
+  revoked?: boolean;
+  /** original signed scan, when the CMS has one */
+  file?: string;
+};
+
+export type CertificateStatus = "valid" | "expired" | "revoked";
+
+/** Revocation wins; otherwise the dates decide, compared in Tashkent. */
+export function certificateStatus(c: Certificate, now = new Date()): CertificateStatus {
+  if (c.revoked) return "revoked";
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tashkent" }).format(now);
+  return c.validUntil < today ? "expired" : "valid";
+}
+
+/** Two letters for a monogram: initials of the first two words. */
+export function monogram(name: string) {
+  const words = name.replace(/["«»“”]/g, "").split(/\s+/).filter(Boolean);
+  return ((words[0]?.[0] ?? "") + (words[1]?.[0] ?? words[0]?.[1] ?? "")).toUpperCase();
+}

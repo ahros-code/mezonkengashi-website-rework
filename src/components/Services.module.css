@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  padding: clamp(1.35rem, 2vw, 1.9rem);
+  padding: var(--card-pad);
   border-radius: var(--r-lg);
   background: var(--paper);
   border: 1px solid var(--ganch-3);
@@ -86,6 +86,39 @@
   font-size: 0.925rem;
   line-height: 1.55;
   color: var(--ink-2);
+}
+
+/* The education tile's quiet pointer to the Mezon Taʼlim page. */
+.talimLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.5rem 0.9rem 0.5rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: var(--ganch);
+  border: 1px solid var(--ganch-3);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition:
+    border-color 0.35s var(--ease-out),
+    background-color 0.35s var(--ease-out);
+}
+.talimMark {
+  width: 1.15rem;
+  height: auto;
+}
+.talimLink svg:last-child {
+  transition: transform 0.35s var(--ease-out);
+}
+.talimLink:hover {
+  border-color: var(--zar);
+  background: color-mix(in srgb, var(--zar) 12%, var(--paper));
+}
+.talimLink:hover svg:last-child {
+  transform: translateX(3px);
 }
 
 .points {

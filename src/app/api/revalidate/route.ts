@@ -19,6 +19,8 @@ const TAGS: Record<string, string[]> = {
   newsArticle: ["news"],
   event: ["events"],
   faqCategory: ["faq"],
+  organization: ["clients"],
+  certificate: ["clients"],
   researchPage: ["page:researchPage"],
   newsPage: ["page:newsPage"],
   eventsPage: ["page:eventsPage"],

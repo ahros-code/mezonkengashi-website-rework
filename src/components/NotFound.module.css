@@ -1,0 +1,665 @@
+/* =========================================================================
+   404 — the home hero's lapis ground, with the zero cut as a khatam seal
+   ========================================================================= */
+
+.page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  background: var(--nil);
+  color: var(--on-dark);
+  overflow: clip;
+  padding-block: clamp(7.5rem, 15vh, 10.5rem) clamp(3.5rem, 7vw, 5.5rem);
+}
+
+/* ---------- background stack ---------- */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  mask-image: radial-gradient(90% 70% at 72% 18%, #000 10%, transparent 78%);
+  -webkit-mask-image: radial-gradient(90% 70% at 72% 18%, #000 10%, transparent 78%);
+}
+.photo img {
+  object-fit: cover;
+  object-position: 50% 30%;
+  opacity: 0.24;
+  filter: grayscale(0.4) contrast(1.1) brightness(0.7);
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 60% at 22% 20%, rgba(23, 98, 156, 0.34), transparent 70%),
+    linear-gradient(180deg, rgba(0, 34, 61, 0.55) 0%, transparent 30%, rgba(0, 26, 46, 0.7) 78%, var(--nil) 100%);
+}
+
+.lattice {
+  position: absolute;
+  inset: -10%;
+  color: rgba(248, 183, 0, 0.14);
+  mask-image: radial-gradient(60% 55% at 26% 30%, #000 6%, transparent 70%);
+  -webkit-mask-image: radial-gradient(60% 55% at 26% 30%, #000 6%, transparent 70%);
+  animation: drift 120s linear infinite alternate;
+}
+
+.bloom {
+  position: absolute;
+  width: 58vmax;
+  height: 58vmax;
+  left: -10vmax;
+  top: -26vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(248, 183, 0, 0.2) 0%,
+    rgba(248, 183, 0, 0.08) 36%,
+    transparent 66%
+  );
+  filter: blur(30px);
+  animation: bloom 14s var(--ease-in-out) infinite;
+}
+
+/* two hairline rings behind the numerals, echoing the logo's arch */
+.arch {
+  position: absolute;
+  width: min(92vw, 900px);
+  aspect-ratio: 1;
+  left: clamp(-26rem, -18vw, -6rem);
+  top: clamp(-30rem, -22vw, -10rem);
+  border-radius: 50%;
+  border: 1px solid rgba(248, 183, 0, 0.13);
+}
+.arch::after {
+  content: "";
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ---------- top: message + resume card ---------- */
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
+}
+
+.lead {
+  display: grid;
+  justify-items: start;
+  gap: clamp(0.9rem, 1.8vh, 1.3rem);
+}
+
+.code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--on-dark-2);
+  letter-spacing: 0.04em;
+  animation: rise 0.8s var(--ease-out) 0.05s both;
+}
+.codeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--zar);
+  box-shadow: 0 0 0 4px rgba(248, 183, 0, 0.2);
+  flex: none;
+}
+
+/* The numerals: two brand-weight fours around a seal. */
+.digits {
+  display: flex;
+  align-items: center;
+  gap: 0.04em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(6.2rem, 2.4rem + 15vw, 14.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-block: 0.08em 0.1em;
+  margin-left: -0.05em;
+  user-select: none;
+}
+
+.digit {
+  display: block;
+  text-shadow: 0 0.06em 0.5em rgba(0, 20, 40, 0.5);
+  animation: unveil 1.1s var(--ease-out) 0.2s both;
+}
+.digitLate {
+  animation-delay: 0.42s;
+}
+
+.seal {
+  width: 0.78em;
+  height: 0.78em;
+  flex: none;
+  margin-inline: 0.02em;
+  filter: drop-shadow(0 0 0.14em rgba(248, 183, 0, 0.28))
+    drop-shadow(0 0.08em 0.24em rgba(0, 14, 28, 0.6));
+  animation: sealIn 1.3s var(--ease-out) 0.3s both;
+}
+.sealStar {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 80s linear infinite;
+}
+.sealTicks {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: spin 160s linear infinite reverse;
+}
+
+@keyframes sealIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-60deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 1.15rem + 2.1vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  color: #ffffff;
+  max-width: 20ch;
+  animation: rise 0.8s var(--ease-out) 0.6s both;
+}
+
+.lede {
+  font-size: clamp(0.98rem, 0.92rem + 0.3vw, 1.12rem);
+  line-height: 1.66;
+  color: var(--on-dark-2);
+  max-width: 50ch;
+  animation: rise 0.8s var(--ease-out) 0.7s both;
+}
+
+.requested {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  max-width: 100%;
+  padding: 0.5rem 0.55rem 0.5rem 1rem;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 18, 33, 0.35);
+  font-size: var(--t-xs);
+  animation: rise 0.8s var(--ease-out) 0.78s both;
+}
+.requestedLabel {
+  color: var(--on-dark-3);
+}
+.requestedPath {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--zar-2);
+  background: rgba(248, 183, 0, 0.08);
+  border: 1px solid rgba(248, 183, 0, 0.18);
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--r-pill);
+  overflow-wrap: anywhere;
+  text-decoration: line-through;
+  text-decoration-color: rgba(248, 183, 0, 0.45);
+  text-decoration-thickness: 1px;
+}
+
+.suggest {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: 100%;
+  font-size: var(--t-cap);
+  color: var(--on-dark-2);
+  padding-block: 0.15rem;
+  animation: rise 0.8s var(--ease-out) 0.84s both;
+}
+.suggest svg:first-child {
+  color: var(--zar);
+  flex: none;
+}
+.suggestTitle {
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.45s var(--ease-out), color 0.3s var(--ease-out);
+}
+.suggestArrow {
+  flex: none;
+  color: var(--zar);
+  transition: transform 0.35s var(--ease-out);
+}
+.suggest:hover .suggestTitle,
+.suggest:focus-visible .suggestTitle {
+  color: var(--zar-2);
+  background-size: 100% 1px;
+}
+.suggest:hover .suggestArrow {
+  transform: translateX(4px);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.4rem;
+  animation: rise 0.8s var(--ease-out) 0.9s both;
+}
+
+/* ---------- resume card ---------- */
+
+.resume {
+  padding: clamp(1.4rem, 2.4vw, 1.9rem);
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  animation: rise 0.9s var(--ease-out) 0.55s both;
+}
+/* a gold hairline on the card's top edge — the one ornament it carries */
+.resume::before {
+  content: "";
+  position: absolute;
+  inset: 0 12% auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(248, 183, 0, 0.75), transparent);
+}
+
+.cardLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--on-dark-2);
+}
+.cardTime {
+  margin-left: auto;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--on-dark-3);
+  white-space: nowrap;
+}
+
+.pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--zar);
+  flex: none;
+}
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--zar);
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+@keyframes pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+.resumeTitle {
+  font-size: clamp(1.15rem, 1.02rem + 0.5vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-wrap: balance;
+}
+
+.resumePath {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.74rem;
+  color: var(--on-dark-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: -0.4rem;
+}
+
+.startBody {
+  font-size: var(--t-cap);
+  line-height: 1.6;
+  color: var(--on-dark-2);
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.2rem;
+}
+.progressTrack {
+  position: relative;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.progressFill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--firuza), var(--zar-2));
+  transform-origin: left center;
+  box-shadow: 0 0 12px rgba(248, 183, 0, 0.5);
+  animation: fill 1.2s var(--ease-out) 0.2s both;
+}
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+.progressText {
+  font-size: var(--t-xs);
+  color: var(--on-dark-3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.resumeCta {
+  margin-top: 0.35rem;
+}
+.resumeCta svg {
+  transition: transform 0.35s var(--ease-out);
+}
+.resumeCta:hover svg {
+  transform: translateX(3px);
+}
+
+.recent {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.recentLabel {
+  font-size: var(--t-xs);
+  color: var(--on-dark-3);
+  margin-bottom: 0.45rem;
+}
+.recentList {
+  display: grid;
+}
+.recentLink {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.6rem;
+  margin-inline: -0.6rem;
+  border-radius: var(--r-sm);
+  font-size: var(--t-sm);
+  color: var(--on-dark-2);
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+.recentLink svg {
+  color: rgba(248, 183, 0, 0.65);
+}
+.recentLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+.recentTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.recentTime {
+  font-size: 0.7rem;
+  color: var(--on-dark-3);
+  white-space: nowrap;
+}
+
+/* placeholder until storage has been read, so the card never jumps */
+.skeleton {
+  display: grid;
+  gap: 0.9rem;
+}
+.skeleton span {
+  display: block;
+  height: 0.8rem;
+  border-radius: 6px;
+  background: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0.05) 30%,
+      rgba(255, 255, 255, 0.13) 50%,
+      rgba(255, 255, 255, 0.05) 70%
+    )
+    0 0 / 220% 100%;
+  animation: sheenSweep 1.6s linear infinite;
+}
+.skeleton span:nth-child(1) {
+  width: 42%;
+}
+.skeleton span:nth-child(2) {
+  height: 1.5rem;
+  width: 88%;
+}
+.skeleton span:nth-child(3) {
+  width: 64%;
+}
+.skeleton span:nth-child(4) {
+  height: 2.9rem;
+  border-radius: var(--r-pill);
+  margin-top: 2.2rem;
+}
+
+/* ---------- sections grid ---------- */
+
+.sections {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+
+.sectionsLabel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--t-cap);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--on-dark-2);
+  margin-bottom: 1.3rem;
+}
+.sectionsLabel::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(248, 183, 0, 0.45), rgba(255, 255, 255, 0.08) 40%, transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+}
+
+.cell {
+  display: grid;
+  animation: rise 0.8s var(--ease-out) both;
+}
+
+.tile {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 0.4rem;
+  min-height: 9.5rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: var(--r-md);
+  transition:
+    transform 0.45s var(--ease-out),
+    border-color 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out);
+}
+/* a gold rule draws in along the base on hover */
+.tile::before {
+  content: "";
+  position: absolute;
+  left: 1.2rem;
+  right: 1.2rem;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--zar), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s var(--ease-out);
+}
+.tile:hover,
+.tile:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(248, 183, 0, 0.32);
+}
+.tile:hover::before,
+.tile:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.tileIndex {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: var(--zar);
+}
+.tileArrow {
+  color: var(--on-dark-3);
+  transition: transform 0.4s var(--ease-out), color 0.4s var(--ease-out);
+}
+.tile:hover .tileArrow,
+.tile:focus-visible .tileArrow {
+  color: var(--zar-2);
+  transform: translateX(3px) rotate(-45deg);
+}
+
+.tileName {
+  grid-column: 1 / -1;
+  align-self: end;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+.tileBlurb {
+  grid-column: 1 / -1;
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--on-dark-3);
+  transition: color 0.4s var(--ease-out);
+}
+.tile:hover .tileBlurb {
+  color: var(--on-dark-2);
+}
+
+/* ---------- help rail ---------- */
+
+.help {
+  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+.helpText {
+  font-size: var(--t-sm);
+  color: var(--on-dark-3);
+  max-width: 52ch;
+}
+.helpLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.helpLink {
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--on-dark-2);
+  padding: 0.5rem 1rem;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: color 0.3s var(--ease-out), border-color 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out);
+}
+.helpLink:hover {
+  color: #ffffff;
+  border-color: rgba(248, 183, 0, 0.45);
+  background: rgba(248, 183, 0, 0.06);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .resume {
+    min-height: 0;
+  }
+}
+
+/* On a phone the tiles become a compact two-up index: the name carries it. */
+@media (max-width: 520px) {
+  .tile {
+    min-height: 6.25rem;
+    padding: 0.9rem 0.95rem 1rem;
+  }
+  .tileName {
+    font-size: 0.98rem;
+  }
+  .tileBlurb {
+    display: none;
+  }
+  .help {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,335 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--ganch);
+  padding-block: var(--sec-y);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
+}
+.head :global(.h2) {
+  max-width: 17ch;
+}
+
+.headAside {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.figures {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ganch-3);
+}
+.figure {
+  font-family: var(--font-display);
+  font-size: var(--t-num);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--kobalt);
+  font-variant-numeric: tabular-nums;
+}
+.figureLabel {
+  margin-top: 0.4rem;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  max-width: 16ch;
+}
+
+/* ---------------- roster marquee ---------------- */
+
+.marquee {
+  display: grid;
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+  /* the rows fade out at both edges instead of being cut by the viewport */
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.row {
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+  width: max-content;
+  animation: roll 70s linear infinite;
+}
+.row[data-reverse="true"] .track {
+  animation-direction: reverse;
+  animation-duration: 80s;
+}
+/* anyone reading or reaching for a tile stops the whole roster */
+.marquee:hover .track,
+.marquee:focus-within .track {
+  animation-play-state: paused;
+}
+
+/* the track holds the list twice, so shifting by half lands on an identical frame */
+@keyframes roll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - clamp(0.7rem, 1.2vw, 1rem) / 2));
+  }
+}
+
+.tile {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 17.5rem;
+  padding: 0.95rem 1.15rem 0.95rem 0.95rem;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--ganch-2);
+  box-shadow: 0 14px 30px -26px rgba(0, 34, 61, 0.55);
+  transition:
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+.tile:hover {
+  border-color: color-mix(in srgb, var(--zar) 50%, var(--ganch-2));
+  box-shadow: 0 20px 36px -24px rgba(0, 34, 61, 0.55);
+  transform: translateY(-2px);
+}
+
+.mark {
+  position: relative;
+  flex: none;
+  width: 3.1rem;
+  height: 3.1rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background: linear-gradient(150deg, var(--kobalt), var(--nil));
+  color: rgba(248, 183, 0, 0.55);
+  overflow: hidden;
+}
+.mark svg {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  transition: transform 1.2s var(--ease-out);
+}
+.tile:hover .mark svg {
+  transform: rotate(45deg);
+}
+.mark span {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+.mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.4rem;
+  background: var(--paper);
+}
+
+.tileText {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.meta {
+  font-size: 0.74rem;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.badge {
+  margin-left: auto;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--zar) 22%, transparent);
+  color: var(--firuza);
+}
+.badgeText {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------------- verify band ---------------- */
+
+.verify {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  grid-template-areas:
+    "text field"
+    "text link";
+  gap: 0.9rem clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  padding: var(--card-pad);
+  border-radius: var(--r-xl);
+  background: linear-gradient(135deg, var(--kobalt) 0%, var(--nil) 70%);
+  color: var(--on-dark);
+  box-shadow: 0 30px 60px -36px rgba(0, 34, 61, 0.75);
+}
+.verifyLattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(248, 183, 0, 0.14);
+  mask-image: radial-gradient(60% 120% at 100% 50%, #000, transparent 72%);
+  -webkit-mask-image: radial-gradient(60% 120% at 100% 50%, #000, transparent 72%);
+}
+.verifyText {
+  grid-area: text;
+  display: grid;
+  gap: 0.5rem;
+}
+.verifyTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: var(--t-xl);
+  font-weight: 700;
+  color: #ffffff;
+}
+.verifyTitle svg {
+  color: var(--zar);
+  flex: none;
+}
+.verifyBody {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--on-dark-2);
+  max-width: 46ch;
+}
+
+.verifyField {
+  grid-area: field;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+.verifyField:focus-within {
+  border-color: rgba(248, 183, 0, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+}
+.verifyInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 1rem;
+  border: 0;
+  background: none;
+  outline: none;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+.verifyInput::placeholder {
+  color: var(--on-dark-3);
+}
+.verifyInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.registryLink {
+  grid-area: link;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: var(--t-cap);
+  font-weight: 600;
+  color: var(--zar-2);
+  transition: gap 0.35s var(--ease-out);
+}
+.registryLink:hover {
+  gap: 0.85rem;
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .verify {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "text"
+      "field"
+      "link";
+  }
+  .registryLink {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 520px) {
+  .tile {
+    min-width: 15rem;
+  }
+  .verifyField {
+    flex-direction: column;
+    border-radius: var(--r-lg);
+  }
+  .verifyField :global(.btn) {
+    width: 100%;
+  }
+}
+
+/* No motion: the roster becomes a still, wrapping grid of the real tiles. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    mask-image: none;
+    -webkit-mask-image: none;
+    padding-inline: var(--gutter);
+    max-width: var(--maxw);
+    margin-inline: auto;
+  }
+  .track {
+    width: auto;
+    flex-wrap: wrap;
+    animation: none;
+  }
+  .tile[aria-hidden="true"] {
+    display: none;
+  }
+}

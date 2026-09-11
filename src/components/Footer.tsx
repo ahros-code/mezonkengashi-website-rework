@@ -8,6 +8,14 @@ import s from "./Footer.module.css";
 export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
   const year = new Date().getFullYear();
 
+  const knowledge = [
+    { href: paths.research(locale), label: t.nav.research },
+    { href: paths.news(locale), label: t.nav.news },
+    { href: paths.events(locale), label: t.nav.events },
+    { href: paths.faq(locale), label: t.nav.faq },
+    { href: paths.talim(locale), label: t.nav.talim },
+  ];
+
   return (
     <footer className={s.footer}>
       <div className={s.lattice} aria-hidden="true">
@@ -37,7 +45,7 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
             <ul className={s.list}>
               {serviceOrder.map((id) => (
                 <li key={id}>
-                  <a href={paths.services(locale)} className={s.link}>
+                  <a href={paths.service(locale, id)} className={s.link}>
                     {t.services.items[id].name}
                   </a>
                 </li>
@@ -66,10 +74,30 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
                 </a>
               </li>
               <li>
-                <a href={paths.faq(locale)} className={s.link}>
-                  {t.nav.faq}
+                <a href={paths.certificates(locale)} className={s.link}>
+                  {t.registry.title}
                 </a>
               </li>
+              <li>
+                <a href={paths.contact(locale)} className={s.link}>
+                  {t.nav.cta}
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="foot-knowledge">
+            <h2 id="foot-knowledge" className={s.colTitle}>
+              {t.knowledge.label}
+            </h2>
+            <ul className={s.list}>
+              {knowledge.map((k) => (
+                <li key={k.href}>
+                  <a href={k.href} className={s.link}>
+                    {k.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
 
@@ -103,12 +131,6 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
               </li>
             </ul>
           </div>
-        </div>
-
-        <div className={s.markRow}>
-          <span className={s.bigmark} aria-hidden="true">
-            MEZON
-          </span>
         </div>
 
         <div className={s.base}>

@@ -4,7 +4,9 @@ import { sanityFetch } from "@/sanity/client";
 import { isSanityConfigured } from "@/sanity/env";
 import type { SingletonType } from "@/sanity/schema/pages";
 import {
+  certificatesQuery,
   eventsQuery,
+  organizationsQuery,
   faqQuery,
   newsQuery,
   pageCopyQuery,
@@ -13,7 +15,8 @@ import {
 import { news as bundledNews } from "./news";
 import { research as bundledResearch } from "./research";
 import { events as bundledEvents } from "./events";
-import type { Article, Block, L, MezonEvent } from "./types";
+import { certificates as bundledCertificates, organizations as bundledOrganizations } from "./clients";
+import type { Article, Block, Certificate, L, MezonEvent, Organization } from "./types";
 
 /**
  * The single door between the pages and their content.
@@ -151,4 +154,32 @@ export async function getPageCopy<T extends Record<string, unknown>>(
     if (text) merged[key] = text;
   }
   return merged as T;
+}
+
+export type Registry = { organizations: Organization[]; certificates: Certificate[] };
+
+/**
+ * The client roster and the certificates issued to it, read together because
+ * every certificate is shown with its organisation.
+ *
+ * Unlike the knowledge-centre getters, an empty CMS falls back to the bundled
+ * sample registry: the roster is a homepage section, and a blank one reads as
+ * broken. The first published organisation switches the site to the CMS copy.
+ */
+export async function getRegistry(): Promise<Registry> {
+  const [organizations, certificates] = await Promise.all([
+    sanityFetch<Organization[]>(organizationsQuery, {}, bundledOrganizations, "clients"),
+    sanityFetch<Certificate[]>(certificatesQuery, {}, bundledCertificates, "clients"),
+  ]);
+  if (!organizations.length) {
+    return { organizations: bundledOrganizations, certificates: bundledCertificates };
+  }
+  return {
+    organizations: organizations.map((o) => ({ ...o, city: text(o.city), logo: o.logo ?? undefined })),
+    certificates: certificates.map((c) => ({
+      ...c,
+      subject: text(c.subject),
+      file: c.file ?? undefined,
+    })),
+  };
 }
