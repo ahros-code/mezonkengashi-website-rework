@@ -1,5 +1,5 @@
 import { GirihField, GirihStar } from "./Girih";
-import type { Block } from "@/content/types";
+import { pick, type Block } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 import s from "./Prose.module.css";
 
@@ -19,7 +19,7 @@ export default function Prose({
           case "p":
             return (
               <p key={i} className={s.p}>
-                {block.text[locale]}
+                {pick(block.text, locale)}
               </p>
             );
 
@@ -27,7 +27,7 @@ export default function Prose({
             return (
               <h2 key={i} className={s.h}>
                 <GirihStar size={13} strokeWidth={1.5} />
-                {block.text[locale]}
+                {pick(block.text, locale)}
               </h2>
             );
 
@@ -35,9 +35,9 @@ export default function Prose({
             return (
               <ul key={i} className={s.ul}>
                 {block.items.map((item) => (
-                  <li key={item[locale]} className={s.li}>
+                  <li key={pick(item, locale)} className={s.li}>
                     <GirihStar size={10} strokeWidth={1.6} />
-                    <span>{item[locale]}</span>
+                    <span>{pick(item, locale)}</span>
                   </li>
                 ))}
               </ul>
@@ -49,8 +49,8 @@ export default function Prose({
                 <span className={s.quoteLattice} aria-hidden="true">
                   <GirihField id={`${latticeId}-q${i}`} tile={104} strokeWidth={0.9} />
                 </span>
-                <blockquote className={s.quoteText}>{block.text[locale]}</blockquote>
-                <figcaption className={s.quoteBy}>{block.by[locale]}</figcaption>
+                <blockquote className={s.quoteText}>{pick(block.text, locale)}</blockquote>
+                <figcaption className={s.quoteBy}>{pick(block.by, locale)}</figcaption>
               </figure>
             );
         }

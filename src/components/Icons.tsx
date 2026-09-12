@@ -104,6 +104,72 @@ export function ServiceIcon({ id }: { id: ServiceId }) {
   return <C />;
 }
 
+/* --- consultation form marks: who is asking, and the two needs that are not services --- */
+
+function Bank() {
+  return (
+    <svg {...base}>
+      <path d="M6 18L24 7l18 11z" />
+      <path d="M11 22v14M19 22v14M29 22v14M37 22v14" />
+      <path d="M6 40h36" />
+    </svg>
+  );
+}
+
+function Business() {
+  return (
+    <svg {...base}>
+      <path d="M9 42V16l15-9 15 9v26z" />
+      <path d="M17 42v-9h14v9" />
+      <path d="M17 22h4M27 22h4M17 28h4M27 28h4" opacity="0.7" />
+    </svg>
+  );
+}
+
+function Person() {
+  return (
+    <svg {...base}>
+      <circle cx="24" cy="16" r="7" />
+      <path d="M9 41c0-8.3 6.7-14 15-14s15 5.7 15 14" />
+    </svg>
+  );
+}
+
+function Advice() {
+  return (
+    <svg {...base}>
+      {/* a pointed-arch speech bubble */}
+      <path d="M8 33V21C8 13 15 7 24 7s16 6 16 14v12H18l-8 7v-7z" />
+      <path d="M17 21h14M17 27h9" opacity="0.7" />
+    </svg>
+  );
+}
+
+function Other() {
+  return (
+    <svg {...base}>
+      <path d={STAR_24} />
+      <circle cx="24" cy="21" r="1.4" />
+    </svg>
+  );
+}
+
+export type WizardIconId = "bank" | "business" | "person" | "learner" | "advice" | "other";
+
+const wizardMap: Record<WizardIconId, () => React.JSX.Element> = {
+  bank: Bank,
+  business: Business,
+  person: Person,
+  learner: Education,
+  advice: Advice,
+  other: Other,
+};
+
+export function WizardIcon({ id }: { id: WizardIconId | ServiceId }) {
+  const C = id in wizardMap ? wizardMap[id as WizardIconId] : map[id as ServiceId];
+  return <C />;
+}
+
 /* --- small utility marks --- */
 
 export function ArrowMark() {

@@ -66,7 +66,11 @@ export default function PageHero({
             <p className={s.kicker}>{kicker}</p>
             <h1 className={s.title}>{title}</h1>
           </div>
-          {lede && <p className={s.lede}>{lede}</p>}
+          {lede && (
+            <p className={s.lede} data-speakable>
+              {lede}
+            </p>
+          )}
         </div>
 
         {meta && meta.length > 0 && (

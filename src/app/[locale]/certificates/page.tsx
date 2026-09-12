@@ -9,6 +9,7 @@ import { paths } from "@/lib/routes";
 import { company } from "@/lib/site";
 import { getRegistry } from "@/content/source";
 import {
+  pick,
   certificateKindLabel,
   certificateStatus,
   countLabel,
@@ -69,9 +70,9 @@ export default async function CertificatesPage({
         number: c.number,
         href: paths.certificate(locale, c.number),
         org,
-        sectorLabel: sectorLabel[org.sector][locale],
-        subject: c.subject[locale],
-        kindLabel: certificateKindLabel[c.kind][locale],
+        sectorLabel: pick(sectorLabel[org.sector], locale),
+        subject: pick(c.subject, locale),
+        kindLabel: pick(certificateKindLabel[c.kind], locale),
         standards: c.standards,
         issued: formatDate(c.issued, locale),
         until: formatDate(c.validUntil, locale),
@@ -81,7 +82,7 @@ export default async function CertificatesPage({
 
   const sectors = [...new Set(organizations.map((o) => o.sector))].map((id) => ({
     id,
-    label: sectorLabel[id as SectorId][locale],
+    label: pick(sectorLabel[id as SectorId], locale),
   }));
 
   const tableCopy = {
@@ -146,6 +147,15 @@ export default async function CertificatesPage({
               <GirihStar size={16} strokeWidth={1.3} />
               <span>
                 {copy.note}{" "}
+                <a
+                  href={company.telegram}
+                  className={s.noteLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Telegram
+                </a>
+                <span aria-hidden="true"> · </span>
                 <a href={`mailto:${company.email}`} className={s.noteLink}>
                   {company.email}
                 </a>

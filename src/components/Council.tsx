@@ -3,12 +3,19 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { GirihMedallion } from "./Girih";
-import { boardMembers, expertMembers } from "@/lib/site";
+import { boardMembers, expertMembers, teamMembers } from "@/lib/site";
 import type { Dict } from "@/i18n";
 import s from "./Council.module.css";
 
-type GroupId = "board" | "experts";
-const GROUPS: GroupId[] = ["board", "experts"];
+type GroupId = "board" | "experts" | "team";
+const GROUPS: GroupId[] = ["board", "experts", "team"];
+
+/** Who sits in each tab: the two councils, then the people who run the work. */
+const ROSTER: Record<GroupId, typeof boardMembers> = {
+  board: boardMembers,
+  experts: expertMembers,
+  team: teamMembers,
+};
 
 export default function Council({ t }: { t: Dict }) {
   const [group, setGroup] = useState<GroupId>("board");
@@ -36,7 +43,7 @@ export default function Council({ t }: { t: Dict }) {
     return () => window.removeEventListener("resize", placeThumb);
   }, [placeThumb]);
 
-  const members = group === "board" ? boardMembers : expertMembers;
+  const members = ROSTER[group];
 
   /* On a phone each panel is a swipe row; the pager reads and drives it. */
   const step = () => {
@@ -131,7 +138,7 @@ export default function Council({ t }: { t: Dict }) {
         </div>
 
         {GROUPS.map((id) => {
-          const members = id === "board" ? boardMembers : expertMembers;
+          const members = ROSTER[id];
           return (
           <div
             key={id}

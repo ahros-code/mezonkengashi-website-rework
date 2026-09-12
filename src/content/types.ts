@@ -1,10 +1,17 @@
-import type { Locale } from "@/i18n/config";
+import { intlLocale, type ContentLocale, type Locale } from "@/i18n/config";
+import { toCyrillic } from "@/i18n/translit";
 
 /** Every translatable string keeps its locales adjacent so they cannot drift. */
-export type L = Record<Locale, string>;
+export type L = Record<ContentLocale, string>;
 
-export function pick(v: L, locale: Locale) {
-  return v[locale];
+/** The string for a locale; the Cyrillic edition is read off the Latin one. */
+export function pick(v: L, locale: Locale): string {
+  return locale === "oz" ? toCyrillic(v.uz) : v[locale];
+}
+
+/** Same, for plain strings written in Uzbek Latin (organisation names, UI literals). */
+export function script(text: string, locale: Locale): string {
+  return locale === "oz" ? toCyrillic(text) : text;
 }
 
 export type Block =
@@ -81,7 +88,7 @@ export function byNewestFirst<T extends { date?: string; start?: string }>(a: T,
 /** Locale-correct long date, without pulling in a formatting library. */
 export function formatDate(iso: string, locale: Locale, withTime = false) {
   const d = new Date(iso);
-  const tag = locale === "ru" ? "ru-RU" : "uz-UZ";
+  const tag = intlLocale[locale];
   const opts: Intl.DateTimeFormatOptions = {
     day: "numeric",
     month: "long",
@@ -118,7 +125,7 @@ export type PluralForms = {
  * Russian picks a form from the last digit, with 11–14 always taking `many`.
  */
 export function countLabel(n: number, locale: Locale, forms: PluralForms) {
-  if (locale !== "ru") return `${n} ${forms.uz}`;
+  if (locale !== "ru") return `${n} ${script(forms.uz, locale)}`;
   const mod100 = n % 100;
   const mod10 = n % 10;
   const form =
@@ -133,10 +140,9 @@ export function countLabel(n: number, locale: Locale, forms: PluralForms) {
 }
 
 export function formatPrice(price: number, locale: Locale) {
-  if (price === 0) return locale === "ru" ? "Бесплатно" : "Bepul";
-  const tag = locale === "ru" ? "ru-RU" : "uz-UZ";
-  const n = new Intl.NumberFormat(tag).format(price);
-  return locale === "ru" ? `${n} сум` : `${n} soʻm`;
+  if (price === 0) return locale === "ru" ? "Бесплатно" : script("Bepul", locale);
+  const n = new Intl.NumberFormat(intlLocale[locale]).format(price);
+  return locale === "ru" ? `${n} сум` : `${n} ${script("soʻm", locale)}`;
 }
 
 /** Rough word count for the article schema — good enough for a signal. */
@@ -147,12 +153,14 @@ export function countWords(blocks: Block[], locale: Locale) {
   const add = (s: string | undefined | null) => {
     n += (s ?? "").trim().split(/\s+/).filter(Boolean).length;
   };
+  // Transliteration keeps word boundaries, so the Latin count stands for Cyrillic.
+  const l: ContentLocale = locale === "ru" ? "ru" : "uz";
   for (const b of blocks) {
-    if (b.type === "p" || b.type === "h") add(b.text[locale]);
-    else if (b.type === "ul") b.items.forEach((i) => add(i[locale]));
+    if (b.type === "p" || b.type === "h") add(b.text[l]);
+    else if (b.type === "ul") b.items.forEach((i) => add(i[l]));
     else if (b.type === "quote") {
-      add(b.text[locale]);
-      add(b.by[locale]);
+      add(b.text[l]);
+      add(b.by[l]);
     }
   }
   return n;
@@ -167,6 +175,8 @@ export type SectorId =
   | "leasing"
   | "takaful"
   | "investment"
+  | "fintech"
+  | "construction"
   | "microfinance"
   | "business";
 
@@ -175,6 +185,8 @@ export const sectorLabel: Record<SectorId, L> = {
   leasing: { uz: "Lizing", ru: "Лизинг" },
   takaful: { uz: "Takaful", ru: "Такафул" },
   investment: { uz: "Investitsiya", ru: "Инвестиции" },
+  fintech: { uz: "Fintex", ru: "Финтех" },
+  construction: { uz: "Qurilish", ru: "Строительство" },
   microfinance: { uz: "Mikromoliya", ru: "Микрофинансы" },
   business: { uz: "Halol biznes", ru: "Халяль-бизнес" },
 };
@@ -185,8 +197,10 @@ export type Organization = {
   name: string;
   sector: SectorId;
   city: L;
-  /** year the relationship began */
-  since: number;
+  /** Year the relationship began, where it is on record. */
+  since?: number;
+  /** What the council did for them, when it is worth naming. */
+  work?: L;
   /** absolute URL of the logo, when the CMS has one; a monogram stands in otherwise */
   logo?: string;
 };

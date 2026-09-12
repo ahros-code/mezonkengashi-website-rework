@@ -2,7 +2,7 @@ import { GirihField, GirihStar } from "./Girih";
 import { company, serviceOrder } from "@/lib/site";
 import { paths } from "@/lib/routes";
 import type { Dict } from "@/i18n";
-import type { Locale } from "@/i18n/config";
+import { htmlLang, type Locale } from "@/i18n/config";
 import s from "./Footer.module.css";
 
 export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
@@ -109,11 +109,7 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
                   {company.phone}
                 </a>
               </li>
-              <li>
-                <a href={`mailto:${company.email}`} className={s.link}>
-                  {company.email}
-                </a>
-              </li>
+              {/* Telegram before e-mail: it is the channel clients actually use. */}
               <li>
                 <a
                   href={company.telegram}
@@ -122,6 +118,11 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
                   rel="noopener noreferrer"
                 >
                   Telegram
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${company.email}`} className={s.link}>
+                  {company.email}
                 </a>
               </li>
               <li>
@@ -138,7 +139,7 @@ export default function Footer({ t, locale }: { t: Dict; locale: Locale }) {
             © {year} {company.legalName}. {t.footer.rights}
           </span>
           <span className={s.disclaimer}>{t.footer.disclaimer}</span>
-          <span lang={locale === "uz" ? "uz" : "ru"}>{t.footer.credits}</span>
+          <span lang={htmlLang[locale]}>{t.footer.credits}</span>
         </div>
       </div>
     </footer>

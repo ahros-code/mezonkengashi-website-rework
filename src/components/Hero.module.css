@@ -209,9 +209,17 @@
   line-height: 1.55;
   color: #ffffff;
 }
-.quoteMark {
-  color: var(--zar-2);
+/* the line that names the standing above the statement */
+.statusKicker {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   margin-bottom: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--zar-2);
 }
 .attrib {
   display: flex;
@@ -265,6 +273,15 @@
   line-height: 1.45;
   color: var(--on-dark-2);
   max-width: 26ch;
+}
+/* source and forecast, kept quieter than the label above it */
+.metricNote {
+  margin-top: 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--on-dark-2);
+  opacity: 0.85;
+  max-width: 30ch;
 }
 .spark {
   margin-top: 1rem;

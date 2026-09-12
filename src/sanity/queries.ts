@@ -84,6 +84,7 @@ export const organizationsQuery = groq`*[_type == "organization" && defined(slug
   sector,
   city${localised},
   since,
+  work${localised},
   "logo": logo.asset->url
 }`;
 

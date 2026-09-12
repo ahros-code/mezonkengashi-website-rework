@@ -14,6 +14,7 @@ import {
   standardName,
   talimContact,
 } from "@/content/talim";
+import { pick } from "@/content/types";
 import { TalimLeaf, TalimLeaves, TalimWordmark } from "@/components/TalimMark";
 import { GirihField, GirihStar } from "@/components/Girih";
 import { ArrowMark, PhoneMark, PlaneMark } from "@/components/Icons";
@@ -60,7 +61,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
   const t = getDict(locale);
   const c = t.talim;
 
-  const standardsMarquee = Object.values(standardName).map((n) => n[locale]);
+  const standardsMarquee = Object.values(standardName).map((n) => pick(n, locale));
   const arabicMarquee = cpssModules.map((m) => m.ar);
   const statementWords = c.statement.split(" ");
 
@@ -84,7 +85,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
       inLanguage: "uz",
       provider: { "@id": `${SITE_URL}/#talim` },
       educationalCredentialAwarded: "AAOIFI Certificate of Proficiency in Shariʼah Standards (CPSS)",
-      syllabusSections: cpssModules.map((m, i) => ({ "@type": "Syllabus", name: `${i + 1}. ${m.title[locale]}` })),
+      syllabusSections: cpssModules.map((m, i) => ({ "@type": "Syllabus", name: `${i + 1}. ${pick(m.title, locale)}` })),
       hasCourseInstance: {
         "@type": "CourseInstance",
         courseMode: "Blended",
@@ -100,7 +101,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
           name: c.city,
           address: { "@type": "PostalAddress", addressLocality: c.city, addressCountry: "UZ" },
         },
-        instructor: instructors.map((p) => ({ "@type": "Person", name: p.name[locale], jobTitle: p.role[locale] })),
+        instructor: instructors.map((p) => ({ "@type": "Person", name: pick(p.name, locale), jobTitle: pick(p.role, locale) })),
       },
     },
     breadcrumbs(locale, [
@@ -298,7 +299,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
 
             <figure className={s.cpssPhoto} data-reveal>
               <div className={s.archTall}>
-                <img src="/img/talim/instructors.webp" alt={instructors.map((p) => p.name[locale]).join(", ")} width={1080} height={1080} loading="lazy" decoding="async" />
+                <img src="/img/talim/instructors.webp" alt={instructors.map((p) => pick(p.name, locale)).join(", ")} width={1080} height={1080} loading="lazy" decoding="async" />
               </div>
               <span className={`${s.floatTag} ${s.floatA}`}>
                 <b>61</b> {c.stats[3].u}
@@ -319,9 +320,9 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
           lede={c.journeyLede}
           moduleLabel={c.moduleLabel}
           modules={cpssModules.map((m) => ({
-            title: m.title[locale],
+            title: pick(m.title, locale),
             ar: m.ar,
-            standards: m.standards.map((n) => ({ n, name: standardName[n]?.[locale] ?? "" })),
+            standards: m.standards.map((n) => ({ n, name: standardName[n] ? pick(standardName[n], locale) : "" })),
           }))}
         />
 
@@ -378,7 +379,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
               {instructors.map((p, i) => (
                 <li key={p.id} className={s.person} data-tilt="6" data-reveal style={{ "--d": i } as React.CSSProperties}>
                   <div className={s.personFrame}>
-                    <img src={p.photo} alt={p.name[locale]} width={480} height={480} loading="lazy" decoding="async" />
+                    <img src={p.photo} alt={pick(p.name, locale)} width={480} height={480} loading="lazy" decoding="async" />
                     <span className={s.personRing} aria-hidden="true">
                       <svg viewBox="0 0 100 120" preserveAspectRatio="none">
                         <path d="M1 119V48C1 24 24 9 50 1c26 8 49 23 49 47v71z" pathLength={1} />
@@ -386,11 +387,11 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
                     </span>
                   </div>
                   <div className={s.personText}>
-                    <h3 className={s.personName}>{p.name[locale]}</h3>
-                    <p className={s.personRole}>{p.role[locale]}</p>
+                    <h3 className={s.personName}>{pick(p.name, locale)}</h3>
+                    <p className={s.personRole}>{pick(p.role, locale)}</p>
                     <ul className={s.personCreds}>
                       {p.credentials.map((cr) => (
-                        <li key={cr.uz}>{cr[locale]}</li>
+                        <li key={cr.uz}>{pick(cr, locale)}</li>
                       ))}
                     </ul>
                   </div>
@@ -418,27 +419,27 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
                   </div>
                   <div className={s.courseBody}>
                     <div className={s.courseTop}>
-                      <h3 className={s.courseTitle}>{course.title[locale]}</h3>
+                      <h3 className={s.courseTitle}>{pick(course.title, locale)}</h3>
                       {course.sample && (
                         <span className={s.sample} title={c.sampleNote}>
                           {c.sample}
                         </span>
                       )}
                     </div>
-                    <p className={s.courseSub}>{course.subtitle[locale]}</p>
-                    <p className={s.courseText}>{course.summary[locale]}</p>
+                    <p className={s.courseSub}>{pick(course.subtitle, locale)}</p>
+                    <p className={s.courseText}>{pick(course.summary, locale)}</p>
                     <dl className={s.courseFacts}>
                       <div>
                         <dt>{c.audience}</dt>
-                        <dd>{course.audience[locale]}</dd>
+                        <dd>{pick(course.audience, locale)}</dd>
                       </div>
                       <div>
                         <dt>{c.format}</dt>
-                        <dd>{course.format[locale]}</dd>
+                        <dd>{pick(course.format, locale)}</dd>
                       </div>
                       <div>
                         <dt>{c.length}</dt>
-                        <dd>{course.length[locale]}</dd>
+                        <dd>{pick(course.length, locale)}</dd>
                       </div>
                     </dl>
                     <a {...tg} className={s.courseLink}>
@@ -466,7 +467,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
               {plates.map((pl, i) => (
                 <li key={pl.caption.uz} className={s.shot} data-reveal data-spot style={{ "--d": i } as React.CSSProperties}>
                   {pl.src ? (
-                    <img src={pl.src} alt={pl.alt?.[locale] ?? pl.caption[locale]} loading="lazy" decoding="async" />
+                    <img src={pl.src} alt={pick(pl.alt ?? pl.caption, locale)} loading="lazy" decoding="async" />
                   ) : (
                     <div className={s.shotPending}>
                       <GirihField id={`girih-shot-${i}`} tile={[110, 80, 130, 95, 70][i % 5]} strokeWidth={0.7} />
@@ -474,7 +475,7 @@ export default async function TalimPage({ params }: { params: Promise<{ locale: 
                       <span className={s.shotSoon}>{c.pending}</span>
                     </div>
                   )}
-                  <p className={s.shotCaption}>{pl.caption[locale]}</p>
+                  <p className={s.shotCaption}>{pick(pl.caption, locale)}</p>
                 </li>
               ))}
             </ul>

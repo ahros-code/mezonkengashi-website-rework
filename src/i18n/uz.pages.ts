@@ -46,20 +46,20 @@ const uzPages = {
   },
 
   about: {
-    metaTitle: "Biz haqimizda — Mezon Kengashi islom moliyasi markazi",
+    metaTitle: "Biz haqimizda — AAOIFI ning Oʻzbekistondagi rasmiy vakili",
     metaDescription:
-      "Mezon Kengashi 2013-yildan buyon Oʻzbekistonda islom moliyasi boʻyicha shariat nazorati, audit va sertifikatlash bilan shugʻullanadi. Tariximiz, tamoyillarimiz va jamoamiz haqida.",
+      "Mezon Kengashi — AAOIFI ning Oʻzbekistondagi rasmiy vakili. 2023-yildan buyon Toshkentda islom moliyasi boʻyicha shariat nazorati, audit va sertifikatlash bilan shugʻullanamiz. Kengashlarimiz va jamoamiz haqida.",
     hero: {
       kicker: "Biz haqimizda",
-      title: "Oʻn ikki yildan buyon bitta savolga javob beramiz",
+      title: "Bitta savolga javob beramiz",
       lede: "Bu shartnoma shariatga muvofiqmi — va buni qanday isbotlash mumkin?",
     },
     story: {
       title: "Qanday boshlangan",
       body: [
-        "2013-yilda Toshkentda uchta odam bir masala ustida ishlay boshladi: mahalliy banklar halol mahsulot chiqarmoqchi edi, lekin ularni kim va qanday mezon boʻyicha tekshirishi noaniq edi. Fatvo bor edi, ammo uni amaliyotga bogʻlaydigan hujjat yoʻq edi.",
-        "Birinchi ish oddiy koʻrindi — bitta murobaha shartnomasini koʻrib chiqish. Ekspertiza uch hafta davom etdi va yakunida yigirma toʻrt bandlik tuzatish roʻyxati chiqdi. Oʻsha roʻyxat bizning birinchi uslubiy hujjatimizga aylandi.",
-        "Bugun Mezon Kengashida yigirma sakkiz nafar mutaxassis ishlaydi, ikkita kengash faoliyat yuritadi va yiliga yuzdan ortiq mahsulot ekspertizadan oʻtadi. Metod esa oʻzgarmadi: har bir xulosa yozma, har bir imzo javobgarlik bilan.",
+        "Mezon Kengashi 2023-yilda Toshkentda tashkil etildi. Sabab oddiy edi: mahalliy banklar va kompaniyalar halol mahsulot chiqarmoqchi edi, lekin ularni kim va qanday mezon boʻyicha tekshirishi noaniq boʻlib qolgandi. Fatvo bor edi, ammo uni amaliyotga bogʻlaydigan hujjat yoʻq edi.",
+        "Jamoa va hamkorlarimiz undan ancha oldin AAOIFI — islom moliya institutlari uchun standartlarni belgilovchi yetakchi xalqaro tashkilot bilan ishlagan edi. Bugun Mezon Kengashi AAOIFI ning Oʻzbekistondagi rasmiy vakili: mutaxassislarni tayyorlash, sertifikatlash va imtihonlarni oʻtkazish boʻyicha kelishuvlar imzolangan.",
+        "Hamkorlik doirasida 30 dan ortiq mutaxassis AAOIFI xalqaro sertifikatlash imtihonlarini topshirdi, AAOIFI ning flagman dasturlaridan biri — CIPA rus tiliga tarjima qilindi. Metod esa oʻzgarmaydi: har bir xulosa yozma, har bir imzo javobgarlik bilan.",
       ],
     },
     principles: {
@@ -86,22 +86,19 @@ const uzPages = {
     timeline: {
       title: "Yoʻl",
       items: [
-        { year: "2013", name: "Ish boshlandi", body: "Uch mutaxassis, birinchi murobaha ekspertizasi va yigirma toʻrt bandlik tuzatish roʻyxati." },
-        { year: "2015", name: "Birinchi doimiy kengash", body: "Mahalliy bank uchun doimiy shariat nazorat kengashi tashkil etildi va birinchi yillik fatvo chiqarildi." },
-        { year: "2018", name: "Uslubiyat", body: "AAOIFI shariat standartlari mahalliy amaliyotga moslashtirildi, ichki uslubiy qoʻllanma nashr etildi." },
-        { year: "2020", name: "Taʼlim", body: "Bank jamoalari uchun korporativ dasturlar va xalqaro sertifikatlarga tayyorgarlik kurslari ishga tushdi." },
-        { year: "2022", name: "Ekspert kengashi", body: "Ikkinchi kengash tuzildi: metodologiya, audit va huquq boʻyicha amaliyotchilar." },
-        { year: "2024", name: "Ochiq reyestr", body: "Berilgan sertifikatlar ommaviy reyestrda eʼlon qilina boshladi." },
-        { year: "2026", name: "Bugun", body: "Yigirma sakkiz mutaxassis, ikkita kengash, yiliga yuzdan ortiq ekspertiza." },
+        { year: "2022", name: "AAOIFI bilan hamkorlik", body: "Jamoa va hamkorlarimiz Bahraynda AAOIFI ning yillik Shariat kengashlari konferensiyasida ishtirok etdi." },
+        { year: "2023", name: "Kengash tashkil etildi", body: "«Mezon Kengashi» MChJ Toshkentda ish boshladi: shariat kengashi va yuridik kengash bir imzo ostida." },
+        { year: "2024", name: "Bank va fintex hamkorlari", body: "InfinBANK, ATTO, Paynet, Asaxiy Invest va boshqa kompaniyalar bilan loyihalar; UZCARD Forumida islom bankingi boʻyicha panel." },
+        { year: "2026", name: "Bugun", body: "AAOIFI ning Oʻzbekistondagi rasmiy vakili, 30 dan ortiq sertifikatlangan mutaxassis va ochiq sertifikatlar reyestri." },
       ],
     },
     numbers: {
       title: "Bugungi holat",
       items: [
-        { value: "28", label: "jamoadagi mutaxassis" },
-        { value: "2", label: "doimiy kengash" },
-        { value: "340+", label: "ekspertizadan oʻtgan mahsulot" },
-        { value: "12", label: "yillik amaliyot" },
+        { value: "30+", label: "AAOIFI imtihonlarini topshirgan mutaxassis" },
+        { value: "2", label: "doimiy kengash: shariat va yuridik" },
+        { value: "9", label: "hamkor bank, fintex va kompaniya" },
+        { value: "2023", label: "yildan buyon faoliyat" },
       ],
     },
     team: {
@@ -218,6 +215,32 @@ const uzPages = {
     copied: "Havola nusxalandi",
     original: "Imzolangan asl nusxa",
     other: "Tashkilotning boshqa sertifikatlari",
+    /* Asked on the phone often enough to be worth answering on the page itself. */
+    faqTitle: "Sertifikat boʻyicha koʻp beriladigan savollar",
+    faqLede: "Telefon qilishdan oldin — eng koʻp soʻraladigan beshta savolga javob.",
+    faqAsk: "Javobni topa olmadingizmi? Bizga yozing:",
+    faq: [
+      {
+        q: "Bu sertifikat haqiqiyligini qanday tekshiraman?",
+        a: "Siz hozir Mezon Kengashining rasmiy reyestridagi yozuvni koʻrib turibsiz — bu sertifikatning oʻzi emas, uning manbadagi qaydidir. Qogʻoz nusxani qalbakilashtirish mumkin, reyestrni esa yoʻq. Qogʻozdagi raqam, tashkilot nomi va sana shu sahifadagi maʼlumot bilan bir xil boʻlsa, hujjat haqiqiy. Farq boʻlsa — bizga yozing.",
+      },
+      {
+        q: "Sertifikat aynan nimani tasdiqlaydi?",
+        a: "Faqat shu sahifada koʻrsatilgan obyektni: muayyan mahsulotni, fondni, sukuk emissiyasini yoki faoliyat turini. Kengash uni roʻyxatdagi standartlar boʻyicha tekshirib, shariatga muvofiq deb topgan. Bu sertifikat tashkilotning boshqa barcha mahsulotlariga taalluqli emas va moliyaviy kafolat ham emas.",
+      },
+      {
+        q: "Muddati tugagan sertifikat nimani anglatadi?",
+        a: "U qoidabuzarlik degani emas. Har bir sertifikat bir yilga beriladi va yillik qayta nazoratdan soʻng yangilanadi. Muddat tugagan boʻlsa, nazorat hali yangilanmagan. Yangilangan sertifikat reyestrda alohida raqam bilan chiqadi — uni tashkilotdan soʻrang yoki reyestrdan qidiring.",
+      },
+      {
+        q: "“Bekor qilingan” degan yozuv nega turibdi?",
+        a: "Sertifikat muddatidan oldin bekor qilingan: mahsulot yoki jarayon shartlardan chetga chiqqan. Yozuvni reyestrdan oʻchirmaymiz — tarix ochiq qolishi kerak. Bunday obyektni shariatga muvofiq sifatida taqdim etib boʻlmaydi.",
+      },
+      {
+        q: "Reyestrda sertifikat topilmadi. Nega?",
+        a: "Avval raqam formatini tekshiring: MK-YYYY-NNNN, masalan MK-2026-0148. Agar raqam toʻgʻri boʻlsa va yozuv topilmasa — bu sertifikat Mezon Kengashi tomonidan berilmagan. Shubha tugʻilsa, hujjat nusxasini bizga yuboring, tekshirib beramiz.",
+      },
+    ],
     validNote: "Sertifikat amalda. Yozuv reyestrdagi maʼlumot bilan mos keladi.",
     expiredNote: "Bu sertifikatning amal qilish muddati tugagan. Yangilangan sertifikat reyestrda alohida raqam bilan chiqadi.",
     revokedNote: "Bu sertifikat muddatidan oldin bekor qilingan va amal qilmaydi.",

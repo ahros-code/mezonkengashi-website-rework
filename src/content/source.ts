@@ -16,7 +16,7 @@ import { news as bundledNews } from "./news";
 import { research as bundledResearch } from "./research";
 import { events as bundledEvents } from "./events";
 import { certificates as bundledCertificates, organizations as bundledOrganizations } from "./clients";
-import type { Article, Block, Certificate, L, MezonEvent, Organization } from "./types";
+import { pick, script, type Article, type Block, type Certificate, type L, type MezonEvent, type Organization } from "./types";
 
 /**
  * The single door between the pages and their content.
@@ -122,8 +122,8 @@ export async function getFaqCategories(
   if (!rows?.length) return [...fallback];
   return rows.map((c) => ({
     id: c.id,
-    name: text(c.title)[locale],
-    items: (c.items ?? []).map((i) => ({ q: text(i.q)[locale], a: text(i.a)[locale] })),
+    name: pick(text(c.title), locale),
+    items: (c.items ?? []).map((i) => ({ q: pick(text(i.q), locale), a: pick(text(i.a), locale) })),
   }));
 }
 
@@ -148,10 +148,11 @@ export async function getPageCopy<T extends Record<string, unknown>>(
   if (!doc) return base;
 
   const merged: Record<string, unknown> = { ...base };
+  const from = locale === "ru" ? "ru" : "uz";
   for (const [key, value] of Object.entries(doc)) {
     if (typeof base[key] !== "string") continue;
-    const text = value?.[locale]?.trim();
-    if (text) merged[key] = text;
+    const text = value?.[from]?.trim();
+    if (text) merged[key] = script(text, locale);
   }
   return merged as T;
 }
@@ -175,7 +176,16 @@ export async function getRegistry(): Promise<Registry> {
     return { organizations: bundledOrganizations, certificates: bundledCertificates };
   }
   return {
-    organizations: organizations.map((o) => ({ ...o, city: text(o.city), logo: o.logo ?? undefined })),
+    organizations: organizations.map((o) => {
+      const work = text(o.work);
+      return {
+        ...o,
+        city: text(o.city),
+        since: o.since ?? undefined,
+        work: work.uz ? work : undefined,
+        logo: o.logo ?? undefined,
+      };
+    }),
     certificates: certificates.map((c) => ({
       ...c,
       subject: text(c.subject),

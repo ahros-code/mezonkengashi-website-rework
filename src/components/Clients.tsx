@@ -1,7 +1,7 @@
 import type { Dict } from "@/i18n";
 import type { Locale } from "@/i18n/config";
 import type { Registry } from "@/content/source";
-import { certificateStatus, countLabel, sectorLabel, type Organization } from "@/content/types";
+import { pick, certificateStatus, countLabel, sectorLabel, type Organization } from "@/content/types";
 import { paths } from "@/lib/routes";
 import { GirihField, GirihStar } from "./Girih";
 import { ArrowMark } from "./Icons";
@@ -32,31 +32,40 @@ export default function Clients({
     organizations.filter((_, i) => i % 2 === 1),
   ].filter((r) => r.length);
 
-  const tile = (org: Organization, hidden: boolean) => (
-    <a
-      key={`${org.slug}${hidden ? "-dup" : ""}`}
-      href={`${paths.certificates(locale)}?org=${org.slug}`}
-      className={s.tile}
-      aria-hidden={hidden || undefined}
-      tabIndex={hidden ? -1 : undefined}
-    >
-      <OrgMark org={org} className={s.mark} />
-      <span className={s.tileText}>
-        <span className={s.name}>{org.name}</span>
-        <span className={s.meta}>
-          {sectorLabel[org.sector][locale]} · {t.clients.since.replace("{year}", String(org.since))}
+  const tile = (org: Organization, hidden: boolean) => {
+    const isCertified = certified.has(org.slug);
+    /* Only a holder of a certificate has something to open in the registry;
+       a partner without one would land on an empty result. */
+    const Tag = isCertified ? "a" : "span";
+    return (
+      <Tag
+        key={`${org.slug}${hidden ? "-dup" : ""}`}
+        {...(isCertified
+          ? { href: `${paths.certificates(locale)}?org=${org.slug}`, tabIndex: hidden ? -1 : undefined }
+          : {})}
+        className={s.tile}
+        title={org.work ? pick(org.work, locale) : undefined}
+        aria-hidden={hidden || undefined}
+      >
+        <OrgMark org={org} className={s.mark} />
+        <span className={s.tileText}>
+          <span className={s.name}>{org.name}</span>
+          <span className={s.meta}>
+            {pick(sectorLabel[org.sector], locale)}
+            {org.since ? ` · ${t.clients.since.replace("{year}", String(org.since))}` : ""}
+          </span>
         </span>
-      </span>
-      {certified.has(org.slug) && (
-        <span className={s.badge} title={t.clients.certified}>
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M2.5 6.2 5 8.6l4.5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className={s.badgeText}>{t.clients.certified}</span>
-        </span>
-      )}
-    </a>
-  );
+        {isCertified && (
+          <span className={s.badge} title={t.clients.certified}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 6.2 5 8.6l4.5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className={s.badgeText}>{t.clients.certified}</span>
+          </span>
+        )}
+      </Tag>
+    );
+  };
 
   return (
     <section id="clients" className={s.section} aria-labelledby="clients-title">

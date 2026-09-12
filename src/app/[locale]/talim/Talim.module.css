@@ -1348,7 +1348,8 @@
   object-position: 50% 22%;
   mask: var(--arch-short) center / 100% 100% no-repeat;
   -webkit-mask: var(--arch-short) center / 100% 100% no-repeat;
-  filter: grayscale(1) contrast(1.06) brightness(0.88);
+  /* full colour: these are the people, not archive prints */
+  filter: saturate(1.06) contrast(1.03);
   transition:
     filter 0.8s var(--out),
     scale 1s var(--out);
@@ -1373,7 +1374,7 @@
 }
 .person:hover .personFrame img,
 .person:focus-within .personFrame img {
-  filter: none;
+  filter: saturate(1.14) contrast(1.05) brightness(1.04);
   scale: 1.03;
 }
 .person:hover .personFrame::before {

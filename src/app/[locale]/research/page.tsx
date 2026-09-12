@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, collectionPage, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { getPageCopy, getResearch } from "@/content/source";
-import { byNewestFirst, categoryLabel, countLabel, formatDate } from "@/content/types";
+import { pick, byNewestFirst, categoryLabel, countLabel, formatDate } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihMedallion, GirihStar } from "@/components/Girih";
 import { ArrowMark, ClockMark } from "@/components/Icons";
@@ -56,7 +56,7 @@ export default async function ResearchIndex({
       name: copy.metaTitle,
       description: copy.metaDescription,
       items: sorted.map((a) => ({
-        name: a.title[locale],
+        name: pick(a.title, locale),
         path: `/research/${a.slug}`,
       })),
     }),
@@ -107,8 +107,8 @@ export default async function ResearchIndex({
                   <GirihStar size={11} strokeWidth={1.6} />
                   {copy.featured}
                 </span>
-                <h2 className={s.featureTitle}>{featured.title[locale]}</h2>
-                <p className={s.featureExcerpt}>{featured.excerpt[locale]}</p>
+                <h2 className={s.featureTitle}>{pick(featured.title, locale)}</h2>
+                <p className={s.featureExcerpt}>{pick(featured.excerpt, locale)}</p>
                 <span className={s.featureCta}>
                   {t.ui.readMore}
                   <ArrowMark />
@@ -118,7 +118,7 @@ export default async function ResearchIndex({
               <p className={s.featureMeta}>
                 <span>
                   <GirihStar size={11} strokeWidth={1.5} />
-                  {categoryLabel[featured.category][locale]}
+                  {pick(categoryLabel[featured.category], locale)}
                 </span>
                 <span>
                   <time dateTime={featured.date}>{formatDate(featured.date, locale)}</time>
@@ -148,14 +148,14 @@ export default async function ResearchIndex({
                     <span className={s.cardTop}>
                       <span className={s.cardCat}>
                         <GirihStar size={10} strokeWidth={1.6} />
-                        {categoryLabel[a.category][locale]}
+                        {pick(categoryLabel[a.category], locale)}
                       </span>
                       <span className={s.cardDot} aria-hidden="true" />
                       <time dateTime={a.date}>{formatDate(a.date, locale)}</time>
                     </span>
 
-                    <h3 className={s.cardTitle}>{a.title[locale]}</h3>
-                    <p className={s.cardExcerpt}>{a.excerpt[locale]}</p>
+                    <h3 className={s.cardTitle}>{pick(a.title, locale)}</h3>
+                    <p className={s.cardExcerpt}>{pick(a.excerpt, locale)}</p>
 
                     <span className={s.cardFoot}>
                       <span className={s.cardAuthorMed}>

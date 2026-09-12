@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { locales, isLocale, type Locale } from "@/i18n/config";
+import { locales, isLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, collectionPage, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { getNews, getPageCopy } from "@/content/source";
-import { byNewestFirst, categoryLabel, countLabel, dayInTashkent, formatDate } from "@/content/types";
+import { pick, byNewestFirst, categoryLabel, countLabel, dayInTashkent, formatDate } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihMedallion, GirihStar } from "@/components/Girih";
 import { ArrowMark } from "@/components/Icons";
@@ -53,7 +53,7 @@ export default async function NewsIndex({
   /* the two stories that sit beside the lead on the front block */
   const side = rest.slice(0, 2);
 
-  const monthShort = new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "uz-UZ", {
+  const monthShort = new Intl.DateTimeFormat(intlLocale[locale], {
     month: "short",
     timeZone: "Asia/Tashkent",
   });
@@ -67,9 +67,9 @@ export default async function NewsIndex({
     day: dayInTashkent(a.date),
     month: month(a.date),
     category: a.category,
-    categoryLabel: categoryLabel[a.category][locale],
-    title: a.title[locale],
-    excerpt: a.excerpt[locale],
+    categoryLabel: pick(categoryLabel[a.category], locale),
+    title: pick(a.title, locale),
+    excerpt: pick(a.excerpt, locale),
     minutes: minutes(a.readingMinutes),
   }));
 
@@ -79,7 +79,7 @@ export default async function NewsIndex({
       path: "/news",
       name: copy.metaTitle,
       description: copy.metaDescription,
-      items: sorted.map((a) => ({ name: a.title[locale], path: `/news/${a.slug}` })),
+      items: sorted.map((a) => ({ name: pick(a.title, locale), path: `/news/${a.slug}` })),
     }),
     breadcrumbs(locale, [
       { name: t.ui.home, path: "" },
@@ -143,14 +143,14 @@ export default async function NewsIndex({
                         <span className={s.leadPulse} aria-hidden="true" />
                         {copy.latest}
                       </span>
-                      <span className={s.leadCat}>{categoryLabel[lead.category][locale]}</span>
+                      <span className={s.leadCat}>{pick(categoryLabel[lead.category], locale)}</span>
                       <span className={s.leadMin}>{minutes(lead.readingMinutes)}</span>
                     </span>
                   </span>
 
                   <span className={s.leadBody}>
-                    <h2 className={s.leadTitle}>{lead.title[locale]}</h2>
-                    <p className={s.leadExcerpt}>{lead.excerpt[locale]}</p>
+                    <h2 className={s.leadTitle}>{pick(lead.title, locale)}</h2>
+                    <p className={s.leadExcerpt}>{pick(lead.excerpt, locale)}</p>
                   </span>
 
                   <span className={s.leadFoot}>
@@ -181,12 +181,12 @@ export default async function NewsIndex({
                         <span className={s.sideMeta}>
                           <span className={s.rowCat}>
                             <GirihStar size={10} strokeWidth={1.6} />
-                            {categoryLabel[a.category][locale]}
+                            {pick(categoryLabel[a.category], locale)}
                           </span>
                           <time dateTime={a.date}>{formatDate(a.date, locale)}</time>
                         </span>
-                        <span className={s.sideTitle}>{a.title[locale]}</span>
-                        <span className={s.sideExcerpt}>{a.excerpt[locale]}</span>
+                        <span className={s.sideTitle}>{pick(a.title, locale)}</span>
+                        <span className={s.sideExcerpt}>{pick(a.excerpt, locale)}</span>
                         <span className={s.sideFoot}>
                           {minutes(a.readingMinutes)}
                           <ArrowMark />
@@ -231,12 +231,21 @@ export default async function NewsIndex({
                 <div className={s.press}>
                   <h2 className={s.pressTitle}>{copy.pressTitle}</h2>
                   <p className={s.pressBody}>{copy.pressBody}</p>
-                  <a href={`mailto:${company.email}`} className={s.pressLink}>
-                    {company.email}
+                  <a
+                    href={company.telegram}
+                    className={s.pressLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Telegram
                     <ArrowMark />
                   </a>
                   <a href={`tel:${company.phoneHref}`} className={s.pressLink}>
                     {company.phone}
+                    <ArrowMark />
+                  </a>
+                  <a href={`mailto:${company.email}`} className={s.pressLink}>
+                    {company.email}
                     <ArrowMark />
                   </a>
                 </div>

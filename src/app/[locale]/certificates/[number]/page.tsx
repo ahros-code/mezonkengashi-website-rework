@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import { locales, isLocale, SITE_URL, type Locale } from "@/i18n/config";
 import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
-import { breadcrumbs, graph } from "@/lib/jsonld";
+import { breadcrumbs, faqNode, graph } from "@/lib/jsonld";
+import { company } from "@/lib/site";
 import { paths } from "@/lib/routes";
 import { getRegistry } from "@/content/source";
 import {
+  pick,
   certificateKindLabel,
   certificateStatus,
   formatDate,
@@ -15,7 +17,7 @@ import {
 import PageHero from "@/components/PageHero";
 import SectionBackdrop from "@/components/SectionBackdrop";
 import OrgMark from "@/components/OrgMark";
-import { GirihField } from "@/components/Girih";
+import { GirihField, GirihStar } from "@/components/Girih";
 import { ArrowMark } from "@/components/Icons";
 import CertActions from "./CertActions";
 import s from "./Certificate.module.css";
@@ -51,7 +53,7 @@ export async function generateMetadata({
     locale: data.locale,
     path: `/certificates/${data.cert.number}`,
     title: `${data.cert.number} — ${data.org.name}`,
-    description: `${t.registry.docTitle}: ${data.org.name}, ${data.cert.subject[data.locale]}. ${t.registry.status[certificateStatus(data.cert)]}.`,
+    description: `${t.registry.docTitle}: ${data.org.name}, ${pick(data.cert.subject, data.locale)}. ${t.registry.status[certificateStatus(data.cert)]}.`,
   });
 }
 
@@ -77,6 +79,8 @@ export default async function CertificatePage({
       { name: copy.title, path: "/certificates" },
       { name: cert.number, path: `/certificates/${cert.number}` },
     ]),
+    // The same answers, machine-readable: search results can answer the caller first.
+    faqNode(locale, `/certificates/${cert.number}`, [...copy.faq]),
   );
 
   return (
@@ -89,9 +93,9 @@ export default async function CertificatePage({
           t={t}
           latticeId="girih-cert"
           crumbs={[{ label: copy.title, href: paths.certificates(locale) }, { label: cert.number }]}
-          kicker={certificateKindLabel[cert.kind][locale]}
+          kicker={pick(certificateKindLabel[cert.kind], locale)}
           title={org.name}
-          lede={cert.subject[locale]}
+          lede={pick(cert.subject, locale)}
           meta={[cert.number, copy.status[status]]}
         />
 
@@ -116,7 +120,7 @@ export default async function CertificatePage({
                 <p className={s.docLabel}>{copy.docIssuedTo}</p>
                 <p className={s.docOrg}>{org.name}</p>
                 <p className={s.docLabel}>{copy.docSubject}</p>
-                <p className={s.docSubject}>{cert.subject[locale]}</p>
+                <p className={s.docSubject}>{pick(cert.subject, locale)}</p>
                 <p className={s.docStatement}>{copy.docStatement}</p>
                 {cert.standards.length > 0 && (
                   <p className={s.docStandards}>
@@ -188,18 +192,20 @@ export default async function CertificatePage({
                   <OrgMark org={org} className={s.mark} />
                   <div>
                     <p className={s.holderName}>{org.name}</p>
-                    <p className={s.holderMeta}>{sectorLabel[org.sector][locale]}</p>
+                    <p className={s.holderMeta}>{pick(sectorLabel[org.sector], locale)}</p>
                   </div>
                 </div>
                 <dl className={s.facts}>
                   <div>
                     <dt>{copy.sideCity}</dt>
-                    <dd>{org.city[locale]}</dd>
+                    <dd>{pick(org.city, locale)}</dd>
                   </div>
-                  <div>
-                    <dt>{copy.sideSince}</dt>
-                    <dd>{t.clients.since.replace("{year}", String(org.since))}</dd>
-                  </div>
+                  {org.since && (
+                    <div>
+                      <dt>{copy.sideSince}</dt>
+                      <dd>{t.clients.since.replace("{year}", String(org.since))}</dd>
+                    </div>
+                  )}
                 </dl>
               </div>
 
@@ -218,7 +224,7 @@ export default async function CertificatePage({
                         <li key={c.number}>
                           <a href={paths.certificate(locale, c.number)} className={s.other}>
                             <span className={s.otherNumber}>{c.number}</span>
-                            <span className={s.otherSubject}>{c.subject[locale]}</span>
+                            <span className={s.otherSubject}>{pick(c.subject, locale)}</span>
                             <span className={s.otherStatus} data-status={st}>
                               {copy.status[st]}
                             </span>
@@ -236,6 +242,43 @@ export default async function CertificatePage({
               </a>
             </aside>
           </div>
+
+          {/* The questions the office answers on the phone all day, answered here. */}
+          <section className={`container ${s.faq}`} aria-labelledby="cert-faq-title">
+            <div className={s.faqHead}>
+              <h2 id="cert-faq-title" className={s.faqTitle}>
+                {copy.faqTitle}
+              </h2>
+              <p className={s.faqLede}>{copy.faqLede}</p>
+            </div>
+
+            <div className={s.faqList}>
+              {copy.faq.map((item, i) => (
+                <details key={item.q} className={s.faqItem} name="cert-faq" open={i === 0}>
+                  <summary className={s.faqQ}>
+                    <span className={s.faqQText}>{item.q}</span>
+                    {/* the same star-and-plus toggle the site's FAQ uses */}
+                    <span className={s.faqToggle} aria-hidden="true">
+                      <GirihStar size={30} strokeWidth={1.2} />
+                      <span className={s.faqPlus} />
+                    </span>
+                  </summary>
+                  <p className={s.faqA}>{item.a}</p>
+                </details>
+              ))}
+            </div>
+
+            <p className={s.faqAsk}>
+              {copy.faqAsk}{" "}
+              <a href={company.telegram} target="_blank" rel="noopener noreferrer">
+                Telegram
+              </a>
+              <span aria-hidden="true"> · </span>
+              <a href={`tel:${company.phoneHref}`}>{company.phone}</a>
+              <span aria-hidden="true"> · </span>
+              <a href={`mailto:${company.email}`}>{company.email}</a>
+            </p>
+          </section>
         </section>
       </main>
     </>

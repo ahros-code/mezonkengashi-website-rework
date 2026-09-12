@@ -1,17 +1,15 @@
 import Image from "next/image";
 import ContactForm from "./ContactForm";
 import { GirihField } from "./Girih";
-import { ClockMark, PhoneMark, PinMark } from "./Icons";
-import { company } from "@/lib/site";
+import { ArrowMark, ClockMark, PhoneMark, PinMark, PlaneMark } from "./Icons";
+import { addressLine, company } from "@/lib/site";
 import type { Dict } from "@/i18n";
 import type { Locale } from "@/i18n/config";
 import s from "./Contact.module.css";
 import SectionBackdrop from "./SectionBackdrop";
 
 export default function Contact({ t, locale }: { t: Dict; locale: Locale }) {
-  const mapQuery = encodeURIComponent(
-    `${company.city}, ${company.countryName}`,
-  );
+  const mapQuery = encodeURIComponent(addressLine);
 
   return (
     <section id="contact" className={s.section} aria-labelledby="contact-title">
@@ -54,9 +52,9 @@ export default function Contact({ t, locale }: { t: Dict; locale: Locale }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {company.countryName}
+                    {company.street}
                     <br />
-                    {company.city}
+                    {company.city}, {company.countryName}
                   </a>
                   <span className={s.blockNote}>{t.contact.mapLabel}</span>
                 </span>
@@ -88,6 +86,25 @@ export default function Contact({ t, locale }: { t: Dict; locale: Locale }) {
                 </span>
               </div>
             </div>
+
+            {/* The fastest way to reach the office, given its own plate. */}
+            <a
+              className={s.telegram}
+              href={company.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className={s.telegramIcon} aria-hidden="true">
+                <PlaneMark />
+              </span>
+              <span className={s.telegramText}>
+                <span className={s.telegramTitle}>{t.contact.telegramTitle}</span>
+                <span className={s.telegramAction}>{t.contact.telegramCta}</span>
+              </span>
+              <span className={s.telegramArrow} aria-hidden="true">
+                <ArrowMark />
+              </span>
+            </a>
           </div>
 
           <div className={s.panel}>

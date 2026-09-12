@@ -7,8 +7,6 @@ import type { Dict } from "@/i18n";
 import type { Locale } from "@/i18n/config";
 import s from "./Hero.module.css";
 
-const STANDARDS = ["AAOIFI", "IFSB", "CIMA Islamic Finance", "OIC Fiqh Academy"];
-
 /** Twelve months of expertise volume — decorative but drawn from real shape. */
 const SPARK = [34, 41, 38, 52, 47, 63, 58, 71, 66, 82, 78, 94];
 
@@ -56,20 +54,22 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
         </div>
 
         <div className={s.stack}>
+          {/* The standing that sets the council apart: AAOIFI's representative here. */}
           <GlassCard className={s.card}>
-            <blockquote>
-              <GirihStar size={20} stroke="currentColor" strokeWidth={1} className={s.quoteMark} />
-              <p className={s.quote}>{t.hero.quote}</p>
-            </blockquote>
-            <figcaption className={s.attrib}>
+            <p className={s.statusKicker}>
+              <GirihStar size={14} stroke="currentColor" strokeWidth={1.4} />
+              {t.hero.statusKicker}
+            </p>
+            <p className={s.quote}>{t.hero.status}</p>
+            <p className={s.attrib}>
               <span className={s.attribMed}>
-                <GirihMedallion seed="mezon" scope="hero" />
+                <GirihMedallion seed="aaoifi" scope="hero" />
               </span>
               <span>
-                <span className={s.attribName}>{t.hero.quoteName}</span>
-                <span className={s.attribRole}>{t.hero.quoteRole}</span>
+                <span className={s.attribName}>{t.hero.statusName}</span>
+                <span className={s.attribRole}>{t.hero.statusRole}</span>
               </span>
-            </figcaption>
+            </p>
           </GlassCard>
 
           <GlassCard className={s.card}>
@@ -78,6 +78,7 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
               <span className={s.metricUnit}>{t.hero.metricUnit}</span>
             </p>
             <p className={s.metricLabel}>{t.hero.metricLabel}</p>
+            <p className={s.metricNote}>{t.hero.metricNote}</p>
             <span className={s.spark} aria-hidden="true">
               {SPARK.map((h, i) => (
                 <span
@@ -96,7 +97,7 @@ export default function Hero({ t, locale }: { t: Dict; locale: Locale }) {
 
         <div className={s.rail}>
           <p className={s.standards}>
-            {STANDARDS.map((name) => (
+            {t.hero.standards.map((name) => (
               <span key={name} className={s.standard}>
                 <GirihStar size={11} strokeWidth={1.4} />
                 {name}

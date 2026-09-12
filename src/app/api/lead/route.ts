@@ -10,6 +10,12 @@ type Lead = {
   topic?: string;
   message?: string;
   locale?: string;
+  /** Answers from the step-by-step consultation form. */
+  audience?: string;
+  detail?: string;
+  when?: string;
+  channel?: string;
+  telegram?: string;
   /** Honeypot — real people leave it empty. */
   website?: string;
 };
@@ -40,12 +46,18 @@ export async function POST(request: Request) {
     org: clean(body.org, MAX.org),
     topic: clean(body.topic, 40),
     message: clean(body.message, MAX.message),
+    audience: clean(body.audience, 20),
+    detail: clean(body.detail, 20),
+    when: clean(body.when, 20),
+    channel: clean(body.channel, 20) || "call",
+    telegram: clean(body.telegram, 40),
     locale: clean(body.locale, 8) || "uz",
     receivedAt: new Date().toISOString(),
   };
 
   const digits = lead.phone.replace(/\D/g, "");
-  if (!lead.name || (digits.length < 9 && !lead.email)) {
+  const handle = /^@?[a-zA-Z][a-zA-Z0-9_]{4,31}$/.test(lead.telegram);
+  if (!lead.name || (digits.length < 9 && !lead.email && !handle)) {
     return NextResponse.json({ ok: false, error: "validation" }, { status: 422 });
   }
 

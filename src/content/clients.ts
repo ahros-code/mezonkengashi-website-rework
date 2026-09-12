@@ -1,24 +1,130 @@
 import type { Certificate, Organization } from "./types";
 
+const TASHKENT = { uz: "Toshkent", ru: "Ташкент" };
+
 /**
- * PLACEHOLDER registry. The organisations below are invented — none is a real
- * institution — and every certificate is a sample. Replace them with the
- * client's real records, ideally in the Studio (Mijozlar va sertifikatlar):
- * the site switches to the CMS copy as soon as one organisation is published.
+ * The roster.
+ *
+ * The first block is real: the clients and partners named in the company
+ * brochure, with the work described there. None of them carries a certificate
+ * record here — a certificate is a signed document, so the registry below only
+ * ever holds what the council actually issued.
+ *
+ * The second block is the PLACEHOLDER sample registry the certificates were
+ * written against. Those organisations are invented. Replace them in the Studio
+ * (Mijozlar va sertifikatlar): the site switches to the CMS copy as soon as one
+ * organisation is published there.
  */
 export const organizations: Organization[] = [
-  { slug: "barqaror-moliya-bank", name: "Barqaror Moliya Bank", sector: "bank", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2015 },
-  { slug: "oqsaroy-invest-bank", name: "Oqsaroy Invest Bank", sector: "bank", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2017 },
-  { slug: "nurafshon-lizing", name: "Nurafshon Lizing", sector: "leasing", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2018 },
-  { slug: "chorsu-mikromoliya", name: "Chorsu Mikromoliya", sector: "microfinance", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2019 },
-  { slug: "bargoh-takaful", name: "Bargoh Takaful", sector: "takaful", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2020 },
-  { slug: "zarafshon-halol-invest", name: "Zarafshon Halol Invest", sector: "investment", city: { uz: "Samarqand", ru: "Самарканд" }, since: 2021 },
-  { slug: "yangi-vodiy-bank", name: "Yangi Vodiy Bank", sector: "bank", city: { uz: "Fargʻona", ru: "Фергана" }, since: 2021 },
-  { slug: "sahro-agro-lizing", name: "Sahro Agro Lizing", sector: "leasing", city: { uz: "Buxoro", ru: "Бухара" }, since: 2022 },
-  { slug: "afshona-food", name: "Afshona Food", sector: "business", city: { uz: "Buxoro", ru: "Бухара" }, since: 2022 },
-  { slug: "sipoh-takaful", name: "Sipoh Takaful", sector: "takaful", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2023 },
-  { slug: "minor-halol-savdo", name: "Minor Halol Savdo", sector: "business", city: { uz: "Toshkent", ru: "Ташкент" }, since: 2023 },
-  { slug: "ilm-moliya-mikrokredit", name: "Ilm Moliya Mikrokredit", sector: "microfinance", city: { uz: "Namangan", ru: "Наманган" }, since: 2024 },
+  {
+    slug: "infinbank",
+    logo: "/img/clients/infinbank.webp",
+    name: "InfinBANK",
+    sector: "bank",
+    city: TASHKENT,
+    work: {
+      uz: "Xalqaro standartlar asosida islom moliyasi vositalarini joriy etish",
+      ru: "Внедрение исламских финансовых инструментов по международным стандартам",
+    },
+  },
+  {
+    slug: "brb",
+    logo: "/img/clients/brb.webp",
+    name: "Biznesni Rivojlantirish Banki",
+    sector: "bank",
+    city: TASHKENT,
+    work: {
+      uz: "Bank xodimlari uchun “Islom bankingi asoslari” va “AAOIFI CPSS” kurslari",
+      ru: "Курсы «Основы исламского банкинга» и «AAOIFI CPSS» для сотрудников банка",
+    },
+  },
+  {
+    slug: "murad-buildings",
+    logo: "/img/clients/murad-buildings.webp",
+    name: "Murad Buildings",
+    sector: "construction",
+    city: TASHKENT,
+    work: {
+      uz: "Qurilish loyihalarini islom moliyasi standartlari asosida strukturalash",
+      ru: "Структурирование строительных проектов по стандартам исламских финансов",
+    },
+  },
+  {
+    slug: "mbimu",
+    logo: "/img/clients/mbimu.webp",
+    name: "MBIMU",
+    sector: "microfinance",
+    city: TASHKENT,
+    work: {
+      uz: "Uyushma aʼzolariga islom mikromoliyasi xizmatlarini yoʻlga qoʻyishda koʻmak",
+      ru: "Содействие в предоставлении услуг исламского микрофинансирования для учреждений-членов",
+    },
+  },
+  {
+    slug: "atto",
+    logo: "/img/clients/atto.webp",
+    name: "ATTO",
+    sector: "fintech",
+    city: TASHKENT,
+    work: {
+      uz: "Fintex sohasida investitsiya mahsulotlarini strukturalash va joriy etish",
+      ru: "Структурирование и внедрение инвестиционных продуктов в сфере финтеха",
+    },
+  },
+  {
+    slug: "asaxiy-invest",
+    logo: "/img/clients/asaxiy-invest.webp",
+    name: "Asaxiy Invest",
+    sector: "investment",
+    city: TASHKENT,
+    work: {
+      uz: "Investitsiya platformasi doirasida shariatga muvofiq yechimlarni ishlab chiqish",
+      ru: "Разработка и внедрение шариатских решений в рамках инвестиционной платформы",
+    },
+  },
+  {
+    slug: "paynet",
+    logo: "/img/clients/paynet.webp",
+    name: "Paynet",
+    sector: "fintech",
+    city: TASHKENT,
+    work: {
+      uz: "Tijorat banklari uchun islom moliyasi vositalari orqali mablagʻ jalb qilish",
+      ru: "Мобилизация средств с исламскими финансовыми инструментами для коммерческих банков",
+    },
+  },
+  {
+    slug: "a-group",
+    logo: "/img/clients/a-group.webp",
+    name: "A Group",
+    sector: "business",
+    city: TASHKENT,
+    work: {
+      uz: "Avtoritet chakana va savdo tarmogʻiga islom moliyasi vositalarini integratsiya qilish",
+      ru: "Интеграция исламских финансовых инструментов в розничную и торговую сеть Avtoritet",
+    },
+  },
+  {
+    slug: "mk-leasing",
+    logo: "/img/clients/mk-leasing.webp",
+    name: "MK Leasing",
+    sector: "leasing",
+    city: TASHKENT,
+    work: {
+      uz: "AAOIFI va Oʻzbekiston qonunchiligiga muvofiqlik; ijara va murobaha mahsulotlari",
+      ru: "Соответствие стандартам AAOIFI и законодательству РУз; продукты иджара и мурабаха",
+    },
+  },
+
+  /* ---- sample organisations, for the placeholder registry below ---- */
+  { slug: "barqaror-moliya-bank", name: "Barqaror Moliya Bank", sector: "bank", city: TASHKENT, since: 2024 },
+  { slug: "oqsaroy-invest-bank", name: "Oqsaroy Invest Bank", sector: "bank", city: TASHKENT, since: 2024 },
+  { slug: "nurafshon-lizing", name: "Nurafshon Lizing", sector: "leasing", city: TASHKENT, since: 2024 },
+  { slug: "chorsu-mikromoliya", name: "Chorsu Mikromoliya", sector: "microfinance", city: TASHKENT, since: 2025 },
+  { slug: "bargoh-takaful", name: "Bargoh Takaful", sector: "takaful", city: TASHKENT, since: 2025 },
+  { slug: "zarafshon-halol-invest", name: "Zarafshon Halol Invest", sector: "investment", city: { uz: "Samarqand", ru: "Самарканд" }, since: 2025 },
+  { slug: "yangi-vodiy-bank", name: "Yangi Vodiy Bank", sector: "bank", city: { uz: "Fargʻona", ru: "Фергана" }, since: 2025 },
+  { slug: "sahro-agro-lizing", name: "Sahro Agro Lizing", sector: "leasing", city: { uz: "Buxoro", ru: "Бухара" }, since: 2025 },
 ];
 
 const AAOIFI = "AAOIFI SS";
@@ -61,33 +167,6 @@ export const certificates: Certificate[] = [
     validUntil: "2027-03-01",
   },
   {
-    number: "MK-2026-0119",
-    org: "sipoh-takaful",
-    kind: "operations",
-    subject: { uz: "Umumiy takaful faoliyati", ru: "Деятельность общего такафула" },
-    standards: [`${AAOIFI} 26`],
-    issued: "2026-02-10",
-    validUntil: "2027-02-09",
-  },
-  {
-    number: "MK-2026-0112",
-    org: "ilm-moliya-mikrokredit",
-    kind: "product",
-    subject: { uz: "Qarzi hasan asosidagi taʼlim krediti", ru: "Образовательное финансирование на основе карз хасан" },
-    standards: [`${AAOIFI} 19`],
-    issued: "2026-01-19",
-    validUntil: "2027-01-18",
-  },
-  {
-    number: "MK-2025-0098",
-    org: "minor-halol-savdo",
-    kind: "operations",
-    subject: { uz: "Ulgurji savdo va toʻlov muddatini kechiktirish amaliyoti", ru: "Оптовая торговля и отсрочка платежа" },
-    standards: [`${AAOIFI} 8`, `${AAOIFI} 2`],
-    issued: "2025-11-24",
-    validUntil: "2026-11-23",
-  },
-  {
     number: "MK-2025-0091",
     org: "yangi-vodiy-bank",
     kind: "product",
@@ -113,15 +192,6 @@ export const certificates: Certificate[] = [
     standards: [`${AAOIFI} 21`, `${AAOIFI} 12`],
     issued: "2025-07-01",
     validUntil: "2026-12-31",
-  },
-  {
-    number: "MK-2025-0069",
-    org: "afshona-food",
-    kind: "operations",
-    subject: { uz: "Xomashyoni salam asosida xarid qilish", ru: "Закупка сырья на основе салам" },
-    standards: [`${AAOIFI} 10`],
-    issued: "2025-05-12",
-    validUntil: "2026-05-11",
   },
   {
     number: "MK-2025-0055",

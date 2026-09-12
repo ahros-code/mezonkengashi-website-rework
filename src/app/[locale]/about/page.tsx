@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
-import { aboutNode, breadcrumbs, graph } from "@/lib/jsonld";
+import { aboutNode, breadcrumbs, graph, organizationNode, peopleNodes } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { company } from "@/lib/site";
+import { script } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import InView from "@/components/InView";
 import { GirihField, GirihStar } from "@/components/Girih";
@@ -45,6 +46,8 @@ export default async function AboutPage({
 
   const jsonLd = graph(
     aboutNode({ locale, name: t.about.metaTitle, description: t.about.metaDescription }),
+    organizationNode(locale, t),
+    ...peopleNodes(t),
     breadcrumbs(locale, [
       { name: t.ui.home, path: "" },
       { name: t.nav.about, path: "/about" },
@@ -70,7 +73,7 @@ export default async function AboutPage({
           meta={[
             `${company.founded}`,
             t.about.numbers.items[0].value + " " + t.about.numbers.items[0].label,
-            company.city,
+            script(company.city, locale),
           ]}
         />
 

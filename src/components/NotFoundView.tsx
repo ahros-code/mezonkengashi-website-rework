@@ -10,7 +10,7 @@ import { company } from "@/lib/site";
 import { readTrail, requestResume, type TrailEntry } from "@/lib/trail";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n";
-import type { L } from "@/content/types";
+import { pick, script, type L } from "@/content/types";
 import s from "./NotFound.module.css";
 
 export type SectionId = keyof Dict["notFound"]["sections"];
@@ -101,7 +101,7 @@ const UZ_UNITS: Partial<Record<Intl.RelativeTimeFormatUnit, string>> = {
 
 function ago(at: number, locale: Locale) {
   const sec = Math.max(0, Math.round((Date.now() - at) / 1000));
-  if (sec < 60) return locale === "ru" ? "только что" : "hozirgina";
+  if (sec < 60) return locale === "ru" ? "только что" : script("hozirgina", locale);
 
   const steps: [Intl.RelativeTimeFormatUnit, number][] = [
     ["minute", 60],
@@ -117,7 +117,7 @@ function ago(at: number, locale: Locale) {
       const n = Math.max(1, Math.round(v));
       return locale === "ru"
         ? new Intl.RelativeTimeFormat("ru", { numeric: "auto" }).format(-n, unit)
-        : `${n} ${UZ_UNITS[unit]} oldin`;
+        : script(`${n} ${UZ_UNITS[unit]} oldin`, locale);
     }
     v /= size;
   }
@@ -267,7 +267,7 @@ export default function NotFoundView({
                 <GirihStar size={14} strokeWidth={1.4} />
                 <span>
                   {t.suggestLabel}:{" "}
-                  <strong className={s.suggestTitle}>{suggestion.title[locale]}</strong>
+                  <strong className={s.suggestTitle}>{pick(suggestion.title, locale)}</strong>
                 </span>
                 <Arrow className={s.suggestArrow} />
               </a>
@@ -390,12 +390,6 @@ export default function NotFoundView({
         <div className={s.help}>
           <p className={s.helpText}>{t.help}</p>
           <div className={s.helpLinks}>
-            <a href={`tel:${company.phoneHref}`} className={s.helpLink}>
-              {company.phone}
-            </a>
-            <a href={`mailto:${company.email}`} className={s.helpLink}>
-              {company.email}
-            </a>
             <a
               href={company.telegram}
               className={s.helpLink}
@@ -403,6 +397,12 @@ export default function NotFoundView({
               rel="noopener noreferrer"
             >
               Telegram
+            </a>
+            <a href={`tel:${company.phoneHref}`} className={s.helpLink}>
+              {company.phone}
+            </a>
+            <a href={`mailto:${company.email}`} className={s.helpLink}>
+              {company.email}
             </a>
           </div>
         </div>

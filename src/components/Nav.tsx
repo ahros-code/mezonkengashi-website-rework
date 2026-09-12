@@ -6,7 +6,7 @@ import { GirihStar, GirihField } from "./Girih";
 import { TalimLeaves } from "./TalimMark";
 import { useSpecular } from "@/lib/useSpecular";
 import { paths } from "@/lib/routes";
-import { locales, localeLabel, type Locale } from "@/i18n/config";
+import { locales, localeLabel, localeName, hreflang, htmlLang, type Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n";
 import s from "./Nav.module.css";
 
@@ -214,7 +214,7 @@ export default function Nav({ t, locale }: { t: Dict; locale: Locale }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const otherLocale = locales.find((l) => l !== locale) as Locale;
+  const otherLocales = locales.filter((l) => l !== locale);
 
   /* Keeps the locale switch on the current page instead of dropping people home. */
   const swapLocale = (l: Locale) => {
@@ -384,7 +384,10 @@ export default function Nav({ t, locale }: { t: Dict; locale: Locale }) {
                   href={swapLocale(l)}
                   className={s.lang}
                   aria-current={l === locale}
-                  hrefLang={l}
+                  aria-label={localeName[l]}
+                  title={localeName[l]}
+                  hrefLang={hreflang[l]}
+                  lang={htmlLang[l]}
                 >
                   {localeLabel[l]}
                 </a>
@@ -461,9 +464,18 @@ export default function Nav({ t, locale }: { t: Dict; locale: Locale }) {
           <a href={paths.contact(locale)} className="btn btn--gold" onClick={() => setOpen(false)}>
             {t.nav.cta}
           </a>
-          <a href={swapLocale(otherLocale)} className="btn btn--ghost" hrefLang={otherLocale}>
-            {localeLabel[otherLocale]}
-          </a>
+          {otherLocales.map((l) => (
+            <a
+              key={l}
+              href={swapLocale(l)}
+              className="btn btn--ghost"
+              aria-label={localeName[l]}
+              hrefLang={hreflang[l]}
+              lang={htmlLang[l]}
+            >
+              {localeLabel[l]}
+            </a>
+          ))}
         </div>
       </div>
     </>

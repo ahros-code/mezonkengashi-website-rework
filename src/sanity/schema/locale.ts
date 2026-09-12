@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { locales } from "@/i18n/config";
+import { contentLocales as locales } from "@/i18n/config";
 
 /**
  * Field-level localisation.
@@ -9,6 +9,9 @@ import { locales } from "@/i18n/config";
  * lets translations drift apart and doubles the editing surface; here an editor
  * sees both languages side by side and a missing translation is visible in the
  * same form rather than in another document.
+ *
+ * Only Latin Uzbek and Russian are edited: the Cyrillic edition is generated
+ * from the Latin field, so there is nothing for an editor to fill in.
  */
 const localeFields = (rows?: number) =>
   locales.map((locale) =>

@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/meta";
 import { articleNode, breadcrumbs, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { getNews } from "@/content/source";
-import { byNewestFirst, categoryLabel, countWords } from "@/content/types";
+import { pick, byNewestFirst, categoryLabel, countWords } from "@/content/types";
 import ArticleView from "@/components/ArticleView";
 
 export async function generateStaticParams() {
@@ -29,12 +29,13 @@ export async function generateMetadata({
   return pageMetadata({
     locale,
     path: `/news/${slug}`,
-    title: article.title[locale],
-    description: article.excerpt[locale],
+    title: pick(article.title, locale),
+    description: pick(article.excerpt, locale),
     type: "article",
     publishedTime: article.date,
     authors: [author.name],
-    section: categoryLabel[article.category][locale],
+    section: pick(categoryLabel[article.category], locale),
+    tags: [pick(categoryLabel[article.category], locale)],
   });
 }
 
@@ -64,17 +65,20 @@ export default async function NewsArticlePage({
       locale,
       path: `/news/${slug}`,
       type: "NewsArticle",
-      headline: article.title[locale],
-      description: article.excerpt[locale],
+      headline: pick(article.title, locale),
+      description: pick(article.excerpt, locale),
       datePublished: article.date,
+      authorId: article.author,
       authorName: author.name,
-      section: categoryLabel[article.category][locale],
+      readingMinutes: article.readingMinutes,
+      keywords: [pick(categoryLabel[article.category], locale), ...t.meta.keywords.slice(0, 5)],
+      section: pick(categoryLabel[article.category], locale),
       wordCount: countWords(article.body, locale),
     }),
     breadcrumbs(locale, [
       { name: t.ui.home, path: "" },
       { name: t.nav.news, path: "/news" },
-      { name: article.title[locale], path: `/news/${slug}` },
+      { name: pick(article.title, locale), path: `/news/${slug}` },
     ]),
   );
 

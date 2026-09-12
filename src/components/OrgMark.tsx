@@ -8,7 +8,7 @@ import { monogram, type Organization } from "@/content/types";
  */
 export default function OrgMark({ org, className }: { org: Organization; className?: string }) {
   return (
-    <span className={className} data-org-mark="" aria-hidden="true">
+    <span className={className} data-org-mark="" data-logo={org.logo ? "" : undefined} aria-hidden="true">
       {org.logo ? (
         // eslint-disable-next-line @next/next/no-img-element -- CMS asset of unknown size
         <img src={org.logo} alt="" loading="lazy" />

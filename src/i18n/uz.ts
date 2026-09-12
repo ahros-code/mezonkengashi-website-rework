@@ -1,12 +1,15 @@
 const uz = {
   meta: {
-    title: "Mezon Kengashi — Islom moliyasi boʻyicha konsalting va shariat auditi | Toshkent",
+    title: "Mezon Kengashi — AAOIFI ning Oʻzbekistondagi rasmiy vakili | Islom moliyasi",
     description:
-      "Mezon Kengashi — Toshkentdagi islom moliyasi markazi: shariat nazorat kengashi, audit va sertifikatlash, nizolarni hal qilish, taʼlim, konsalting va zakot hisobi. 2013-yildan buyon 28 moliya instituti bilan ishlaymiz.",
+      "Mezon Kengashi — AAOIFI ning Oʻzbekistondagi rasmiy vakili. Toshkentda islom moliyasi boʻyicha shariat nazorat kengashi, audit va sertifikatlash, islom banki litsenziyasi, nizolarni hal qilish, taʼlim va zakot hisobi.",
     keywords: [
       "islom moliyasi",
+      "AAOIFI Oʻzbekiston",
+      "AAOIFI rasmiy vakili",
       "shariat auditi",
       "shariat kengashi",
+      "islom banki litsenziyasi",
       "halol moliya Oʻzbekiston",
       "sukuk",
       "murobaha",
@@ -37,20 +40,29 @@ const uz = {
   },
 
   hero: {
-    place: "Toshkent shahri, 2013-yildan buyon",
+    place: "Toshkent shahri, 2023-yildan buyon",
     wordmark: "MEZON",
     tagline: "Har bir shartnoma shariat mezonida oʻlchanadi",
     lede:
-      "Biz banklar, lizing va sugʻurta kompaniyalari hamda halol biznes uchun mahsulotlarni shariatga muvofiq quramiz, tekshiramiz va sertifikatlaymiz.",
+      "Biz banklar, lizing, fintex va halol biznes uchun mahsulotlarni AAOIFI standartlari asosida quramiz, tekshiramiz va sertifikatlaymiz.",
     primary: "Konsultatsiya olish",
     secondary: "Xizmatlarni koʻrish",
-    quote:
-      "Fatvo — qogʻoz emas, majburiyat. Biz imzo qoʻygan har bir hujjat ortida kengashning butun masʼuliyati turadi.",
-    quoteName: "MEZON KENGASHI",
-    quoteRole: "Islom moliyasi kengashi",
-    metricValue: "4,2 trln",
-    metricUnit: "soʻm",
-    metricLabel: "ekspertizadan oʻtgan aktivlar hajmi",
+    statusKicker: "Rasmiy maqom",
+    status:
+      "Mezon Kengashi — AAOIFI ning Oʻzbekistondagi rasmiy vakili. Mutaxassislarni tayyorlash va sertifikatlash boʻyicha kelishuvlar imzolangan.",
+    statusName: "AAOIFI",
+    statusRole: "Islom moliyasi standartlari tashkiloti, Bahrayn",
+    metricValue: "5,98 trln",
+    metricUnit: "$",
+    metricLabel: "jahon islom moliyasi aktivlari hajmi, 2024-yil",
+    metricNote: "2029-yilga borib 9,7 trln dollarga yetishi kutilmoqda · ICD–LSEG, 2025",
+    /* What we actually work to, and the certificates the team holds. */
+    standards: [
+      "AAOIFI rasmiy vakili",
+      "61 shariat standarti",
+      "AAOIFI FAS hisob standartlari",
+      "CSAA · CPSS · CIPA",
+    ],
     formTitle: "Qoʻngʻiroqni buyurtma qiling",
     formNote: "Ish kunlari 30 daqiqa ichida javob beramiz.",
     scroll: "Pastga",
@@ -91,13 +103,166 @@ const uz = {
     ],
   },
 
+  /* The step-by-step consultation form at the foot of the home page.
+     Which options appear on each step is decided in ContactForm.tsx. */
+  wizard: {
+    intro: "4 ta qisqa savol — taxminan bir daqiqa",
+    progress: "{n}-savol, jami {total}",
+    back: "Orqaga",
+    next: "Davom etish",
+    restart: "Boshidan boshlash",
+    editHint: "Javobni oʻzgartirish",
+    who: {
+      q: "Kim nomidan murojaat qilyapsiz?",
+      note: "Dastlabki 30 daqiqalik suhbat va hujjatlarni koʻrib chiqish bepul.",
+      options: {
+        bank: { label: "Bank yoki moliya instituti", hint: "Bank, lizing, takaful, investitsiya fondi" },
+        business: { label: "Kompaniya yoki tadbirkor", hint: "Halol biznes, savdo, ishlab chiqarish" },
+        person: { label: "Shaxsiy savol", hint: "Zakot, shartnoma, shaxsiy moliya" },
+        learner: { label: "Oʻqish va malaka oshirish", hint: "Kurslar va CPSS imtihoniga tayyorgarlik" },
+      },
+    },
+    need: {
+      q: "Sizga qanday yordam kerak?",
+      note: "Murojaatingizni shu yoʻnalish mutaxassisiga yoʻnaltiramiz.",
+      options: {
+        council: { label: "Shariat nazorat kengashi", hint: "Doimiy nazorat va yozma fatvolar" },
+        audit: { label: "Audit va sertifikatlash", hint: "Muvofiqlikni tekshirish, sertifikat" },
+        consulting: { label: "Yangi mahsulot yaratish", hint: "Murobaha, ijara, sukuk, takaful" },
+        advice: { label: "Shariat boʻyicha maslahat", hint: "Bitim yoki qaror shariatga mosmi" },
+        dispute: { label: "Nizoni hal qilish", hint: "Vositachilik va arbitraj" },
+        education: { label: "Jamoani oʻqitish", hint: "Korporativ kurslar" },
+        zakat: { label: "Zakot hisobi", hint: "Biznes yoki shaxsiy aktivlar" },
+        other: { label: "Boshqa masala", hint: "Oʻzim yozib beraman" },
+      },
+    },
+    detail: {
+      note: "Dastlabki tahlil bepul va odatda 2–5 kun davom etadi.",
+      questions: {
+        council: {
+          q: "Hozir shariat kengashingiz bormi?",
+          options: {
+            none: "Yoʻq, noldan tuzamiz",
+            strengthen: "Bor, kuchaytirmoqchimiz",
+            regulator: "Regulyator talab qilmoqda",
+          },
+        },
+        audit: {
+          q: "Mahsulot qaysi bosqichda?",
+          options: {
+            planning: "Hali ishga tushmagan",
+            live: "Allaqachon ishlamoqda",
+            renewal: "Sertifikatni yangilash",
+          },
+        },
+        consulting: {
+          q: "Qaysi mahsulot haqida gap ketyapti?",
+          options: {
+            murabaha: "Murobaha yoki ijara",
+            partnership: "Mushoraka yoki mudoraba",
+            sukuk: "Sukuk",
+            takaful: "Takaful yoki fond",
+            unsure: "Hali aniq emas",
+          },
+        },
+        advice: {
+          q: "Savol nimaga oid?",
+          options: {
+            deal: "Bitim yoki shartnoma",
+            invest: "Investitsiya yoki jamgʻarma",
+            finance: "Kredit, ipoteka yoki lizing",
+            other: "Boshqa narsa",
+          },
+        },
+        dispute: {
+          q: "Nizo qaysi bosqichda?",
+          options: {
+            pre: "Hali sudga chiqmagan",
+            court: "Sud jarayoni ketmoqda",
+            clause: "Shartnomaga arbitraj bandi kerak",
+          },
+        },
+        education: {
+          q: "Nechta xodimni oʻqitish kerak?",
+          options: {
+            small: "1–5 kishi",
+            medium: "6–20 kishi",
+            large: "20 kishidan ortiq",
+          },
+        },
+        learn: {
+          q: "Nima qiziqtiradi?",
+          options: {
+            cpss: "AAOIFI CPSS imtihoniga tayyorgarlik",
+            other: "Boshqa kurslar",
+            unsure: "Maslahat kerak",
+          },
+        },
+        zakat: {
+          q: "Zakot kim uchun hisoblanadi?",
+          options: {
+            business: "Biznes uchun",
+            personal: "Shaxsan oʻzim uchun",
+          },
+        },
+      },
+      when: {
+        q: "Qachon kerak?",
+        options: {
+          now: "Shoshilinch, shu hafta",
+          month: "Shu oy ichida",
+          later: "Hozircha oʻrganyapman",
+        },
+      },
+    },
+    talim: {
+      kicker: "Mezon Taʼlim",
+      title: "AAOIFI CPSS imtihoniga oʻzbek tilida tayyorgarlik",
+      facts: ["15 hafta · 30 dars", "Shanba–yakshanba", "Onlayn va Toshkentda"],
+      more: "Kurs haqida",
+      telegram: "Telegramda yozish",
+    },
+    contact: {
+      q: "Qanday bogʻlanaylik?",
+      note: "Ish kunlari 30 daqiqa ichida javob beramiz.",
+      noteClosed: "Hozir ish vaqtidan tashqari — keyingi ish kuni 09:00 dan keyin bogʻlanamiz.",
+      channel: "Qulay aloqa usuli",
+      channels: { call: "Qoʻngʻiroq", telegram: "Telegram", email: "Elektron pochta" },
+      telegram: "Telegram: raqam yoki @username",
+      telegramPh: "@username yoki +998 …",
+      errTelegram: "Telegram raqami yoki @username kiriting",
+      errEmailRequired: "Elektron pochta manzilini kiriting",
+      addNote: "Izoh qoʻshish (ixtiyoriy)",
+      noteLabel: "Vaziyatni qisqacha yozing",
+      submit: "Konsultatsiyaga yozilish",
+      failed:
+        "Murojaatni yuborib boʻlmadi. Qayta urinib koʻring yoki bizga toʻgʻridan-toʻgʻri qoʻngʻiroq qiling.",
+    },
+    done: {
+      title: "Rahmat, {name}!",
+      body: "Murojaatingiz qabul qilindi va «{need}» mutaxassisiga yuborildi.",
+      bodyGeneric: "Murojaatingiz qabul qilindi va tegishli mutaxassisga yuborildi.",
+      nextTitle: "Keyingi qadamlar",
+      via: {
+        call: "Mutaxassis sizga qoʻngʻiroq qiladi",
+        telegram: "Mutaxassis Telegramda yozadi",
+        email: "Mutaxassis pochtangizga yozadi",
+      },
+      soon: "30 daqiqa ichida",
+      nextDay: "keyingi ish kuni",
+      faster: "Kutishni istamaysizmi?",
+      telegramCta: "Telegramda yozish",
+      callCta: "Qoʻngʻiroq qilish",
+    },
+  },
+
   stats: {
     title: "Raqamlarda",
     items: [
-      { value: "340+", label: "shartnoma va mahsulot ekspertizadan oʻtgan" },
-      { value: "28", label: "bank, lizing va sugʻurta kompaniyasi hamkor" },
-      { value: "12", label: "yillik uzluksiz shariat nazorati amaliyoti" },
-      { value: "96%", label: "mijozlar keyingi loyihada qaytib keladi" },
+      { value: "2023", label: "yildan buyon Toshkentda faoliyat yuritamiz" },
+      { value: "30+", label: "hamkorlik doirasida AAOIFI imtihonlarini topshirgan mutaxassis" },
+      { value: "13", label: "kengash aʼzosi: shariat olimlari va yuristlar" },
+      { value: "9", label: "hamkor bank, fintex va kompaniya" },
     ],
   },
 
@@ -105,7 +270,7 @@ const uz = {
     kicker: "Nima qilamiz",
     title: "Oltita yoʻnalish, bitta mezon",
     lede:
-      "Har bir xizmat bir xil metodologiyaga tayanadi: AAOIFI shariat standartlari, mahalliy tartibga solish talablari va kengashning yozma qarori.",
+      "Har bir xizmat bir xil metodologiyaga tayanadi: AAOIFI shariat standartlari, Oʻzbekiston qonunchiligi va Markaziy bank talablari hamda kengashning yozma qarori.",
     items: {
       council: {
         name: "Shariat nazorat kengashi",
@@ -142,19 +307,19 @@ const uz = {
         summary:
           "Bank va kompaniya jamoalari uchun amaliy dasturlar hamda xalqaro sertifikatlarga tayyorgarlik.",
         points: [
-          "Korporativ kurslar (16–72 soat)",
-          "AAOIFI CSAA va CIMA IF ga tayyorgarlik",
-          "Ichki metodik qoʻllanmalar",
+          "AAOIFI boʻyicha treninglar va korporativ kurslar",
+          "CPSS va CSAA xalqaro imtihonlariga tayyorgarlik",
+          "Xorijiy hamkorlar bilan tajriba almashish safarlari",
         ],
       },
       consulting: {
         name: "Konsalting va mahsulot dizayni",
         summary:
-          "Yangi mahsulotni nolldan quramiz: struktura, hujjatlar, buxgalteriya va ishga tushirish.",
+          "Islom banki litsenziyasidan tortib yangi mahsulotgacha: struktura, hujjatlar, buxgalteriya va ishga tushirish.",
         points: [
-          "Murobaha, ijara, mushoraka, mudoraba, sukuk",
-          "Takaful va halol investitsiya fondlari",
-          "Tartibga soluvchi bilan muloqotni qoʻllab-quvvatlash",
+          "Islom banki litsenziyasini olish va ishga tushirishni toʻliq qoʻllab-quvvatlash",
+          "Islom oynasi va islom moliyasi boʻlimini tashkil etish",
+          "Murobaha, ijara, mushoraka, mudoraba, sukuk, takaful",
         ],
       },
       zakat: {
@@ -188,6 +353,11 @@ const uz = {
         short: "Yuridik kengash",
         role: "Qonunchilik va huquqiy ekspertiza",
       },
+      team: {
+        name: "Rahbariyat va loyiha menejerlari",
+        short: "Jamoa",
+        role: "AAOIFI sertifikatiga ega amaliyotchilar",
+      },
     },
     members: {
       sultonxojaev: {
@@ -202,7 +372,7 @@ const uz = {
       },
       razzoqov: {
         name: "Yahyobek Razzoqov",
-        role: "Kengash aʼzosi",
+        role: "Kengash raisi",
         bio: "Islomshunos, iqtisodchi va arabshunos. Muhammad Taqi Usmoniyning “Fiqhul buyuʼ” asarini arab tilidan oʻzbek tiliga tarjima qilgan.",
         credentials: [
           "Toshkent moliya instituti",
@@ -272,32 +442,92 @@ const uz = {
       },
       usmanov: {
         name: "Jamshid Usmanov",
-        role: "“Constant” yuridik firmasi direktori",
-        bio: "Tadbirkorlik subyektlariga kompleks huquqiy xizmat koʻrsatadi. Oʻzbekistonda islom moliyasini joriy etish boʻyicha qonun hujjatlari loyihalarini ishlab chiqishda bevosita ishtirok etgan.",
+        role: "“Constat” advokatlik firmasi direktori",
+        bio: "Tadbirkorlik subyektlariga kompleks huquqiy xizmat koʻrsatadi. Bank sohasida 6 yillik tajribaga ega, AAOIFI CPSS sertifikati sohibi.",
         credentials: [
-          "Toshkent davlat yuridik instituti",
-          "Iqtisodiy va maʼmuriy nizolar",
-          "19 yil amaliyot",
+          "“Constat” advokatlik firmasi, direktor",
+          "Bank huquqi boʻyicha 6 yil tajriba",
+          "AAOIFI CPSS",
         ],
       },
       rajabov: {
         name: "Nodir Rajabov",
-        role: "Xalqaro tijorat hakamlik sudi sudyasi",
-        bio: "«ENTER Engineering Pte. Ltd.» kompaniyasi yuridik boshqarmasi boshligʻi. Qurilish va pudrat ishlari bilan bogʻliq huquqiy nizolar boʻyicha yetuk mutaxassis.",
+        role: "“Philosophy of Justice” xalqaro arbitraj sudi arbitri",
+        bio: "Xalqaro arbitraj sudi arbitri. Tijorat va pudrat nizolarini shariat hamda Oʻzbekiston qonunchiligi asosida koʻrib chiqadi.",
         credentials: [
-          "Samarqand davlat universiteti",
-          "“Philosophy of Justice” hakamlik sudi",
-          "20 yil amaliyot",
+          "“Philosophy of Justice” xalqaro arbitraj sudi",
+          "Tijorat nizolari boʻyicha arbitr",
         ],
+      },
+      amanbaev: {
+        name: "Damir Amanbaev",
+        role: "“Enlawyer” yuridik firmasining boshqaruvchi sherigi",
+        bio: "Korporativ va moliyaviy huquq boʻyicha amaliyotchi. Islom moliyasi bitimlarini Oʻzbekiston qonunchiligiga muvofiq rasmiylashtirish bilan shugʻullanadi.",
+        credentials: ["“Enlawyer” yuridik firmasi", "Korporativ va moliyaviy huquq"],
+      },
+      shermatov: {
+        name: "Sherzod Shermatov",
+        role: "“Constat” advokatlik firmasining boshqaruvchi sherigi",
+        bio: "Advokat va boshqaruvchi sherik. Bitimlarni huquqiy tekshirish va shartnomaviy hujjatlarni tayyorlash yoʻnalishida ishlaydi.",
+        credentials: ["“Constat” advokatlik firmasi", "Bitimlarni huquqiy tekshirish"],
       },
       husanov: {
         name: "Shohruh Husanov",
         role: "“Philosophy of Justice” xalqaro arbitraj sudi rahbari",
-        bio: "«SAM LEX UNIVERSALIS» advokatlik firmasining boshqaruvchi sherigi va advokati. Xalqaro arbitraj amaliyotiga ixtisoslashgan.",
+        bio: "Xalqaro arbitraj sudi rahbari. Nizolarni sudgacha, yopiq va tez tartibda hal qilish amaliyotiga ixtisoslashgan.",
         credentials: [
-          "Samarqand davlat universiteti",
-          "Nagoya universiteti (Yaponiya)",
-          "20+ yil amaliyot",
+          "“Philosophy of Justice” xalqaro arbitraj sudi, rahbar",
+          "Xalqaro arbitraj amaliyoti",
+        ],
+      },
+      xusniddinov: {
+        name: "Muzaffar Xusniddinov",
+        role: "Mezon Kengashi direktori",
+        bio: "AAOIFI sertifikatlangan shariat maslahatchisi va auditori (CSAA). Audit va islom moliyasi sohasida keng tajribaga ega.",
+        credentials: [
+          "CSAA — AAOIFI sertifikatlangan shariat auditori",
+          "Korea University (Janubiy Koreya), MBA",
+          "Audit va islom moliyasi",
+        ],
+      },
+      xolboboev: {
+        name: "Olmos Xolboboev",
+        role: "Loyihalar menejeri",
+        bio: "AAOIFI sertifikatlangan shariat maslahatchisi va auditori (CSAA). Markaziy bank va tijorat banklarida koʻp yillik tajribaga ega.",
+        credentials: [
+          "CSAA — AAOIFI sertifikatlangan shariat auditori",
+          "Sabahattin Zaim universiteti (Turkiya), islom moliyasi magistri",
+          "Markaziy bank va tijorat banklari tajribasi",
+        ],
+      },
+      oripova: {
+        name: "Irodaxon Oripova",
+        role: "Loyihalar menejeri",
+        bio: "AAOIFI sertifikatlangan shariat maslahatchisi va auditori (CSAA). Islom moliya institutlarida 5 yillik amaliy tajriba.",
+        credentials: [
+          "CSAA — AAOIFI sertifikatlangan shariat auditori",
+          "INCEIF (Malayziya), magistratura",
+          "IMAN Global Ltd tajribasi",
+        ],
+      },
+      kaxramonov: {
+        name: "Abdurashid Kaxramonov",
+        role: "Loyihalar menejeri",
+        bio: "AAOIFI sertifikatlangan shariat standartlari boʻyicha mutaxassis (CPSS). Murobaha va ijara mahsulotlari boʻyicha ekspert.",
+        credentials: [
+          "CPSS — AAOIFI shariat standartlari sertifikati",
+          "Istanbul Marmara universiteti, islom moliyasi magistraturasi",
+          "Murobaha va ijara mahsulotlari",
+        ],
+      },
+      nusratxojayev: {
+        name: "Xondamir Nusratxoʻjaev",
+        role: "Mustaqil ekspert, strategik maslahatchi",
+        bio: "AAOIFI sertifikatlangan shariat auditori (CSAA) va islom moliyasi boʻyicha professional buxgalter (CIPA). Islom taraqqiyot banki (Saudiya Arabistoni) moliya menejeri.",
+        credentials: [
+          "CSAA va CIPA — AAOIFI",
+          "Islom taraqqiyot banki (IsDB), moliya menejeri",
+          "AAOIFI shariat kengashi aʼzosi (2016–2023)",
         ],
       },
       mezon: {
@@ -359,13 +589,15 @@ const uz = {
     kicker: "Aloqa",
     title: "Savolingizni yozing",
     lede:
-      "Konsultatsiya, audit, taʼlim yoki zakot hisobi — mavzuni tanlang va tafsilotlarni yozing. Murojaatni tegishli mutaxassisga yoʻnaltiramiz.",
+      "Bir necha savolga javob bering — murojaatingizni darhol kerakli mutaxassisga yoʻnaltiramiz. Dastlabki suhbat bepul.",
     officeTitle: "Manzil",
     hoursTitle: "Ish vaqti",
     hours: "Dushanba–Juma, 09:00–18:00",
     hoursNote: "Juma kuni 12:30–14:00 tanaffus",
     directTitle: "Toʻgʻridan-toʻgʻri",
     mapLabel: "Xaritada koʻrish",
+    telegramTitle: "Tezkor aloqa",
+    telegramCta: "Telegramda yozish",
   },
 
   footer: {
@@ -384,8 +616,8 @@ const uz = {
 
   clients: {
     kicker: "Ishonch",
-    title: "Biz tekshirgan va sertifikatlagan tashkilotlar",
-    lede: "Banklar, lizing va takaful kompaniyalari, investitsiya fondlari va halol biznes — har biri bir xil mezon boʻyicha tekshirilgan.",
+    title: "Hamkorlarimiz va mijozlarimiz",
+    lede: "Banklar, fintex platformalari, lizing, qurilish va savdo kompaniyalari — mahsulot strukturasi, audit, sertifikatlash yoki jamoani oʻqitish boʻyicha birga ishlaymiz.",
     since: "{year}-yildan",
     certified: "Sertifikatlangan",
     registryCta: "Sertifikatlar reyestri",

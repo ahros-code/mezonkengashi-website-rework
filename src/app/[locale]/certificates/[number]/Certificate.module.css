@@ -484,6 +484,159 @@
   transform: rotate(180deg) translateX(3px);
 }
 
+/* ---- questions the registry page should answer before the phone rings ---- */
+
+.faq {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--ganch-2);
+}
+
+.faqHead {
+  max-width: 46rem;
+  margin-bottom: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+.faqTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.1rem + 1vw, 1.9rem);
+  line-height: 1.25;
+  color: var(--ink);
+}
+.faqLede {
+  margin-top: 0.5rem;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+}
+
+.faqList {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 52rem;
+}
+
+/* Same visual language as the site's other FAQ: paper card, amber-tinted
+   border when open, and the girih star that turns as the answer appears. */
+.faqItem {
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--ganch-2);
+  transition:
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+.faqItem:hover {
+  border-color: var(--ganch-3);
+}
+.faqItem[open] {
+  border-color: color-mix(in srgb, var(--zar) 45%, var(--ganch-2));
+  box-shadow: 0 22px 44px -30px rgba(0, 34, 61, 0.45);
+}
+
+.faqQ {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 1.1rem 1.05rem 1.35rem;
+  border-radius: inherit;
+  cursor: pointer;
+  list-style: none;
+  /* A drag across the question used to select the text and toggle the panel at
+     the same time, collapsing the answer being read. The header is a control;
+     the answer below it stays selectable. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.faqQ::-webkit-details-marker {
+  display: none;
+}
+/* The global focus ring is the right one; it only needs to hug the card,
+   and only keyboard focus should raise it. */
+.faqQ:focus-visible {
+  outline-offset: -3px;
+  border-radius: var(--r-md);
+}
+
+.faqQText {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  transition: color 0.3s var(--ease-out);
+}
+.faqQ:hover .faqQText {
+  color: var(--kobalt);
+}
+
+.faqToggle {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: color-mix(in srgb, var(--zar) 70%, transparent);
+  transition: color 0.3s var(--ease-out);
+}
+.faqToggle svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.55s var(--ease-out);
+}
+.faqPlus,
+.faqPlus::after {
+  position: absolute;
+  width: 10px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--kobalt);
+}
+.faqPlus::after {
+  content: "";
+  transform: rotate(90deg);
+  transition: transform 0.45s var(--ease-out);
+}
+.faqItem[open] .faqToggle {
+  color: var(--zar);
+}
+.faqItem[open] .faqToggle svg {
+  transform: rotate(22.5deg);
+}
+.faqItem[open] .faqPlus::after {
+  transform: rotate(0deg);
+}
+
+.faqA {
+  user-select: text;
+  -webkit-user-select: text;
+  padding: 0 3rem 1.25rem 1.35rem;
+  font-size: 0.94rem;
+  line-height: 1.66;
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+
+.faqAsk {
+  margin-top: 1.1rem;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+}
+.faqAsk a {
+  color: var(--kobalt);
+  font-weight: 600;
+}
+.faqAsk a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faqChev {
+    transition: none;
+  }
+}
+
 @media (max-width: 1000px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);

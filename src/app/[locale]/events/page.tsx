@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { locales, isLocale, type Locale } from "@/i18n/config";
+import { locales, isLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getDict } from "@/i18n";
 import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, collectionPage, eventNode, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { getEvents, getPageCopy } from "@/content/source";
-import { countLabel, dayInTashkent, formatDate, formatPrice } from "@/content/types";
+import { pick, countLabel, dayInTashkent, formatDate, formatPrice } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihStar } from "@/components/Girih";
 import { ArrowMark } from "@/components/Icons";
@@ -59,7 +59,7 @@ export default async function EventsIndex({
     .filter((e) => new Date(e.end).getTime() < now)
     .sort((a, b) => b.start.localeCompare(a.start));
 
-  const monthShort = new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "uz-UZ", {
+  const monthShort = new Intl.DateTimeFormat(intlLocale[locale], {
     month: "short",
     timeZone: "Asia/Tashkent",
   });
@@ -71,7 +71,7 @@ export default async function EventsIndex({
       name: copy.metaTitle,
       description: copy.metaDescription,
       items: [...upcoming, ...past].map((e) => ({
-        name: e.title[locale],
+        name: pick(e.title, locale),
         path: `/events/${e.slug}`,
       })),
     }),
@@ -79,13 +79,13 @@ export default async function EventsIndex({
       eventNode({
         locale,
         path: `/events/${e.slug}`,
-        name: e.title[locale],
-        description: e.excerpt[locale],
+        name: pick(e.title, locale),
+        description: pick(e.excerpt, locale),
         start: e.start,
         end: e.end,
         format: e.format,
-        venue: e.venue[locale],
-        city: e.city[locale],
+        venue: pick(e.venue, locale),
+        city: pick(e.city, locale),
         price: e.price,
         seats: e.seats,
         hostName: t.council.members[e.host as keyof typeof t.council.members].name,
@@ -167,13 +167,13 @@ export default async function EventsIndex({
                               {formatPrice(0, locale)}
                             </span>
                           )}
-                          <span>{e.city[locale]}</span>
+                          <span>{pick(e.city, locale)}</span>
                         </span>
 
                         <h3 className={s.cardTitle}>
-                          <a href={paths.eventItem(locale, e.slug)}>{e.title[locale]}</a>
+                          <a href={paths.eventItem(locale, e.slug)}>{pick(e.title, locale)}</a>
                         </h3>
-                        <p className={s.cardExcerpt}>{e.excerpt[locale]}</p>
+                        <p className={s.cardExcerpt}>{pick(e.excerpt, locale)}</p>
                       </div>
 
                       <div className={s.facts}>
@@ -225,8 +225,8 @@ export default async function EventsIndex({
                     </span>
 
                     <span>
-                      <h3 className={s.pastTitle}>{e.title[locale]}</h3>
-                      <p className={s.pastExcerpt}>{e.excerpt[locale]}</p>
+                      <h3 className={s.pastTitle}>{pick(e.title, locale)}</h3>
+                      <p className={s.pastExcerpt}>{pick(e.excerpt, locale)}</p>
                     </span>
 
                     <span className={s.pastArrow} aria-hidden="true">

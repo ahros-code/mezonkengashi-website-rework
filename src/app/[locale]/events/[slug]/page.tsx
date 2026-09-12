@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/meta";
 import { breadcrumbs, eventNode, graph } from "@/lib/jsonld";
 import { paths } from "@/lib/routes";
 import { getEvents } from "@/content/source";
-import { countLabel, formatDate, formatPrice } from "@/content/types";
+import { pick, countLabel, formatDate, formatPrice } from "@/content/types";
 import PageHero from "@/components/PageHero";
 import { GirihField, GirihStar } from "@/components/Girih";
 import { ClockMark, PinMark } from "@/components/Icons";
@@ -35,8 +35,8 @@ export async function generateMetadata({
   return pageMetadata({
     locale,
     path: `/events/${slug}`,
-    title: event.title[locale],
-    description: event.excerpt[locale],
+    title: pick(event.title, locale),
+    description: pick(event.excerpt, locale),
   });
 }
 
@@ -60,13 +60,13 @@ export default async function EventPage({
     eventNode({
       locale,
       path: `/events/${slug}`,
-      name: event.title[locale],
-      description: event.excerpt[locale],
+      name: pick(event.title, locale),
+      description: pick(event.excerpt, locale),
       start: event.start,
       end: event.end,
       format: event.format,
-      venue: event.venue[locale],
-      city: event.city[locale],
+      venue: pick(event.venue, locale),
+      city: pick(event.city, locale),
       price: event.price,
       seats: event.seats,
       hostName: host.name,
@@ -74,7 +74,7 @@ export default async function EventPage({
     breadcrumbs(locale, [
       { name: t.ui.home, path: "" },
       { name: t.nav.events, path: "/events" },
-      { name: event.title[locale], path: `/events/${slug}` },
+      { name: pick(event.title, locale), path: `/events/${slug}` },
     ]),
   );
 
@@ -92,11 +92,11 @@ export default async function EventPage({
           latticeId={`girih-ev-hero-${slug}`}
           crumbs={[
             { label: t.nav.events, href: paths.events(locale) },
-            { label: event.title[locale] },
+            { label: pick(event.title, locale) },
           ]}
-          kicker={`${t.events.formats[event.format]}, ${event.city[locale]}`}
-          title={event.title[locale]}
-          lede={event.excerpt[locale]}
+          kicker={`${t.events.formats[event.format]}, ${pick(event.city, locale)}`}
+          title={pick(event.title, locale)}
+          lede={pick(event.excerpt, locale)}
           meta={[
             formatDate(event.start, locale, true),
             countLabel(event.seats, locale, {
@@ -116,7 +116,7 @@ export default async function EventPage({
                 {event.agenda.map((slot, i) => (
                   <li key={`${slot.time}-${i}`} className={s.slot}>
                     <span className={s.slotTime}>{slot.time}</span>
-                    <span className={s.slotText}>{slot.text[locale]}</span>
+                    <span className={s.slotText}>{pick(slot.text, locale)}</span>
                   </li>
                 ))}
               </ol>
@@ -124,16 +124,16 @@ export default async function EventPage({
               <h2 className={s.sectionTitle}>{t.events.outcomes}</h2>
               <ul className={s.outcomes}>
                 {event.outcomes.map((o) => (
-                  <li key={o[locale]} className={s.outcome}>
+                  <li key={pick(o, locale)} className={s.outcome}>
                     <GirihStar size={11} strokeWidth={1.6} />
-                    <span>{o[locale]}</span>
+                    <span>{pick(o, locale)}</span>
                   </li>
                 ))}
               </ul>
 
               <div className={s.audience}>
                 <p className={s.audienceLabel}>{t.events.audience}</p>
-                <p className={s.audienceValue}>{event.audience[locale]}</p>
+                <p className={s.audienceValue}>{pick(event.audience, locale)}</p>
               </div>
             </div>
 
@@ -169,12 +169,12 @@ export default async function EventPage({
                     <span>
                       <span className={s.rowLabel}>{t.events.venue}</span>
                       <span className={s.rowValue}>
-                        {event.venue[locale]}
+                        {pick(event.venue, locale)}
                         {/* online events name the city in the venue already */}
-                        {!event.venue[locale].includes(event.city[locale]) && (
+                        {!pick(event.venue, locale).includes(pick(event.city, locale)) && (
                           <>
                             <br />
-                            {event.city[locale]}
+                            {pick(event.city, locale)}
                           </>
                         )}
                       </span>

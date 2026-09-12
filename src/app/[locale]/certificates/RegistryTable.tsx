@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowMark } from "@/components/Icons";
 import OrgMark from "@/components/OrgMark";
 import type { CertificateStatus, Organization } from "@/content/types";
+import { foldScript } from "@/i18n/translit";
 import s from "./Registry.module.css";
 
 export type RegistryRow = {
@@ -38,10 +39,11 @@ type Copy = {
 
 const STATUSES: CertificateStatus[] = ["valid", "expired", "revoked"];
 
-/* Uzbek is typed with several apostrophes (ʻ ʼ ' ‘); fold them so "Fargʻona"
-   matches "Farg'ona", and ignore case and dashes so "mk20260148" finds a number. */
+/* Uzbek is typed in two scripts and with several apostrophes (ʻ ʼ ' ‘). Both
+   sides fold to one Latin skeleton, so "Фарғона", "Fargʻona" and "Farg'ona"
+   all match; case and dashes are ignored so "mk20260148" finds a number. */
 function fold(v: string) {
-  return v.toLowerCase().replace(/[ʻʼ'‘’`]/g, "'").replace(/[-\s]+/g, " ");
+  return foldScript(v).replace(/[-\s]+/g, " ");
 }
 
 /** Reads ?q= and ?org= — the home page's verify form and roster tiles land here. */

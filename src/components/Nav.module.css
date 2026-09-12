@@ -71,11 +71,13 @@
 
 /* ---- centre pill ---- */
 
+/* The pill flows in the row: the brand's auto margin and this one split the
+   free space, so it sits centred between logo and switcher and can never slide
+   under the switcher, however wide the three-edition cluster gets. */
 .pill {
   overflow: visible;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  margin-right: auto;
   display: flex;
   align-items: center;
   gap: 0.15rem;
@@ -280,6 +282,29 @@
 
 @media (min-width: 1221px) {
   .sheet {
+    display: none;
+  }
+}
+
+@media (max-width: 1400px) {
+  .pill .link,
+  .pill .trigger {
+    padding-inline: 0.78rem;
+  }
+  .lang {
+    padding-inline: 0.56rem;
+  }
+}
+
+/* Three editions no longer fit beside the logo and burger on a phone; the
+   switch tightens, then moves into the menu sheet, which lists every edition. */
+@media (max-width: 560px) {
+  .lang {
+    padding: 0.44rem 0.52rem;
+  }
+}
+@media (max-width: 350px) {
+  .header .langs {
     display: none;
   }
 }

@@ -41,7 +41,14 @@ export const organization = defineType({
       name: "since",
       title: "Hamkorlik boshlangan yil",
       type: "number",
-      validation: (rule) => rule.required().integer().min(2013).max(2100),
+      description: "Ixtiyoriy. Aniq yil maʼlum boʻlmasa, boʻsh qoldiring.",
+      validation: (rule) => rule.integer().min(2023).max(2100),
+    }),
+    defineField({
+      name: "work",
+      title: "Qanday ish qilingan",
+      type: "localeString",
+      description: "Ixtiyoriy. Bir gap: shu tashkilot uchun nima qilinganini yozing.",
     }),
     defineField({
       name: "logo",

@@ -1,7 +1,7 @@
 import Prose from "./Prose";
 import { GirihField, GirihMedallion, GirihStar } from "./Girih";
 import { ArrowMark, ClockMark } from "./Icons";
-import { categoryLabel, formatDate, type Article } from "@/content/types";
+import { pick, categoryLabel, formatDate, type Article } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 import type { Dict } from "@/i18n";
 import s from "./ArticleView.module.css";
@@ -51,17 +51,17 @@ export default function ArticleView({
                 /
               </span>
               <span className={s.crumbCurrent} aria-current="page">
-                {article.title[locale]}
+                {pick(article.title, locale)}
               </span>
             </nav>
 
             <p className={s.chip}>
               <GirihStar size={10} strokeWidth={1.6} />
-              {categoryLabel[article.category][locale]}
+              {pick(categoryLabel[article.category], locale)}
             </p>
 
-            <h1 className={s.title}>{article.title[locale]}</h1>
-            <p className={s.excerpt}>{article.excerpt[locale]}</p>
+            <h1 className={s.title}>{pick(article.title, locale)}</h1>
+            <p className={s.excerpt} data-speakable>{pick(article.excerpt, locale)}</p>
 
             <div className={s.byline}>
               <span className={s.bylineMed}>
@@ -112,11 +112,11 @@ export default function ArticleView({
                 <a key={r.slug} href={itemPath(r.slug)} className={s.relatedCard}>
                   <span className={s.relatedMeta}>
                     <GirihStar size={10} strokeWidth={1.6} />
-                    {categoryLabel[r.category][locale]}
+                    {pick(categoryLabel[r.category], locale)}
                     <time dateTime={r.date}>{formatDate(r.date, locale)}</time>
                   </span>
-                  <h3 className={s.relatedName}>{r.title[locale]}</h3>
-                  <p className={s.relatedExcerpt}>{r.excerpt[locale]}</p>
+                  <h3 className={s.relatedName}>{pick(r.title, locale)}</h3>
+                  <p className={s.relatedExcerpt}>{pick(r.excerpt, locale)}</p>
                 </a>
               ))}
             </div>
